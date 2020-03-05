@@ -6,6 +6,7 @@ function App() {
   return (
     <div className="App">
        Chris made a change
+       John added some changes
     </div>
   );
 }
