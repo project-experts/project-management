@@ -3,7 +3,11 @@ import logo from "./logo.svg";
 import "./App.css";
 
 function App() {
-  return <div className="App">Leah made a change</div>;
+  return (
+    <div className="App">
+      Chris made a change John added some changes Leah made a change
+    </div>
+  );
 }
 
 export default App;
