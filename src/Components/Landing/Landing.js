@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { userLoggedIn } from '../../redux/reducers/userReducer'
+import { loginClicked } from '../../redux/reducers/loginReducer'
 import Modal from 'react-modal'
+import axios from 'axios'
 import './Landing.css'
+import { FaEye } from 'react-icons/fa'
 
 const customStyles = {
    content : {
@@ -10,7 +14,8 @@ const customStyles = {
      margin: 'auto',
      display: 'flex', 
      flexDirection: 'column',
-     justifyContent: 'space-around'
+     justifyContent: 'space-around',
+     alignItems: 'center'
    }
  };
 
@@ -21,11 +26,24 @@ export class Landing extends Component {
       this.state = {
          username: '', 
          password: '',
-         modalIsOpen: false,
+         isPassword: false,
       }
    }
+
+   handleEvent = e => {
+      this.setState({[e.target.name]: e.target.value})
+   }
+
+   login = () => {
+      const { username, password } = this.state; 
+      this.props.loginClicked(false); 
+      axios.get('/api/login', { username, password })
+      .then(res => this.userLoggedIn(res.data))
+      .catch(err => console.log(err)); 
+   }
    render() {
-      console.log(this.props.isLoginClicked)
+      const { username, password, isPassword } = this.state; 
+      console.log(username, password)
       return (
          <div className='landing' >
             <Modal
@@ -33,10 +51,16 @@ export class Landing extends Component {
             onRequestClose={this.closeModal}
             style={customStyles}
             contentLabel="Example Modal">
-            <div style={{display: 'flex', justifyContent: 'center'}} >Please sign in </div>
-            <input onClick={this.closeModal} placeholder='Enter your email' />
-            <input onClick={this.logout} placeholder='Enter your password' />
-            <button>Sign in</button>
+            <p style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '80%'}} >Please sign in </p>
+            <input className='input' onClick={this.closeModal} placeholder='Enter your email' name='username' value={username} onChange={e => this.handleEvent(e)} />
+            <div className='input-div' > <input type={isPassword ? 'password' : 'text'} 
+                                                className='input'
+                                                placeholder='Enter your password' name='password' 
+                                                value={password} 
+                                                onChange={e => this.handleEvent(e)}/>
+                                                <FaEye className='font' onClick={() => this.setState({isPassword: !this.state.isPassword})} ></FaEye> 
+                                                </div>
+            <button className='btn' onClick={this.login} >Sign in</button>
             </Modal>
          </div>
       )
@@ -50,4 +74,4 @@ function mapStateToProps(state) {
    }
 }
 
-export default connect(mapStateToProps)(Landing)
+export default connect(mapStateToProps, { userLoggedIn, loginClicked })(Landing)
