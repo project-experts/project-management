@@ -1,5 +1,6 @@
-const actionTypes = {
+module.exports = {
    LOGIN_CLICKED: 'LOGIN_CLICKED',
    USER_LOGGED_IN: 'USER_LOGGED_IN',
    USER_LOGGED_OUT: 'USER_LOGGED_OUT',
+   REGISTER_CLICKED: 'REGISTER_CLICKED', 
 }

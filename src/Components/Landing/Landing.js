@@ -2,15 +2,28 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { userLoggedIn } from '../../redux/reducers/userReducer'
 import { loginClicked } from '../../redux/reducers/loginReducer'
+import { registerClicked } from '../../redux/reducers/registerReducer'
 import Modal from 'react-modal'
 import axios from 'axios'
 import './Landing.css'
 import { FaEye } from 'react-icons/fa'
 
-const customStyles = {
+const loginStyle = {
    content : {
      width: '250px', 
      height: '250px', 
+     margin: 'auto',
+     display: 'flex', 
+     flexDirection: 'column',
+     justifyContent: 'space-around',
+     alignItems: 'center'
+   }
+ };
+
+const regStyle = {
+   content : {
+     width: '450px', 
+     height: '450px', 
      margin: 'auto',
      display: 'flex', 
      flexDirection: 'column',
@@ -30,29 +43,34 @@ export class Landing extends Component {
       }
    }
 
-   handleEvent = e => {
-      this.setState({[e.target.name]: e.target.value})
+   handleEvent = e => this.setState({[e.target.name]: e.target.value})
+
+   closeLoginModal = () => this.props.loginClicked(false); 
+   closeRegisterModal = () => this.props.registerClicked(false); 
+
+   register = () => {
+      this.closeRegisterModal(); 
    }
+
 
    login = () => {
       const { email, password } = this.state; 
-      this.props.loginClicked(false); 
+      this.closeLoginModal(); 
       axios.get('/api/login', { email, password })
       .then(res => this.userLoggedIn(res.data))
       .catch(err => console.log(err)); 
    }
    render() {
       const { email, password, isPassword } = this.state; 
-      console.log(email, password)
+      console.log(this.props)
       return (
          <div className='landing' >
             <Modal
             isOpen={this.props.isLoginClicked}
-            onRequestClose={this.closeModal}
-            style={customStyles}
+            style={loginStyle}
             contentLabel="Example Modal">
             <p style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '80%'}} >Please sign in </p>
-            <input className='input' onClick={this.closeModal} placeholder='Enter your email' name='email' value={email} onChange={e => this.handleEvent(e)} />
+            <input className='input' placeholder='Enter your email' name='email' value={email} onChange={e => this.handleEvent(e)} />
             <div className='input-div' > <input type={isPassword ? 'password' : 'text'} 
                                                 className='input'
                                                 placeholder='Enter your password' name='password' 
@@ -62,6 +80,16 @@ export class Landing extends Component {
                                                 </div>
             <button className='btn' onClick={this.login} >Sign in</button>
             </Modal>
+
+            <Modal
+            isOpen={this.props.isRegClicked}
+            style={regStyle}
+            contentLabel="Example Modal">
+            <p style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '80%'}} >Please register </p>
+            <input className='input' placeholder='Enter your email' name='email' value={email} onChange={e => this.handleEvent(e)} />
+            <input className='input' placeholder='Enter your email' name='email' value={email} onChange={e => this.handleEvent(e)} />
+            <button className='btn' onClick={this.register} >Register</button>
+            </Modal>
          </div>
       )
    }
@@ -70,8 +98,9 @@ export class Landing extends Component {
 
 function mapStateToProps(state) {
    return {
-      isLoginClicked: state.loginReducer.isLoginClicked
+      isLoginClicked: state.loginReducer.isLoginClicked,
+      isRegClicked: state.registerReducer.isRegClicked
    }
 }
 
-export default connect(mapStateToProps, { userLoggedIn, loginClicked })(Landing)
+export default connect(mapStateToProps, { userLoggedIn, loginClicked, registerClicked })(Landing)
