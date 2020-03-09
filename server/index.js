@@ -20,6 +20,12 @@ app.use(
   })
 );
 
+massive(CONNECTION_STRING).then(db => {
+   app.set('db', db); 
+   app.listen(SERVER_PORT, () => console.log(`Server is listening on port ${SERVER_PORT}`))
+})
+
+
 //ENDPOINTS
 //auth endpoints
 app.post("/api/register", authCtrl.register);

@@ -24,7 +24,7 @@ export class Landing extends Component {
       super(); 
 
       this.state = {
-         username: '', 
+         email: '', 
          password: '',
          isPassword: false,
       }
@@ -35,15 +35,15 @@ export class Landing extends Component {
    }
 
    login = () => {
-      const { username, password } = this.state; 
+      const { email, password } = this.state; 
       this.props.loginClicked(false); 
-      axios.get('/api/login', { username, password })
+      axios.get('/api/login', { email, password })
       .then(res => this.userLoggedIn(res.data))
       .catch(err => console.log(err)); 
    }
    render() {
-      const { username, password, isPassword } = this.state; 
-      console.log(username, password)
+      const { email, password, isPassword } = this.state; 
+      console.log(email, password)
       return (
          <div className='landing' >
             <Modal
@@ -52,7 +52,7 @@ export class Landing extends Component {
             style={customStyles}
             contentLabel="Example Modal">
             <p style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '80%'}} >Please sign in </p>
-            <input className='input' onClick={this.closeModal} placeholder='Enter your email' name='username' value={username} onChange={e => this.handleEvent(e)} />
+            <input className='input' onClick={this.closeModal} placeholder='Enter your email' name='email' value={email} onChange={e => this.handleEvent(e)} />
             <div className='input-div' > <input type={isPassword ? 'password' : 'text'} 
                                                 className='input'
                                                 placeholder='Enter your password' name='password' 
