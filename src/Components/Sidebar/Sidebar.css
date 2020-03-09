@@ -5,8 +5,14 @@
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     animation: open .5s ease-in;
+    display: flex;
+    justify-content: initial;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px;
     
 }
+ 
 .hide_side_bar{
     height: 90vh;
     width: 0px;
@@ -25,4 +31,16 @@
 @keyframes close {
     from {width: 15%;}
     to {width: 0%;}
+}
+.sidebar_links{
+    height: 50px;
+    width: 100%;
+    background-color:;
+}
+#profile_img{
+    height: 125px;
+    width: 125px;
+    background-color: gray;
+    border-radius: 75px;
+    margin-bottom: 50px;
 }
