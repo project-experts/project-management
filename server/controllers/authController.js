@@ -16,7 +16,7 @@ module.exports = {
     console.log("password :", password);
     console.log("username :", username);
     const hash = bcrypt.hashSync(password, salt);
-    const user = await db.register_user([
+    const user = await db.users.register_user([
       first_name,
       last_name,
       email,
@@ -34,7 +34,7 @@ module.exports = {
   login: async (req, res) => {
     const db = req.app.get("db");
     const { email, password } = req.body;
-    const result = await db.get_user(email);
+    const result = await db.users.get_user(email);
     const user = result[0];
     if (!user) {
       return res.status(401).send("User not found.");
