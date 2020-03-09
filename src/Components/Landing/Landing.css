@@ -3,3 +3,22 @@
    height: 90vh;
    background-color: grey;
 }
+
+.input-div{
+   position: relative;
+}
+
+.font {
+   position: absolute;
+   right: 6px;
+   top: 3px;
+   cursor: pointer;
+}
+
+.input {
+   width: 180px;
+}
+
+.btn {
+   width: 180px;
+}
