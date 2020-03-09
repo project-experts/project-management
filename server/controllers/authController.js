@@ -14,7 +14,7 @@ module.exports = {
     console.log("result :", result);
     const salt = bcrypt.genSaltSync(10);
     console.log("password :", password);
-    console.log("username :", username);
+    console.log("username :", email);
     const hash = bcrypt.hashSync(password, salt);
     const user = await db.users.register_user([
       first_name,
