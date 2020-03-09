@@ -1,11 +1,28 @@
-.side_bar{
+.show_side_bar{
     height: 90vh;
     width: 15%;
     background-color: red;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
-}
-.open{
-    width: 15%;
+    animation: open .5s ease-in;
     
+}
+.hide_side_bar{
+    height: 90vh;
+    width: 0px;
+    background-color: red;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    animation: close .5s ease-out;
+    
+}
+ 
+@keyframes open {
+    from {width: 0%;}
+    to {width: 15%;}
+}
+
+@keyframes close {
+    from {width: 15%;}
+    to {width: 0%;}
 }
