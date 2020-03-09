@@ -10,7 +10,7 @@ import Single_Project from './Components/Single_Project_Dashboard/Single_Project
 export default(
    <Switch>
       <Route exact path='/' component={Landing} />
-      <Route path='/dashboard/:user_id' component={Personal_Dashboard} />
+      <Route path='/dashboard' component={Personal_Dashboard} />
       <Route path='./personal_state' component={Personal_Stats} />
       <Route path='./projects' component={Project_List} />
       <Route path='./single' component={Single_Project} />

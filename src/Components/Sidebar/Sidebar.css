@@ -1,0 +1,11 @@
+.side_bar{
+    height: 90vh;
+    width: 15%;
+    background-color: red;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.open{
+    width: 15%;
+    
+}

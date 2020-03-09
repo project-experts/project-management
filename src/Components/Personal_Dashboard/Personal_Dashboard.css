@@ -1,0 +1,41 @@
+.personal_dashboard{
+    height: 90vh;
+    width: 100%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+}
+ 
+ 
+.task_filler{
+    height: 90vh;
+    width: 85%;
+    display: flex;
+    justify-content: space-evenly;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+}
+.task_container{
+    height: 95%;
+    width: 95%;
+    background-color: yellow;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.tasks{
+    height: 95%;
+    width: 22%;
+    background-color: lightblue;
+    border-radius: 25px;
+    
+}
+#task_name{
+    height: 8%;
+    width: 100%;
+    background-color: transparent;
+    font-size: 20px;
+    text-align: left ;
+    padding: 10px;
+}
