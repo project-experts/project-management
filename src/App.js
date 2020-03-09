@@ -1,11 +1,16 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
+import Header from "./Components/Header/Header";
+import routes from "./routes";
+import Sidebar from './Components/Sidebar/Sidebar'
+
 
 function App() {
   return (
     <div className="App">
-      Chris made a change John added some changes Leah made a change
+      <Header/>
+      <Sidebar/>
+      {routes}
     </div>
   );
 }
