@@ -26,5 +26,7 @@ create table tasks(
   task_name varchar(100),
   task_description text,
   deadline date,
-  status varchar(20)
+  priority varchar (30),
+  status varchar(20),
+  owner int
 );
