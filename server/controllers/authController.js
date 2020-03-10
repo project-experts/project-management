@@ -105,5 +105,9 @@ module.exports = {
   email: async (req, res) => {
     console.log("req.body :", req.body);
     const { email } = req.body;
+  },
+  getAllUsers: (req, res) => {
+    const db = req.app.get("db");
+    db.users.get_allUsers().then(data => res.status(200).send(data));
   }
 };

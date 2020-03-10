@@ -32,9 +32,10 @@ massive(CONNECTION_STRING).then(db => {
 //ENDPOINTS
 //auth endpoints
 app.post("/api/register", authCtrl.register);
-app.post('/api/login', authCtrl.login);
+app.post("/api/login", authCtrl.login);
 app.post("/api/logout", authCtrl.logout);
 app.post("/api/email", authCtrl.email);
+app.get("/api/getAllUsers", authCtrl.getAllUsers);
 
 //task endpoints
 app.post("/api/createTask", taskCtrl.createTask);
@@ -46,3 +47,4 @@ app.delete("/api/deleteTask/:user_id", taskCtrl.deleteTask);
 
 //project endpoints
 app.get("/api/getProjects/:user_id", projectCtrl.getAllProjects);
+app.post("/api/createProject/:user_id", projectCtrl.createProject);
