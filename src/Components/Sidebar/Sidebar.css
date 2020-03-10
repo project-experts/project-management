@@ -1,5 +1,5 @@
 .show_side_bar{
-    height: 90vh;
+    height: 83.5vh;
     width: 15%;
     background-color: red;
     border-top-right-radius: 20px;
@@ -39,8 +39,8 @@
 }
 #profile_img{
     height: 125px;
-    width: 125px;
+    width: 65%;
     background-color: gray;
-    border-radius: 75px;
+    border-radius: 50%;
     margin-bottom: 50px;
 }
