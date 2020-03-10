@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { userLoggedIn } from '../../redux/reducers/userReducer'
-import { loginClicked } from '../../redux/reducers/loginReducer'
+import { loginClicked} from '../../redux/reducers/loginReducer'
 import { registerClicked } from '../../redux/reducers/registerReducer'
 import Modal from 'react-modal'
 import axios from 'axios'
@@ -66,7 +66,7 @@ export class Landing extends Component {
       console.log('Line 66 ', email, password)
       axios.post('/api/login', { email, password })
       .then(res => {
-         this.props.userLoggedIn(res.data)
+          this.props.userLoggedIn(res.data)
          this.props.history.push('/dashboard')
       })
       .catch(err => console.log(err)); 
@@ -113,7 +113,7 @@ export class Landing extends Component {
 function mapStateToProps(state) {
    return {
       isLoginClicked: state.loginReducer.isLoginClicked,
-      isRegClicked: state.registerReducer.isRegClicked
+      isRegClicked: state.registerReducer.isRegClicked,
    }
 }
 
