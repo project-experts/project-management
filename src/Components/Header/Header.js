@@ -29,8 +29,8 @@ class Header extends Component {
          <StyledNav  >
          <span>Contact us</span>
          <span>Meet with the team</span>
-         <div><IoMdLogIn size={20} onClick={() => this.props.loginClicked(9)} ></IoMdLogIn></div>
-         <div><FiUserCheck size={20} onClick={() => this.props.registerClicked(8)} ></FiUserCheck></div>
+         <div><IoMdLogIn size={20} onClick={() => this.props.loginClicked(true)} ></IoMdLogIn></div>
+         <div><FiUserCheck size={20} onClick={() => this.props.registerClicked(true)} ></FiUserCheck></div>
          </StyledNav>
    </div>
    ) 

@@ -7,15 +7,25 @@ module.exports = {
   register: async (req, res) => {
     const db = req.app.get("db");
     const { first_name, last_name, email, password, profile_image } = req.body;
+<<<<<<< HEAD
     const result = await db.users.get_user(email);
     if (result[0]) {
       return res.status(409).send("User already registered.");
     }
     console.log("result :", result);
+=======
+    console.log(first_name, last_name, email, password, profile_image)
+   //  const result = await db.users.get_user(email);
+   //  if (result[0]) {
+   //    return res.status(409).send("Email already registered.");
+   //  }
+   //  console.log("result :", result[0]);
+>>>>>>> master
     const salt = bcrypt.genSaltSync(10);
     console.log("password :", password);
     console.log("username :", email);
     const hash = bcrypt.hashSync(password, salt);
+    console.log('Hash is: ', hash)
     const user = await db.users.register_user([
       first_name,
       last_name,
@@ -29,36 +39,11 @@ module.exports = {
     }
     req.session.user = user[0];
     res.status(200).send(req.session.user);
-  },
 
-  login: async (req, res) => {
-    const db = req.app.get("db");
-    const { email, password } = req.body;
-    const result = await db.users.get_user(email);
-    const user = result[0];
-    if (!user) {
-      return res.status(401).send("User not found.");
-    }
-    const isAuthenticated = bcrypt.compareSync(password, user.hash);
-    if (!isAuthenticated) {
-      return res.status(403).send("Incorrect password.");
-    }
-    delete user.hash;
-    req.session.user = user;
-    console.log("this is user :", user);
-    res.status(200).send(req.session.user);
-  },
-  logout: (req, res) => {
-    req.session.destroy();
-    res.sendStatus(200);
-  },
-  email: async (req, res) => {
-    console.log("req.body :", req.body);
-    const { email } = req.body;
+    //Nodemailer 
     let message = "Thank you for registering your account!";
     let image =
       "https://i.kym-cdn.com/entries/icons/mobile/000/005/608/nyan-cat-01-625x450.jpg";
-
     try {
       let transporter = nodemailer.createTransport({
         service: "gmail",
@@ -101,5 +86,35 @@ module.exports = {
       console.log(err);
       res.sendStatus(500);
     }
+
+  },
+
+  login: async (req, res) => {
+    const db = req.app.get("db");
+    const { email, password } = req.body;
+    const result = await db.users.get_user(email);
+    const user = result[0];
+    if (!user) {
+      return res.status(401).send("User not found.");
+    }
+    const isAuthenticated = bcrypt.compareSync(password, user.hash);
+    if (!isAuthenticated) {
+      return res.status(403).send("Incorrect password.");
+    }
+    delete user.hash;
+    req.session.user = user;
+    console.log("this is user :", user);
+    res.status(200).send(req.session.user);
+  },
+  logout: (req, res) => {
+    req.session.destroy();
+    res.sendStatus(200);
+  },
+  email: async (req, res) => {
+    console.log("req.body :", req.body);
+    const { email } = req.body;
+    
+
+   
   }
 };
