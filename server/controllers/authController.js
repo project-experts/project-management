@@ -7,20 +7,12 @@ module.exports = {
   register: async (req, res) => {
     const db = req.app.get("db");
     const { first_name, last_name, email, password, profile_image } = req.body;
-<<<<<<< HEAD
-    const result = await db.users.get_user(email);
-    if (result[0]) {
-      return res.status(409).send("User already registered.");
-    }
-    console.log("result :", result);
-=======
     console.log(first_name, last_name, email, password, profile_image)
    //  const result = await db.users.get_user(email);
    //  if (result[0]) {
    //    return res.status(409).send("Email already registered.");
    //  }
    //  console.log("result :", result[0]);
->>>>>>> master
     const salt = bcrypt.genSaltSync(10);
     console.log("password :", password);
     console.log("username :", email);
@@ -92,6 +84,7 @@ module.exports = {
   login: async (req, res) => {
     const db = req.app.get("db");
     const { email, password } = req.body;
+    console.log(req.body)
     const result = await db.users.get_user(email);
     const user = result[0];
     if (!user) {
