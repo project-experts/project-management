@@ -22,8 +22,8 @@ const loginStyle = {
 
 const regStyle = {
    content : {
-     width: '450px', 
-     height: '450px', 
+     width: '350px', 
+     height: '350px', 
      margin: 'auto',
      display: 'flex', 
      flexDirection: 'column',
@@ -37,8 +37,11 @@ export class Landing extends Component {
       super(); 
 
       this.state = {
+         first_name: '', 
+         last_name: '',
          email: '', 
          password: '',
+         profile_image: '',
          isPassword: false,
       }
    }
@@ -50,6 +53,10 @@ export class Landing extends Component {
 
    register = () => {
       this.closeRegisterModal(); 
+      const { first_name, last_name, email, password, profile_image } = this.state; 
+      axios.post('/api/register', { first_name, last_name, email, password, profile_image })
+      .then(res => this.props.userLoggedIn(res.data))
+      .catch(err => console.log(err)); 
    }
 
 
@@ -61,8 +68,8 @@ export class Landing extends Component {
       .catch(err => console.log(err)); 
    }
    render() {
-      const { email, password, isPassword } = this.state; 
-      console.log(this.props)
+      const { first_name, last_name, email, password, profile_image, isPassword } = this.state; 
+      console.log(this.state)
       return (
          <div className='landing' >
             <Modal
@@ -86,8 +93,12 @@ export class Landing extends Component {
             style={regStyle}
             contentLabel="Example Modal">
             <p style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '80%'}} >Please register </p>
+            <input className='input' placeholder='Enter your first name' name='first_name' value={first_name} onChange={e => this.handleEvent(e)} />
+            <input className='input' placeholder='Enter your last name' name='last_name' value={last_name} onChange={e => this.handleEvent(e)} />
             <input className='input' placeholder='Enter your email' name='email' value={email} onChange={e => this.handleEvent(e)} />
-            <input className='input' placeholder='Enter your email' name='email' value={email} onChange={e => this.handleEvent(e)} />
+            <button className='btn' >Validate your email </button>
+            <input className='input' placeholder='Choose your password' name='password' value={password} onChange={e => this.handleEvent(e)} />
+            <input className='input' type='file' placeholder='Upload photo' name='profile_image' value={profile_image} onChange={e => this.handleEvent(e)} />
             <button className='btn' onClick={this.register} >Register</button>
             </Modal>
          </div>
