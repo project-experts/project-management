@@ -7,7 +7,7 @@ module.exports = {
   register: async (req, res) => {
     const db = req.app.get("db");
     const { first_name, last_name, email, password, profile_image } = req.body;
-    const result = await db.get_user(email);
+    const result = await db.users.get_user(email);
     if (result[0]) {
       return res.status(409).send("User already registered.");
     }
