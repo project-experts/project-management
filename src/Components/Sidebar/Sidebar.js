@@ -17,24 +17,21 @@ export class Sidebar extends Component {
       }
    }
 
-   // const user = {
-   //    firstName: 'Rico',
-   //    lastName: 'Hancock'
+   // componentDidMount(){
+   //    this.setState({
+   //       userFirst : [this.props.user.first_name]  
+   //     })
    // }
-
-   // let firstInit = user.firstName[0]
-   // let firstInit2 = user.firstName.split('').splice(0, 1).join('')
+    
 
     render() {
       
-      this.setState({
-        userFirst : [this.props.user.first_name]  
-      })
-
+       
+console.log(this.props)
       return (
          
             <div className={this.props.toggleSideBar ? 'show_side_bar' : 'hide_side_bar'}>
-               <div id='profile_img'>{this.state.userFirst[0][0]} </div>
+               <div id='profile_img'>{this.state.userFirst[0]} </div>
                <div className='sidebar_links'>Personal Dashboard</div>
                <div className='sidebar_links'>Personal Stats Chart</div>
                <div className='sidebar_links'>Projects List</div>
