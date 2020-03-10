@@ -14,7 +14,6 @@ create table projects(
   user_id int references users(user_id),
   project_name varchar(100),
   project_description text,
-  team_mates int [],
   deadline date
 );
 
@@ -26,5 +25,14 @@ create table tasks(
   task_name varchar(100),
   task_description text,
   deadline date,
-  status varchar(20)
+  priority varchar (30),
+  status varchar(20),
+  owner int
+);
+
+
+CREATE TABLE project_junc (
+    project_junc_id SERIAL PRIMARY KEY,
+    project_id INT REFERENCES projects(project_id),
+    user_id INT REFERENCES users(user_id)
 );

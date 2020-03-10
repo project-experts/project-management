@@ -1,4 +1,4 @@
-import  LOGIN_CLICKED  from './actionTypes'
+import  {LOGIN_CLICKED}  from './actionTypes'
 
 
 const initialStore = {
@@ -17,7 +17,7 @@ export const loginClicked = bool => {
 export default function loginReducer (state=initialStore, action) {
    const { type, payload } = action; 
    switch(type) {
-      case LOGIN_CLICKED : return {isLoginClicked: payload }
+      case LOGIN_CLICKED : return {isLoginClicked: payload };
       default: return state; 
    }
 }
