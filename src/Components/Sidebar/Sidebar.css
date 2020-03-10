@@ -1,6 +1,6 @@
 .show_side_bar{
     height: 83.5vh;
-    width: 15%;
+    width: 20%;
     background-color: red;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
@@ -25,17 +25,17 @@
  
 @keyframes open {
     from {width: 0%;}
-    to {width: 15%;}
+    to {width: 200px;}
 }
 
 @keyframes close {
-    from {width: 15%;}
+    from {width: 200px;}
     to {width: 0%;}
 }
 .sidebar_links{
     height: 50px;
     width: 100%;
-    background-color:;
+    
 }
 #profile_img{
     height: 125px;
