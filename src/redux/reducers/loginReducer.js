@@ -2,7 +2,7 @@ import  {LOGIN_CLICKED}  from './actionTypes'
 
 
 const initialStore = {
-   isLoginClicked: false 
+   isLoginClicked: false,
 }
 
 
