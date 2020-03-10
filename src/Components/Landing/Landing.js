@@ -63,13 +63,16 @@ export class Landing extends Component {
    login = () => {
       const { email, password } = this.state; 
       this.closeLoginModal(); 
-      axios.get('/api/login', { email, password })
-      .then(res => this.userLoggedIn(res.data))
+      console.log('Line 66 ', email, password)
+      axios.post('/api/login', { email, password })
+      .then(res => {
+         this.props.userLoggedIn(res.data)
+         this.props.history.push('/dashboard')
+      })
       .catch(err => console.log(err)); 
    }
    render() {
       const { first_name, last_name, email, password, profile_image, isPassword } = this.state; 
-      console.log(this.state)
       return (
          <div className='landing' >
             <Modal
