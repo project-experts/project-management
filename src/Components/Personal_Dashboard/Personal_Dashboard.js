@@ -12,7 +12,6 @@ export class Personal_Dashboard extends Component {
    render() {
       return (
          <div className='personal_dashboard'>
-             
             <div className='task_filler'>
                <div className='task_container'>
                   <div  className='tasks'>
