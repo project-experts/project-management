@@ -1,8 +1,2 @@
-drop table if exists newProjects ;
-
-create table newProjects 
-as (select project_id,user_id, project_name, project_description,team_mates,deadline, unnest(team_mates) as teammate from projects);
-
-select n.project_id, n.user_id, n.project_name, n.project_description,n.team_mates,n.deadline, users.profile_image from newProjects n
-join users on users.user_id = n.user_id
-where teammate = $1;
+select p.project_id, p.user_id as teamlead, p.project_name, p.project_description, p.deadline, j.user_id as teammate from projects p
+join project_junc j on p.project_id = j.project_id
