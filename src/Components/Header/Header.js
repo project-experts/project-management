@@ -26,6 +26,9 @@ class Header extends Component {
       <div className="header">
          <GiHamburgerMenu size={17} style={{color: 'black'}}  onClick={() => this.props.sidebarToggle(!this.props.toggleSideBar)}></GiHamburgerMenu>
          <img src={logo} style={{width: '30px', height: '30px'}} />
+         <div class="input-field col s6">
+            <input placeholder="Search" id="first_name" type="text" class="validate"/>
+         </div>
          <StyledNav  >
          <span>Contact us</span>
          <span>Meet with the team</span>
