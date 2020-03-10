@@ -32,7 +32,7 @@ massive(CONNECTION_STRING).then(db => {
 //ENDPOINTS
 //auth endpoints
 app.post("/api/register", authCtrl.register);
-app.post("/api/login", authCtrl.login);
+app.post('/api/login', authCtrl.login);
 app.post("/api/logout", authCtrl.logout);
 app.post("/api/email", authCtrl.email);
 

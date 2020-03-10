@@ -8,13 +8,30 @@ import { AiOutlineLogout } from 'react-icons/ai'
 
 
 export class Sidebar extends Component {
-    render() {
-      console.log(this.props.user)
+   constructor(){
+      super()
 
+      this.state = {
+         userFirst: [],
+         userLast: []
+      }
+   }
+
+   // componentDidMount(){
+   //    this.setState({
+   //       userFirst : [this.props.user.first_name]  
+   //     })
+   // }
+    
+
+    render() {
+      
+       
+console.log(this.props)
       return (
          
             <div className={this.props.toggleSideBar ? 'show_side_bar' : 'hide_side_bar'}>
-               <div id='profile_img'> </div>
+               <div id='profile_img'>{this.state.userFirst[0]} </div>
                <div className='sidebar_links'>Personal Dashboard</div>
                <div className='sidebar_links'>Personal Stats Chart</div>
                <div className='sidebar_links'>Projects List</div>
