@@ -1,9 +1,9 @@
 module.exports = {
   createProject: (req, res) => {
     const db = req.app.get("db");
-    const user_id = req.session.user.user_id;
+    const { user_id } = req.params;
     const { project_name, project_description, deadline } = req.body;
-    db.tasks
+    db.projects
       .create_project(user_id, project_name, project_description, deadline)
       .then(() => res.sendStatus(200));
   },
