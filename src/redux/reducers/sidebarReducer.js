@@ -1,5 +1,5 @@
 const initialState = {
-    toggleSideBar: true
+    toggleSideBar: false
 }
 
 const SIDEBAR_TOGGLE = 'SIDEBAR_TOGGLE'
