@@ -1,26 +1,42 @@
 .show_side_bar{
-    height: 83.5vh;
-    width: 20%;
+    left: 0px;
+    height: auto;
+    width: 200px;
     background-color: red;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
-    animation: open .5s ease-in;
     display: flex;
     justify-content: initial;
     flex-direction: column;
     align-items: center;
-    padding-top: 50px;
+    padding: 50px 0;
+    transition: all .5s ease;
+    overflow: hidden;
     
 }
- 
 .hide_side_bar{
     height: 90vh;
     width: 0px;
     background-color: red;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
-    animation: close .5s ease-out;
-    
+    padding: 50px 0;
+    overflow: hidden;
+    transition: all .5s ease;
+}
+#profile_img_container{
+    display: flex;
+    height: 165px;
+    width: 200px;
+    justify-content: center;
+}
+#logout_container{
+    height: 30px;
+    width: 200px;
+}
+#logout{
+    height: 30px;
+    width: 30px;
 }
  
 @keyframes open {
@@ -34,12 +50,12 @@
 }
 .sidebar_links{
     height: 50px;
-    width: 100%;
+    width: 200px;
     
 }
 #profile_img{
     height: 125px;
-    width: 65%;
+    width: 125px;
     background-color: gray;
     border-radius: 50%;
     margin-bottom: 50px;
