@@ -30,7 +30,6 @@ create table tasks(
   owner int
 );
 
-
 CREATE TABLE project_junc (
     project_junc_id SERIAL PRIMARY KEY,
     project_id INT REFERENCES projects(project_id),

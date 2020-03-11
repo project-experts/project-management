@@ -47,4 +47,4 @@ app.delete("/api/deleteTask/:user_id", taskCtrl.deleteTask);
 
 //project endpoints
 app.get("/api/getProjects/:user_id", projectCtrl.getAllProjects);
-app.post("/api/createProject/:user_id", projectCtrl.createProject);
+app.post("/api/createProject", projectCtrl.createProject);

@@ -1,5 +1,97 @@
 
 
-.new_porject{
+.new-project{
+   width: calc(100% - 200px);
+   height: auto;
+   background-color: slateblue;
+   display: flex;
+   flex-direction: row;
+   justify-content: flex-start;
+   padding: 30px;
+}
+
+.project{
+   height: 80vh;
+   width: 70%;
+   background-color: white;
+   border-radius: 10px;
+   padding: 30px;
+   box-sizing: border-box;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+}
+
+.project-name-input{
+   width: 80%;
+   height: 15vh;
+   position: sticky;
+   top: 0px;
+   padding-left: 15px;
+   font-size: 50px;
+   background: transparent;
+   border: none;
+   border-bottom: 1px solid #000000;
+}
+
+.btn_and_heads{
+   width: 80%;
+   display: flex;
+   flex-direction: row;
+   justify-content: flex-start;
+   margin-left: 65px;
+}
+.project-button1{
+   width: 80%;
+   height: 40px;
+}
+
+.assigned-members{
+   display: inline;
+   max-width: 80%;
+   margin: 0;
+   padding: 0;
+}
+
+.assigned-members img:hover{
+   transform: scale(2);
+   cursor: pointer;
+}
+
+.project-button2{
+   width: 80%;
+   height: 40px;
+}
+.right-box{
+   width: 25%;
+   height: 80vh;
+   background-color: white;
+   border-radius: 10px;
+   margin-left: 30px;
+   overflow: hidden;
+   overflow-y: scroll;
+}
+
+.search-box{
+   width: 100%;
+   height: 5vh;
+   position: sticky;
+   top: 0px;
+   padding-left: 15px;
+   font-size: 20px;
+   /* background: transparent; */
+   border: none;
+   border-bottom: 1px solid #000000;
+}
+.one-line {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   margin-left: 10%;
+}
+.each-row:hover{
+   border-radius: 10px;
+   background-color: green;
+   cursor: pointer;
    margin: auto;
 }
