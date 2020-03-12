@@ -4,7 +4,9 @@
     background-color: white;
     display: flex;
     justify-content: center;
-    transition: all .5s
+    transition: all .5s;
+    overflow-y: scroll;
+
 }
 
 .open{
