@@ -1,12 +1,15 @@
 .projects{
    height: auto;
-   width: 100%;
+   width: calc(100% - 200px);
    display: flex;
    flex-direction: row;
    justify-content: flex-start;
    align-items: flex-start;
    flex-wrap: wrap;
-   margin: 40px;
+   /* margin-left: 40px; */
+}
+.open {
+   width: 100%
 }
 .idea {
    background-color: #929292;
