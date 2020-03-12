@@ -62,5 +62,12 @@ module.exports = {
     db.tasks.delete_task(Number(task_id)).then(() => {
       db.tasks.delete_task(Number(task_id)).then(data => res.sendStatus(200));
     });
+  },
+  getAllTeammates: (req, res) => {
+    const db = req.app.get("db");
+    const { project_id } = req.params;
+    db.tasks
+      .get_allTeam_perProject(project_id)
+      .then(data => res.status(200).send(data));
   }
 };

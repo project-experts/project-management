@@ -44,7 +44,7 @@ app.get("/api/getInProgressTasks/:user_id", taskCtrl.getInProgressTasks);
 app.get("/api/getReviewTasks/:user_id", taskCtrl.getReviewTasks);
 app.get("/api/getDoneTasks/:user_id", taskCtrl.getDoneTasks);
 app.delete("/api/deleteTask/:user_id", taskCtrl.deleteTask);
-
+app.get("/api/getAllTeammates/:project_id", taskCtrl.getAllTeammates);
 //project endpoints
 app.get("/api/getProjects/:user_id", projectCtrl.getAllProjects);
 app.post("/api/createProject", projectCtrl.createProject);
