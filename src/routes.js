@@ -14,7 +14,7 @@ export default(
       <Route path='/dashboard' component={Personal_Dashboard} />
       <Route path='/personal_state' component={Personal_Stats} />
       <Route path='/projects' component={Project_List} />
-      <Route path='/single' component={Single_Project} />
+      <Route path='/single/:user_id' component={Single_Project} />
       <Route path='/newProject/:user_id' component={NewProjectForm} />
    </Switch>
 )

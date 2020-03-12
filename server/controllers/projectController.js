@@ -18,7 +18,7 @@ module.exports = {
   getAllProjects: (req, res) => {
     const db = req.app.get("db");
     const { user_id } = req.params;
-    console.log("user_id :", user_id);
+    console.log("Getting project by id :", user_id);
     db.projects
       .get_allProjects_singleUser(user_id)
       .then(data => res.status(200).send(data));
