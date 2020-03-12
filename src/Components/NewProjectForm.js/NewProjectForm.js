@@ -4,6 +4,8 @@ import "react-datepicker/dist/react-datepicker.css"
 import Modal from 'react-modal'
 import './NewProjectForm.css'
 import axios from 'axios'
+import {sidebarToggle} from '../../redux/reducers/sidebarReducer'
+import {connect} from 'react-redux'
 
 
 const customStyles = {
@@ -97,7 +99,7 @@ export class NewProjectForm extends Component {
       var sorted = this.state.assignedMembers.filter(val => val = val.user_id)
       console.log(sorted)
       return (
-         <div className='new-project'>
+         <div className={this.props.toggleSideBar ? 'new-project' : 'new-project open'}>
             <Modal
             isOpen={modalIsOpen}
             onRequestClose={this.closeModal}
@@ -143,5 +145,9 @@ export class NewProjectForm extends Component {
    }
 }
 
-export default NewProjectForm
-
+function mapStateToProps(state) {
+   return {
+      toggleSideBar: state.sidebarReducer.toggleSideBar,
+   }
+}
+export default connect(mapStateToProps, { sidebarToggle })(NewProjectForm);
