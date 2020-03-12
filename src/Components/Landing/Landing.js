@@ -42,7 +42,7 @@ export class Landing extends Component {
          email: '', 
          password: '',
          profile_image: '',
-         isPassword: false,
+         isPassword: true,
       }
    }
 
