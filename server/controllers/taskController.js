@@ -28,31 +28,30 @@ module.exports = {
 
   getToDoTasks: (req, res) => {
     const db = req.app.get("db");
-    const { user_id } = req.params;
-    console.log("user_id :", user_id);
+    const { owner } = req.params;
     db.tasks
-      .get_allTasks_singleUser_todo(user_id)
+      .get_allTasks_singleUser_todo(owner)
       .then(data => res.status(200).send(data));
   },
 
   getInProgressTasks: (req, res) => {
     const db = req.app.get("db");
-    const { user_id } = req.params;
+    const { owner } = req.params;
     db.tasks
-      .get_allTasks_singleUser_inProgress(user_id)
+      .get_allTasks_singleUser_inProgress(owner)
       .then(data => res.status(200).send(data));
   },
 
   getReviewTasks: (req, res) => {
     const db = req.app.get("db");
-    const { user_id } = req.params;
+    const { owner } = req.params;
     db.tasks
-      .get_allTasks_singleUser_review(user_id)
+      .get_allTasks_singleUser_review(owner)
       .then(data => res.status(200).send(data));
   },
   getDoneTasks: (req, res) => {
     const db = req.app.get("db");
-    const { user_id } = req.params;
+    const { owner } = req.params;
     db.tasks
       .get_allTasks_singleUser_done(user_id)
       .then(data => res.status(200).send(data));

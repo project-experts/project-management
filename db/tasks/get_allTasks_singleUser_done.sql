@@ -1,2 +1,2 @@
 SELECT * FROM tasks
-WHERE user_id = $1 AND status = 'done';
+WHERE owner = $1 AND status = 'done';
