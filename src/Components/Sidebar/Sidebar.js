@@ -16,13 +16,15 @@ export class Sidebar extends Component {
       this.state = {
          userFirst: '',
          userLast: '',
+         userImg: ''
       }
    }
 componentDidUpdate(prev){
    if(prev !== this.props && this.props.user){
       this.setState({
          userFirst: this.props.user.first_name,
-         userLast: this.props.user.last_name
+         userLast: this.props.user.last_name,
+         userImg: this.props.user.profile_image
       })
    }
 }
@@ -34,10 +36,12 @@ handleLogout = () => {
    })
 }
     render() {
+       console.log(this.state)
+       console.log(this.props)
       return (
             <div className={this.props.toggleSideBar ? 'show_side_bar' : 'hide_side_bar'}>
                <div id='profile_img_container'> 
-               <div id='profile_img'>{this.state.userFirst} </div> 
+               <img id='profile_img' src={this.state.userImg}/> 
                </div>
 
                <div onClick={() => this.props.history.push('/dashboard')}className='sidebar_links'>Personal Dashboard</div>
