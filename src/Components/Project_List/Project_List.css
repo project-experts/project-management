@@ -1,12 +1,17 @@
 .projects{
    height: auto;
-   width: 100%;
+   width: calc(100% - 200px);
    display: flex;
    flex-direction: row;
    justify-content: flex-start;
    align-items: flex-start;
    flex-wrap: wrap;
-   margin: 40px;
+   overflow-y: scroll;
+   transition: all .5s
+   /* margin-left: 40px; */
+}
+.open {
+   width: 100%
 }
 .idea {
    background-color: #929292;
@@ -30,5 +35,6 @@
    opacity: 80%;
    cursor: pointer;
 }
+ 
 
 
