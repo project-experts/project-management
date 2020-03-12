@@ -22,6 +22,10 @@ export class Personal_Dashboard extends Component {
                <div className='task_container'>
                   <div  className='tasks'>
                      <div id='task_name'>To Do</div>
+                     <div className='task'>hello</div>
+                     <div className='task'>hello</div>  
+                     <div className='task'>hello</div>  
+
                   </div>
                   <div className='tasks'>
                      <div id='task_name'>In Progress</div>
