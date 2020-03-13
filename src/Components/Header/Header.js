@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from 'styled-components'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import { loginClicked } from '../../redux/reducers/loginReducer'
 import { registerClicked } from '../../redux/reducers/registerReducer'
 import { sidebarToggle } from '../../redux/reducers/sidebarReducer'
@@ -13,8 +14,8 @@ import {userLoggedIn} from '../../redux/reducers/userReducer'
 
 
 class Header extends Component {
-   constructor(){
-     super()
+   constructor(props){
+     super(props)
 
      this.state = {
        
@@ -29,7 +30,7 @@ class Header extends Component {
       {!this.props.user.first_name  ?  (
          <div className="header">
          <div></div>
-         <img src={logo} style={{width: '30px', height: '30px'}} />
+         <img src={logo} style={{width: '30px', height: '30px', cursor: 'pointer'}} onClick={() => this.props.history.push('/')} />
          <div class="input-field col s6">
             <input placeholder="Search" id="first_name" type="text" class="validate"/>
          </div>
@@ -45,7 +46,7 @@ class Header extends Component {
       ) : ( 
          <div className="header">
          <GiHamburgerMenu size={17} style={{color: 'black'}}  onClick={() => this.props.sidebarToggle(!this.props.toggleSideBar)}></GiHamburgerMenu>
-         <img src={logo} style={{width: '30px', height: '30px'}} />
+         <img src={logo} style={{width: '30px', height: '30px', cursor: 'pointer'}} onClick={() => this.props.history.push('/')} />
          <div class="input-field col s6">
             <input placeholder="Search" id="first_name" type="text" class="validate"/>
          </div>
@@ -70,7 +71,7 @@ function mapStateToProps(state) {
       user: state.userReducer.user
    }
 }
-export default connect(mapStateToProps, { loginClicked, registerClicked, sidebarToggle, userLoggedIn })(Header);
+export default connect(mapStateToProps, { loginClicked, registerClicked, sidebarToggle, userLoggedIn })(withRouter(Header));
 
 const StyledNav = styled.nav`
    width: 50%;
