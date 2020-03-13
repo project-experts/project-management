@@ -4,12 +4,14 @@ import {connect} from 'react-redux'
 import DatePicker from "react-datepicker"
 import Modal from 'react-modal'
 import { sidebarToggle } from '../../redux/reducers/sidebarReducer'
+import { IoMdAdd } from 'react-icons/io'
+import axios from 'axios'
 
 
 const todoStyle = {
    content : {
-     width: '350px', 
-     height: '350px', 
+     width: '450px', 
+     height: '450px', 
      margin: 'auto',
      display: 'flex', 
      flexDirection: 'column',
@@ -26,22 +28,52 @@ export class Single_Project extends Component {
          name: '',
          task_description: '',
          deadline: '',
-         priority: '',
-         owner: '',
+         priority: 'High',
+         owner: 'df',
          isModalOpen: false,
          startDate: new Date(), 
+         teammates: [],
       }
    }
 
+   componentDidMount(){
+      if (this.props.match.params.project_id){
+         this.getTeamMates(); 
+      }
+   }
+   getTeamMates(){
+      axios.get(`/api/getAllTeammates/${this.props.match.params.project_id}`)
+      .then(res => this.setState({teammates: res.data }))
+      .catch(err => console.log(err))
+   }
+   handleEvent = e => this.setState({[e.target.name]: e.target.value })
+   handleDate = selectedDate => this.setState({startDate: selectedDate})
+   selectUserId = userID => this.setState({owner: userID})
    openModal = (id, firstName, lastName) => {
       this.setState({isModalOpen: true, selectedUser_id: id, firstName: firstName, lastName: lastName});
    }
    closeModal = () => this.setState({isModalOpen: false, name: '', task_description: ''})
    
+   submitTask = () => {
+      this.closeModal(); 
+      const { name, task_description, startDate, owner } = this.state; 
+      let dd = startDate.getDate(); 
+      let mm = startDate.getMonth() + 1; 
+      let yyyy = startDate.getFullYear(); 
+      let formattedDate = mm + '/' + dd + '/' + yyyy; 
+      const body = {
+         project_id: this.props.match.params.project_id,
+         user_id: this.props.userReducer.user_id,
+         task_name: name, 
+         task_description, 
+         deadline: formattedDate,
+         owner: owner
+      }
+      console.log('Line 70: ', body)
+   }
  
    render() {
-      const { name, task_description, deadline, priority, owner, startDate, isModalOpen } = this.state; 
-      console.log(this.props)
+      const { name, task_description, teammates, startDate, isModalOpen, owner } = this.state; 
       return (
          <div className={this.props.toggleSideBar ? 'personal_dashboard' : 'personal_dashboard open'}>
             <Modal
@@ -49,17 +81,32 @@ export class Single_Project extends Component {
             style={todoStyle}
             contentLabel="Example Modal">
             <p style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '80%'}} > Create new task </p>
-            <input className='input' placeholder='Task name' name='first_name' value={name} onChange={e => this.handleEvent(e)} />
-            <input className='input' placeholder='Task description' name='last_name' value={task_description} onChange={e => this.handleEvent(e)} />
-            <DatePicker  selected={startDate} onChange={this.handleDate}/>
-            <button className='btn' onClick={this.closeModal} >Cancel</button>
-            <button className='btn' onClick={this.submitTask} >Submit</button>
+            <input className='input' placeholder='Task name' name='name' value={name} onChange={e => this.handleEvent(e)} />
+            <textarea className='input' placeholder='Task description' name='task_description' value={task_description} onChange={e => this.handleEvent(e)} style={{height: '10vh'}} />
+            <select onClick={} >
+               <option value='High' >High</option>
+               <option value='Medium' >Medium</option>
+               <option value='Low' >Low</option>
+            </select>
+            <p>Deadline: <DatePicker  selected={startDate} onChange={this.handleDate}/></p>
+            <select  onChange={e => this.selectUserId(e.target.value)}  >
+               {teammates.map(teammate => (
+                  <option value={teammate.user_id} key={teammate.user_id}> {teammate.first_name} {teammate.last_name} </option>
+               ))}
+            </select>
+            <div style={{display: 'flex'}} >
+               <button className='btn' onClick={this.closeModal} >Cancel</button>
+               <button className='btn' onClick={this.submitTask} >Submit</button>
+            </div>
             </Modal>
             <div className='task_filler'>
                <div className='task_container'>
                   <div  className='tasks'>
                      <div id='task_name'>To Do</div>
-                     <button onClick={() => this.openModal()} >add</button>
+                     <IoMdAdd onClick={() => this.openModal()} size={50} style={{cursor: 'pointer'}} ></IoMdAdd>
+                     <div className='task'>hello</div>
+                     <div className='task'>hello</div>  
+                     <div className='task'>hello</div>  
                   </div>
                   <div className='tasks'>
                      <div id='task_name'>In Progress</div>
@@ -80,6 +127,7 @@ export class Single_Project extends Component {
 function mapStateToProps(state) {
    return {
       toggleSideBar: state.sidebarReducer.toggleSideBar,
+      userReducer: state.userReducer.user
    }
 }
 export default connect(mapStateToProps, { sidebarToggle })(Single_Project);
