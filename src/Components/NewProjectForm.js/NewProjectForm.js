@@ -74,12 +74,13 @@ export class NewProjectForm extends Component {
       let mm = startDate.getMonth() + 1; 
       let yyyy = startDate.getFullYear(); 
       let formattedDate = mm + '/' + dd + '/' + yyyy; 
+      let teammates = assignedMembers.map(member => member.user_id)
       var body = {
          user_id: this.props.match.params.user_id,
          project_name, 
          project_description, 
          deadline: formattedDate, 
-         teammates: assignedMembers.map(member => member.user_id)
+         teammates: [...teammates, this.props.match.params.user_id]
       }
       axios.post('/api/createProject', body)
       .then(res => {
