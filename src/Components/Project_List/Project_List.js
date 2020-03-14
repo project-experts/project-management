@@ -32,8 +32,8 @@ export class Project_List extends Component {
                   <div className={this.props.toggleSideBar ? 'projects' : 'projects open'}>
                      <div className='idea'><FaPlus onClick={() => this.props.history.push(`/newProject/${this.props.user.user_id}`)} size={80} style={{margin: 'auto', color: 'green'}}></FaPlus></div>
                         {projects.map(idea => 
-                           <div className='idea'>
-                              <div key={idea.id}> Project: {idea.project_name} </div>
+                           <div className='idea' onClick={() => this.props.history.push(`/single/${idea.project_id}`)} >
+                              <div key={idea.project_id}> Project: {idea.project_name} </div>
                               <div > {idea.project_description} </div>
                               <div > Deadline: {idea.deadline} </div>
                               <div > Teams: {idea.teams} </div>

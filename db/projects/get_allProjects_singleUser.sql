@@ -2,3 +2,4 @@ select p.project_id, p.user_id as teamlead, p.project_name, p.project_descriptio
 join project_junc j on p.project_id = j.project_id
 join users u on j.user_id = u.user_id
 where j.user_id = $1
+order by project_id desc;
