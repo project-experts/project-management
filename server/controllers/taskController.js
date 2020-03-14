@@ -53,7 +53,7 @@ module.exports = {
     const db = req.app.get("db");
     const { owner } = req.params;
     db.tasks
-      .get_allTasks_singleUser_done(user_id)
+      .get_allTasks_singleUser_done(owner)
       .then(data => res.status(200).send(data));
   },
   deleteTask: (req, res) => {
