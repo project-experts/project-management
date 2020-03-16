@@ -28,32 +28,33 @@ module.exports = {
 
   getToDoTasks: (req, res) => {
     const db = req.app.get("db");
-    const { owner } = req.params;
+    const { user_id } = req.params;
+    console.log("asd", req.params);
     db.tasks
-      .get_allTasks_singleUser_todo(owner)
-      .then(data => res.status(200).send(data));
+      .get_allTasks_singleUser_todo(user_id)
+      .then(data => console.log("data :", data) || res.status(200).send(data));
   },
 
   getInProgressTasks: (req, res) => {
     const db = req.app.get("db");
-    const { owner } = req.params;
+    const { user_id } = req.params;
     db.tasks
-      .get_allTasks_singleUser_inProgress(owner)
+      .get_allTasks_singleUser_inProgress(user_id)
       .then(data => res.status(200).send(data));
   },
 
   getReviewTasks: (req, res) => {
     const db = req.app.get("db");
-    const { owner } = req.params;
+    const { user_id } = req.params;
     db.tasks
-      .get_allTasks_singleUser_review(owner)
+      .get_allTasks_singleUser_review(user_id)
       .then(data => res.status(200).send(data));
   },
   getDoneTasks: (req, res) => {
     const db = req.app.get("db");
-    const { owner } = req.params;
+    const { user_id } = req.params;
     db.tasks
-      .get_allTasks_singleUser_done(owner)
+      .get_allTasks_singleUser_done(user_id)
       .then(data => res.status(200).send(data));
   },
   deleteTask: (req, res) => {
@@ -66,8 +67,37 @@ module.exports = {
   getAllTeammates: async (req, res) => {
     const db = req.app.get("db");
     const { project_id } = req.params;
-    console.log('task ctrl line 69 ', project_id)
-    await db.tasks.get_allTeam_perProject(project_id)
-    .then(response => res.status(200).send(response))
+    console.log("task ctrl line 69 ", project_id);
+    await db.tasks
+      .get_allTeam_perProject(project_id)
+      .then(response => res.status(200).send(response));
+  },
+  updateTaskInProgress: (req, res) => {
+    const db = req.app.get("db");
+    const { task_id } = req.params;
+    db.tasks
+      .update_task_to_inProgress(task_id)
+      .then(data => res.status(200).send(data));
+  },
+  updateTaskReview: (req, res) => {
+    const db = req.app.get("db");
+    const { task_id } = req.params;
+    db.tasks
+      .update_task_to_review(task_id)
+      .then(data => res.status(200).send(data));
+  },
+  updateTaskDone: (req, res) => {
+    const db = req.app.get("db");
+    const { task_id } = req.params;
+    db.tasks
+      .update_task_to_done(task_id)
+      .then(data => res.status(200).send(data));
+  },
+  updateTaskToDo: (req, res) => {
+    const db = req.app.get("db");
+    const { task_id } = req.params;
+    db.tasks
+      .update_task_to_todo(task_id)
+      .then(data => res.status(200).send(data));
   }
 };
