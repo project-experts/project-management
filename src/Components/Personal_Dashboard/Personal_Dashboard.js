@@ -3,7 +3,6 @@ import "./Personal_Dashboard.css";
 import { connect } from "react-redux";
 import { sidebarToggle } from "../../redux/reducers/sidebarReducer";
 import axios from "axios";
-import ReactDOM from "react-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 // a little function to help us with reordering the result
