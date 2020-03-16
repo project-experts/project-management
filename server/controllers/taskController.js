@@ -1,10 +1,12 @@
 module.exports = {
   createTask: (req, res) => {
     const db = req.app.get("db");
-    const user_id = req.session.user.user_id;
+   //  const user_id = req.session.user.user_id;
     console.log("req.session.user :", req.session.user);
+    console.log('body is ', req.body)
     const {
       project_id,
+      user_id,
       task_name,
       task_description,
       deadline,
@@ -69,5 +71,13 @@ module.exports = {
     console.log('task ctrl line 69 ', project_id)
     await db.tasks.get_allTeam_perProject(project_id)
     .then(response => res.status(200).send(response))
+  }, 
+  getAllTasksSingleProject: async(req, res) => {
+     const db = req.app.get('db'); 
+     const { project_id } = req.params; 
+     console.log('project_id: ', project_id)
+     await db.tasks.get_all_tasks_single_project(project_id)
+     .then(response => res.status(200).send(response))
+     .catch(err => res.status(500).send(err))
   }
 };

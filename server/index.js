@@ -40,6 +40,7 @@ app.get("/api/getAllUsers", authCtrl.getAllUsers);
 //task endpoints
 app.post("/api/createTask", taskCtrl.createTask);
 app.get("/api/getToDoTasks/:user_id", taskCtrl.getToDoTasks);
+app.get('/api/getALlTasksSingleProject/:project_id', taskCtrl.getAllTasksSingleProject);
 app.get("/api/getInProgressTasks/:user_id", taskCtrl.getInProgressTasks);
 app.get("/api/getReviewTasks/:user_id", taskCtrl.getReviewTasks);
 app.get("/api/getDoneTasks/:user_id", taskCtrl.getDoneTasks);
