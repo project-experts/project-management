@@ -8,151 +8,112 @@ import { IoMdAdd } from "react-icons/io";
 import axios from "axios";
 
 const todoStyle = {
-   content : {
-     width: '450px', 
-     height: '450px', 
-     margin: 'auto',
-     display: 'flex', 
-     flexDirection: 'column',
-     justifyContent: 'space-between',
-     alignItems: 'center',
-   }
- };
+  content: {
+    width: "450px",
+    height: "450px",
+    margin: "auto",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center"
+  }
+};
 
 export class Single_Project extends Component {
   constructor() {
     super();
 
-//     this.state = {
-//       name: "",
-//       task_description: "",
-//       deadline: "",
-//       priority: "High",
-//       owner: "df",
-//       isModalOpen: false,
-//       startDate: new Date(),
-//       teammates: []
-//     };
-//   }
+    this.state = {
+      name: "",
+      task_description: "",
+      deadline: "",
+      priority: "",
+      owner: 0,
+      isModalOpen: false,
+      startDate: new Date(),
+      alltasks: [],  
+      teammates: [],
+    };
+  }
 
-//   componentDidMount() {
-//     if (this.props.match.params.project_id) {
-//       this.getTeamMates();
-//     }
-//   }
-//   getTeamMates() {
-//     axios
-//       .get(`/api/getAllTeammates/${this.props.match.params.project_id}`)
-//       .then(res => this.setState({ teammates: res.data }))
-//       .catch(err => console.log(err));
-//   }
-//   handleEvent = e => this.setState({ [e.target.name]: e.target.value });
-//   handleDate = selectedDate => this.setState({ startDate: selectedDate });
-//   selectUserId = userID => this.setState({ owner: userID });
-//   openModal = (id, firstName, lastName) => {
-//     this.setState({
-//       isModalOpen: true,
-//       selectedUser_id: id,
-//       firstName: firstName,
-//       lastName: lastName
-//     });
-//   };
-//   closeModal = () =>
-//     this.setState({ isModalOpen: false, name: "", task_description: "" });
+  componentDidMount() {
+    if (this.props.match.params.project_id) {
+      this.getTeamMates();
+      this.getAllTasks();
+    }
+  }
 
-      this.state = {
-         name: '',
-         task_description: '',
-         deadline: '',
-         priority: '',
-         owner: 0,
-         isModalOpen: false,
-         startDate: new Date(), 
-         teammates: [],
-         alltasks: [],
+  getTeamMates() {
+    axios.get(`/api/getAllTeammates/${this.props.match.params.project_id}`)
+         .then(res => this.setState({ teammates: res.data }))
+         .catch(err => console.log(err));
+  }
+  getAllTasks() {
+    axios.get(`/api/getALlTasksSingleProject/${this.props.match.params.project_id}`)
+         .then(res => this.setState({teammates: res.data }))
       }
-   }
+  handleEvent = e => this.setState({ [e.target.name]: e.target.value });
+  handleDate = selectedDate => this.setState({ startDate: selectedDate });
+  handlePriority = e => this.setState({ priority: e.target.value });
+  selectUserId = userID => this.setState({ owner: userID });
 
-   componentDidMount(){
-      if (this.props.match.params.project_id){
-         this.getTeamMates(); 
-         this.getAllTasks(); 
-      }
-   }
-   getTeamMates(){
-      axios.get(`/api/getAllTeammates/${this.props.match.params.project_id}`)
-      .then(res => this.setState({teammates: res.data }))
-      .catch(err => console.log(err))
-   }
-   getAllTasks(){
-      console.log(this.props.match.params.project_id)
-      axios.get(`/api/getALlTasksSingleProject/${this.props.match.params.project_id}`)
-      .then(res => this.setState({alltasks: res.data}))
-   }
-   handleEvent = e => this.setState({[e.target.name]: e.target.value })
-   handleDate = selectedDate => this.setState({ startDate: selectedDate})
-   handlePriority = e => this.setState({ priority: e.target.value })
-   selectUserId = userID => this.setState({ owner: userID })
-   openModal = (id, firstName, lastName) => this.setState({isModalOpen: true, selectedUser_id: id, firstName: firstName, lastName: lastName});
-   closeModal = () => this.setState({isModalOpen: false, name: '', task_description: ''})
-   
-   submitTask = () => {
-      this.closeModal(); 
-      const { name, task_description, startDate, owner, priority } = this.state; 
-      let dd = startDate.getDate(); 
-      let mm = startDate.getMonth() + 1; 
-      let yyyy = startDate.getFullYear(); 
-      let formattedDate = mm + '/' + dd + '/' + yyyy; 
-      const body = {
-         project_id: this.props.match.params.project_id,
-         user_id: this.props.userReducer.user_id,
-         task_name: name, 
-         task_description, 
-         deadline: formattedDate,
-         priority, 
-         status: 'todo',
-         owner: owner
-      }
-      axios.post('/api/createTask', body)
-      .then(res => {
-         this.getAllTasks(); 
-         this.setState({
-            name: '',
-            task_description: '',
-            deadline: '',
-            priority: '',
-            owner: 0,
-         })
-      })
-   }
+  openModal = (id, firstName, lastName) =>
+    this.setState({
+      isModalOpen: true,
+      selectedUser_id: id,
+      firstName: firstName,
+      lastName: lastName
+    });
+  closeModal = () => this.setState({ isModalOpen: false, name: "", task_description: "" });
+ 
+  submitTask = () => {
+    this.closeModal();
+    const { name, task_description, startDate, owner, priority } = this.state;
+    let dd = startDate.getDate();
+    let mm = startDate.getMonth() + 1;
+    let yyyy = startDate.getFullYear();
+    let formattedDate = mm + "/" + dd + "/" + yyyy;
+    const body = {
+      project_id: this.props.match.params.project_id,
+      user_id: this.props.userReducer.user_id,
+      task_name: name,
+      task_description,
+      deadline: formattedDate,
+      priority,
+      status: "to do",
+      owner: owner
+    };
+    axios.post("/api/createTask", body).then(res => {
+      this.getAllTasks();
+      this.setState({
+        name: "",
+        task_description: "",
+        deadline: "",
+        priority: "",
+        owner: 0
+      });
+    });
+  };
 
-
+  pushToProgress = task_id => {
+   axios.put(`/api/updateTaskToInProgress/${task_id}`)
+   .then(res => this.getAllTasks())
+   .catch(err => console.log(err))
+  }
+  pushToCompleted = task_id => {
+   axios.put(`/api/updateTaskToDone/${task_id}`)
+   .then(res => this.getAllTasks())
+   .catch(err => console.log(err))
+  }
+  
  
    render() {
-      const { name, task_description, teammates, startDate, isModalOpen, priority, alltasks } = this.state;
-      let todos = [];  
-      let inprogress = [];  
-      let review = [];  
-      let completed = [];  
-      const separator = () => {
-         const { alltasks } = this.state; 
-         if (alltasks.length>0){
-            alltasks.map(t => {
-               if (t.status === 'to do'){
-                  todos.push(t)
-               }
-               else if (t.status === 'in progress'){
-                  inprogress.push(t)
-               }
-               else if (t.status === 'completed'){
-                  completed.push(t)
-               }
-               else if (t.status === 'review'){
-                  review.push(t)
-               }
-            })
-         }
-      }
+      const { name, task_description, teammates, startDate, isModalOpen, priority } = this.state;
+      const todos = teammates.filter(t => t.status === 'to do'); 
+      const inprogress = teammates.filter(t => t.status === 'in progress'); 
+      const review = teammates.filter(t => t.status === 'review'); 
+      const completed = teammates.filter(t => t.status === 'done'); 
+
       return (
          <div className={this.props.toggleSideBar ? 'personal_dashboard' : 'personal_dashboard open'}>
             <Modal
@@ -190,7 +151,7 @@ export class Single_Project extends Component {
                   <div className='tasks'>
                   <div id='task_name'>To Do</div>
                   <div> <IoMdAdd onClick={() => this.openModal()} size={50} className='plus-sign'></IoMdAdd></div>
-                     {todos.map(task => (
+                     {todos.length>0 && todos.map(task => (
                         <div className='task' key={task.task_id} >
                            <div>{task.task_name}</div>
                            <div>{task.task_description}</div>
@@ -199,20 +160,50 @@ export class Single_Project extends Component {
                            <div>{task.status}</div>
                         </div>
                      ))}
-                    
                   </div>
                   <div className='tasks'>
                      <div id='task_name'>In Progress</div>
+                     {inprogress.length>0 && inprogress.map(task => (
+                        <div className='task' key={task.task_id} >
+                           <div>{task.task_name}</div>
+                           <div>{task.task_description}</div>
+                           <div>{task.deadline.slice(0, 10)}</div>
+                           <div>{task.priority}</div>
+                           <div>{task.status}</div>
+                        </div>
+                     ))}
                   </div> 
                   <div className='tasks'>
                      <div id='task_name'>In Review</div>
+                     {review.length>0 && review.map(task => (
+                        <div className='task' key={task.task_id} >
+                           <div>{task.task_name}</div>
+                           <div>{task.task_description}</div>
+                           <div>{task.deadline.slice(0, 10)}</div>
+                           <div>{task.priority}</div>
+                           <div>{task.status}</div>
+                           <div> 
+                              <button onClick={() => this.pushToProgress(task.task_id)} >Did not pass</button> 
+                              <button onClick={() => this.pushToCompleted(task.task_id)} >Did not pass</button> 
+                           </div>
+                        </div>
+                     ))}
                   </div>
                   <div className='tasks'>
                      <div id='task_name'>Complete</div>
+                     {completed.length>0 && completed.map(task => (
+                        <div className='task' key={task.task_id} >
+                           <div>{task.task_name}</div>
+                           <div>{task.task_description}</div>
+                           <div>{task.deadline.slice(0, 10)}</div>
+                           <div>{task.priority}</div>
+                           <div>{task.status}</div>
+                        </div>
+                     ))}
                   </div>
                </div>
             </div>
-          </div>   
+          </div>
     );
   }
 }

@@ -3,7 +3,6 @@ import "./Personal_Dashboard.css";
 import { connect } from "react-redux";
 import { sidebarToggle } from "../../redux/reducers/sidebarReducer";
 import axios from "axios";
-import ReactDOM from "react-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 // a little function to help us with reordering the result
@@ -70,14 +69,15 @@ const move = (
     });
   };
 
-  const updateTaskToDone = () => {
-    axios.put(`/api/updateTaskToDone/${removed.task_id}`).then(res => {
-      setState({
-        [sourceId]: sourceClone,
-        [destId]: destClone
-      });
-    });
-  };
+  // const updateTaskToDone = () => {
+  //   axios.put(`/api/updateTaskToDone/${removed.task_id}`).then(res => {
+  //     setState({
+  //       [sourceId]: sourceClone,
+  //       [destId]: destClone
+  //     });
+  //   });
+  // };
+
   if (droppableDestination.droppableId === "droppable2") {
     updateTaskInProgress();
   } else if (droppableDestination.droppableId === "droppable3") {
@@ -329,6 +329,10 @@ class Personal_Dashboard extends Component {
                 </div>
               )}
             </Droppable>
+          </div>
+          <div>
+            <div>Done</div>
+            <div>fdjhgkjslrdfhg;zor</div>
           </div>
         </DragDropContext>
       </div>
