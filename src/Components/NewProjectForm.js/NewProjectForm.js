@@ -134,8 +134,7 @@ export class NewProjectForm extends Component {
                {filteredUsers.map(user =>
                   <div key={user.user_id} className='each-row'> 
                      <p className='one-line' onClick={() => this.openModal(user.user_id, user.first_name, user.last_name)}>
-                     <img src={user.profile_image} width='40' style={{height: '40px', borderRadius: '50%', marginRight: '10%'}} />
-                    
+                     <img src={user.profile_image} width='40' style={{height: '40px', borderRadius: '50%', marginRight: '10%'}} /> 
                      <h2> {user.first_name} {user.last_name} </h2>
                      </p>
                   </div>)} 
