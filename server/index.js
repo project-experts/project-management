@@ -39,13 +39,22 @@ app.get("/api/getAllUsers", authCtrl.getAllUsers);
 
 //task endpoints
 app.post("/api/createTask", taskCtrl.createTask);
+app.delete("/api/deleteTask/:user_id", taskCtrl.deleteTask);
+app.get("/api/getAllTeammates/:project_id", taskCtrl.getAllTeammates);
+
+//personal Dashboard - get all tasks
 app.get("/api/getToDoTasks/:user_id", taskCtrl.getToDoTasks);
 app.get('/api/getALlTasksSingleProject/:project_id', taskCtrl.getAllTasksSingleProject);
 app.get("/api/getInProgressTasks/:user_id", taskCtrl.getInProgressTasks);
 app.get("/api/getReviewTasks/:user_id", taskCtrl.getReviewTasks);
 app.get("/api/getDoneTasks/:user_id", taskCtrl.getDoneTasks);
-app.delete("/api/deleteTask/:user_id", taskCtrl.deleteTask);
-app.get("/api/getAllTeammates/:project_id", taskCtrl.getAllTeammates);
+
+// personal dashboard - update tasks status
+app.put("/api/updateTaskToReview/:task_id", taskCtrl.updateTaskReview);
+app.put("/api/updateTaskToDone/:task_id", taskCtrl.updateTaskDone);
+app.put("/api/updateTaskToDo/:task_id", taskCtrl.updateTaskToDo);
+app.put("/api/updateTaskToInProgress/:task_id", taskCtrl.updateTaskInProgress);
+
 //project endpoints
 app.get("/api/getProjects/:user_id", projectCtrl.getAllProjects);
 app.post("/api/createProject", projectCtrl.createProject);

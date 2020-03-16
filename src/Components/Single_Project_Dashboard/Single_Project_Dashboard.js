@@ -1,12 +1,11 @@
-import React, { Component } from 'react'
-import './Single_Project_Dashboard.css'
-import {connect} from 'react-redux'
-import DatePicker from "react-datepicker"
-import Modal from 'react-modal'
-import { sidebarToggle } from '../../redux/reducers/sidebarReducer'
-import { IoMdAdd } from 'react-icons/io'
-import axios from 'axios'
-
+import React, { Component } from "react";
+import "./Single_Project_Dashboard.css";
+import { connect } from "react-redux";
+import DatePicker from "react-datepicker";
+import Modal from "react-modal";
+import { sidebarToggle } from "../../redux/reducers/sidebarReducer";
+import { IoMdAdd } from "react-icons/io";
+import axios from "axios";
 
 const todoStyle = {
    content : {
@@ -21,8 +20,45 @@ const todoStyle = {
  };
 
 export class Single_Project extends Component {
-   constructor(){
-      super()
+  constructor() {
+    super();
+
+//     this.state = {
+//       name: "",
+//       task_description: "",
+//       deadline: "",
+//       priority: "High",
+//       owner: "df",
+//       isModalOpen: false,
+//       startDate: new Date(),
+//       teammates: []
+//     };
+//   }
+
+//   componentDidMount() {
+//     if (this.props.match.params.project_id) {
+//       this.getTeamMates();
+//     }
+//   }
+//   getTeamMates() {
+//     axios
+//       .get(`/api/getAllTeammates/${this.props.match.params.project_id}`)
+//       .then(res => this.setState({ teammates: res.data }))
+//       .catch(err => console.log(err));
+//   }
+//   handleEvent = e => this.setState({ [e.target.name]: e.target.value });
+//   handleDate = selectedDate => this.setState({ startDate: selectedDate });
+//   selectUserId = userID => this.setState({ owner: userID });
+//   openModal = (id, firstName, lastName) => {
+//     this.setState({
+//       isModalOpen: true,
+//       selectedUser_id: id,
+//       firstName: firstName,
+//       lastName: lastName
+//     });
+//   };
+//   closeModal = () =>
+//     this.setState({ isModalOpen: false, name: "", task_description: "" });
 
       this.state = {
          name: '',
@@ -78,7 +114,16 @@ export class Single_Project extends Component {
          owner: owner
       }
       axios.post('/api/createTask', body)
-      // .then(res => )
+      .then(res => {
+         this.getAllTasks(); 
+         this.setState({
+            name: '',
+            task_description: '',
+            deadline: '',
+            priority: '',
+            owner: 0,
+         })
+      })
    }
  
    render() {
@@ -143,15 +188,15 @@ export class Single_Project extends Component {
                   </div>
                </div>
             </div>
-         </div>
-      )
-   }
+          </div>   
+    );
+  }
 }
 
 function mapStateToProps(state) {
-   return {
-      toggleSideBar: state.sidebarReducer.toggleSideBar,
-      userReducer: state.userReducer.user
-   }
+  return {
+    toggleSideBar: state.sidebarReducer.toggleSideBar,
+    userReducer: state.userReducer.user
+  };
 }
 export default connect(mapStateToProps, { sidebarToggle })(Single_Project);

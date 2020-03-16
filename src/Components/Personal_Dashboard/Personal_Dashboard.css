@@ -1,64 +1,72 @@
-.personal_dashboard{
-    height: 90vh;
-    width: calc(100% - 200px);
-    background-color: white;
-    display: flex;
-    justify-content: center;
-    transition: all .5s;
-     
+.personal_dashboard {
+  height: 90vh;
+  width: calc(100vw - 200px);
+  background-color: gray;
+  display: flex;
+  justify-content: center;
+  transition: all 0.5s;
+  justify-content: space-evenly;
+}
 
+/* 
+.open {
+  width: 100%;
 }
-.open{
-    width: 100%;
+.task_filler {
+  height: 90vh;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  background-color: white;
+  justify-content: center;
+  align-items: center;
 }
-.task_filler{
-    height: 90vh;
-    width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-    background-color: white;
-    justify-content: center;
-    align-items: center;
+.task_container {
+  height: 95%;
+  width: 100%;
+  background-color: white;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
-.task_container{
-    height: 95%;
-    width: 100%;
-    background-color: white;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+.tasks {
+  height: 95%;
+  width: 22%;
+  background-color: lightblue;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
 }
-.tasks{
-    height: 95%;
-    width: 22%;
-    background-color: lightblue;
-    border-radius: 25px;
-    display: flex;
-    flex-direction: column;
+.task_holder {
+  height: auto;
+  width: 100%;
+  overflow: hidden;
+  overflow-y: scroll;
+  border-radius: 5px 5px 25px 25px;
 }
-.task_holder{
-    height:auto;
-    width: 100%;
-    overflow: hidden;
-    overflow-y: scroll;
-    border-radius: 5px 5px 25px 25px;
+.task {
+  min-height: 150px;
+  background-color: red;
+  margin: 0px 10px 8px 10px;
+  border-radius: 5px;
 }
-.task{
-    min-height: 150px;
-    background-color: red;
-    margin: 0px 10px 8px 10px;
-    border-radius: 5px;
+::-webkit-scrollbar {
+  width: 0;
 }
-::-webkit-scrollbar{
-    width: 0;
-}
-#task_name{
-    position: sticky;
-    top: 0px;
-    height: 8%;
-    width: 100%;
-    background-color: transparent;
-    font-size: 20px;
-    text-align: left ;
-    padding: 10px;
-}
+#task_name {
+  position: sticky;
+  top: 0px;
+  height: 8%;
+  width: 100%;
+  background-color: transparent;
+  font-size: 20px;
+  text-align: left;
+  padding: 10px;
+} */
+
+/* <style>
+      #root {
+        display: flex;
+        justify-content: space-evenly;
+      }
+    </style> */
