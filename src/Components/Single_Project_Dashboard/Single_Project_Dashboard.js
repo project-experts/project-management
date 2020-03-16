@@ -125,10 +125,34 @@ export class Single_Project extends Component {
          })
       })
    }
+
+
  
    render() {
-      const { name, task_description, teammates, startDate, isModalOpen, priority, alltasks } = this.state; 
-      console.log(alltasks)
+      const { name, task_description, teammates, startDate, isModalOpen, priority, alltasks } = this.state;
+      let todos = [];  
+      let inprogress = [];  
+      let review = [];  
+      let completed = [];  
+      const separator = () => {
+         const { alltasks } = this.state; 
+         if (alltasks.length>0){
+            alltasks.map(t => {
+               if (t.status === 'to do'){
+                  todos.push(t)
+               }
+               else if (t.status === 'in progress'){
+                  inprogress.push(t)
+               }
+               else if (t.status === 'completed'){
+                  completed.push(t)
+               }
+               else if (t.status === 'review'){
+                  review.push(t)
+               }
+            })
+         }
+      }
       return (
          <div className={this.props.toggleSideBar ? 'personal_dashboard' : 'personal_dashboard open'}>
             <Modal
@@ -166,7 +190,7 @@ export class Single_Project extends Component {
                   <div className='tasks'>
                   <div id='task_name'>To Do</div>
                   <div> <IoMdAdd onClick={() => this.openModal()} size={50} className='plus-sign'></IoMdAdd></div>
-                     {alltasks.map(task => (
+                     {todos.map(task => (
                         <div className='task' key={task.task_id} >
                            <div>{task.task_name}</div>
                            <div>{task.task_description}</div>
