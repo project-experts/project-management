@@ -70,14 +70,15 @@ const move = (
     });
   };
 
-  const updateTaskToDone = () => {
-    axios.put(`/api/updateTaskToDone/${removed.task_id}`).then(res => {
-      setState({
-        [sourceId]: sourceClone,
-        [destId]: destClone
-      });
-    });
-  };
+  // const updateTaskToDone = () => {
+  //   axios.put(`/api/updateTaskToDone/${removed.task_id}`).then(res => {
+  //     setState({
+  //       [sourceId]: sourceClone,
+  //       [destId]: destClone
+  //     });
+  //   });
+  // };
+
   if (droppableDestination.droppableId === "droppable2") {
     updateTaskInProgress();
   } else if (droppableDestination.droppableId === "droppable3") {
@@ -329,6 +330,10 @@ class Personal_Dashboard extends Component {
                 </div>
               )}
             </Droppable>
+          </div>
+          <div>
+            <div>Done</div>
+            <div>fdjhgkjslrdfhg;zor</div>
           </div>
         </DragDropContext>
       </div>
