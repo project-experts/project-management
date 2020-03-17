@@ -29,23 +29,27 @@ class Single_Project_Stats extends Component{
     render(){
         return(
             <div className={this.props.toggleSideBar ? 'Single_Project_Stats' : 'Single_Project_Stats open'}>
-                <div className='chart_container'> 
-                <Bar
-                    data={this.state.chartData}
-                    height={300}
-                    width={300}
-                    options={{   
-                    }}
-                    />
+               <div className='chart_container'> 
+                    <div className='chart_box'>
+                    <Bar
+                        data={this.state.chartData}
+                        height={100}
+                        width={100}
+                        options={{   
+                        }}
+                        />
+                    </div>
                 </div>
                 <div className='chart_container'> 
-                <Bar
-                    data={this.state.chartData}
-                    height={300}
-                    width={300}
-                    options={{   
-                    }}
-                    />
+                    <div className='chart_box'>
+                    <Bar
+                        data={this.state.chartData}
+                        height={100}
+                        width={100}
+                        options={{   
+                        }}
+                        />
+                    </div>
                 </div>
             </div>
         )

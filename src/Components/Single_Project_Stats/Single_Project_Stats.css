@@ -14,9 +14,13 @@
     width: 100%
 }
 .chart_container{
-    width: 500px;
-    height: 500px;
+    min-width: 500px;
+    min-height: 500px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.chart_box{
+    height: 400px;
+    width: 400px;
 }
