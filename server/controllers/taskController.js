@@ -1,21 +1,8 @@
 module.exports = {
   createTask: (req, res) => {
     const db = req.app.get("db");
-   //  const user_id = req.session.user.user_id;
-    console.log("req.session.user :", req.session.user);
-    console.log('body is ', req.body)
-    const {
-      project_id,
-      user_id,
-      task_name,
-      task_description,
-      deadline,
-      priority,
-      status,
-      owner
-    } = req.body;
-    db.tasks
-      .create_task(
+    const { project_id, user_id, task_name, task_description, deadline, priority, status, owner } = req.body;
+    db.tasks.create_task(
         project_id,
         user_id,
         task_name,
