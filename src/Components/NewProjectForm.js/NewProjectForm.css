@@ -78,6 +78,7 @@
    overflow: hidden;
    overflow-y: scroll;
    margin: 30px;
+   transition: all 1s;
 }
 
 .search-box{
