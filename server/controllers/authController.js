@@ -34,8 +34,7 @@ module.exports = {
 
     //Nodemailer
     let message = "Thank you for registering your account!";
-    let image =
-      "https://i.kym-cdn.com/entries/icons/mobile/000/005/608/nyan-cat-01-625x450.jpg";
+    let image = "https://i.kym-cdn.com/entries/icons/mobile/000/005/608/nyan-cat-01-625x450.jpg";
     try {
       let transporter = nodemailer.createTransport({
         service: "gmail",

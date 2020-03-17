@@ -4,7 +4,7 @@ export class Personal_Stats extends Component {
    render() {
       return (
          <div>
-            
+            dfdf
          </div>
       )
    }
