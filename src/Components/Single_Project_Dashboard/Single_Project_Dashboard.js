@@ -204,7 +204,7 @@ export class Single_Project extends Component {
                </div>
             </div>
           </div>
-    );
+     )
   }
 }
 
