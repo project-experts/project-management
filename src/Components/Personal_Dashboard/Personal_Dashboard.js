@@ -20,8 +20,8 @@ const reorder = (list, startIndex, endIndex) => {
 const id4List = {
   droppable: "tasks",
   droppable2: "inProgress",
-  droppable3: "review",
-  droppable4: "done"
+  droppable3: "review"
+  // droppable4: "done"
 };
 const move = (
   source,
@@ -130,7 +130,7 @@ class Personal_Dashboard extends Component {
     await this.getTasksToDo();
     await this.getTasksInProgress();
     await this.getTasksReview();
-    // await this.getTasksDone();
+    await this.getTasksDone();
   }
 
   getTasksToDo = () => {
@@ -168,7 +168,8 @@ class Personal_Dashboard extends Component {
     axios
       .get(`/api/getDoneTasks/${owner}`)
       .then(res => {
-        this.setState({ tasks: res.data });
+        this.setState({ done: res.data });
+        console.log("res.data :", res.data);
       })
       .catch(err => console.log("err", err));
   };
@@ -247,7 +248,7 @@ class Personal_Dashboard extends Component {
                           <div>{task.task_name}</div>
                           <div>{task.task_description}</div>
                           <div>Priority: {task.priority}</div>
-                          <div>Deadline: {task.deadline}</div>
+                          <div>Deadline: {task.deadline.slice(0, 10)}</div>
                         </div>
                       )}
                     </Draggable>
@@ -284,7 +285,7 @@ class Personal_Dashboard extends Component {
                           <div>{task.task_name}</div>
                           <div>{task.task_description}</div>
                           <div>Priority: {task.priority}</div>
-                          <div>Deadline: {task.deadline}</div>
+                          <div>Deadline: {task.deadline.slice(0, 10)}</div>
                         </div>
                       )}
                     </Draggable>
@@ -321,7 +322,7 @@ class Personal_Dashboard extends Component {
                           <div>{task.task_name}</div>
                           <div>{task.task_description}</div>
                           <div>Priority: {task.priority}</div>
-                          <div>Deadline: {task.deadline}</div>
+                          <div>Deadline: {task.deadline.slice(0, 10)}</div>
                         </div>
                       )}
                     </Draggable>
@@ -333,7 +334,14 @@ class Personal_Dashboard extends Component {
           </div>
           <div>
             <div>Done</div>
-            <div>fdjhgkjslrdfhg;zor</div>
+            {this.state.done.map(task => (
+              <div className="doneList" key={task.task_id}>
+                <div>{task.task_name}</div>
+                <div>{task.task_description}</div>
+                <div>Priority: {task.priority}</div>
+                <div>Deadline:{task.deadline.slice(0, 10)}</div>
+              </div>
+            ))}
           </div>
         </DragDropContext>
       </div>
