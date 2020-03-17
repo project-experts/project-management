@@ -2,7 +2,7 @@
     left: 0px;
     height: auto;
     width: 200px;
-    background-color: red;
+    background-color: rgb(255, 197, 0);
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     display: flex;
@@ -13,11 +13,12 @@
     transition: all .5s ease;
     overflow: hidden;
     
+    
 }
 .hide_side_bar{
     height: 90vh;
     width: 0px;
-    background-color: red;
+    background-color:whitesmoke;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     padding: 50px 0;
