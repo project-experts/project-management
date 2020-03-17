@@ -83,11 +83,11 @@ export class Single_Project extends Component {
             <p style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '80%'}} > Create new task </p>
             <input className='input' placeholder='Task name' name='name' value={name} onChange={e => this.handleEvent(e)} />
             <textarea className='input' placeholder='Task description' name='task_description' value={task_description} onChange={e => this.handleEvent(e)} style={{height: '10vh'}} />
-            <select onClick={} >
+            {/* <select onClick={} >
                <option value='High' >High</option>
                <option value='Medium' >Medium</option>
                <option value='Low' >Low</option>
-            </select>
+            </select> */}
             <p>Deadline: <DatePicker  selected={startDate} onChange={this.handleDate}/></p>
             <select  onChange={e => this.selectUserId(e.target.value)}  >
                {teammates.map(teammate => (

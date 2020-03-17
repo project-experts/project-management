@@ -6,6 +6,7 @@ import Personal_Stats from './Components/Personal_Stats/Personal_Stats';
 import Project_List from './Components/Project_List/Project_List';
 import Single_Project from './Components/Single_Project_Dashboard/Single_Project_Dashboard';
 import NewProjectForm from './Components/NewProjectForm.js/NewProjectForm';
+import Single_Project_Stats from './Components/Single_Project_Stats/Single_Project_Stats'
 
 
 export default(
@@ -16,5 +17,6 @@ export default(
       <Route path='/projects' component={Project_List} />
       <Route path='/single/:project_id' component={Single_Project} />
       <Route path='/newProject/:user_id' component={NewProjectForm} />
+      <Route path='/singleProjectStats' component={Single_Project_Stats}/>
    </Switch>
 )
