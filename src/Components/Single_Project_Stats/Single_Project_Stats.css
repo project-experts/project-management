@@ -1,0 +1,22 @@
+.Single_Project_Stats{
+    height: auto;
+    width: calc(100% - 200px);
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    transition: all .5s;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+.open {
+    width: 100%
+}
+.chart_container{
+    width: 500px;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
