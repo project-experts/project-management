@@ -7,6 +7,7 @@ const { SESSION_SECRET, CONNECTION_STRING, SERVER_PORT } = process.env;
 const authCtrl = require("./controllers/authController");
 const taskCtrl = require("./controllers/taskController");
 const projectCtrl = require("./controllers/projectController");
+const statsCtrl = require("./controllers/statsController");
 
 app.use(express.json());
 
@@ -44,7 +45,10 @@ app.get("/api/getAllTeammates/:project_id", taskCtrl.getAllTeammates);
 
 //personal Dashboard - get all tasks
 app.get("/api/getToDoTasks/:user_id", taskCtrl.getToDoTasks);
-app.get('/api/getALlTasksSingleProject/:project_id', taskCtrl.getAllTasksSingleProject);
+app.get(
+  "/api/getALlTasksSingleProject/:project_id",
+  taskCtrl.getAllTasksSingleProject
+);
 app.get("/api/getInProgressTasks/:user_id", taskCtrl.getInProgressTasks);
 app.get("/api/getReviewTasks/:user_id", taskCtrl.getReviewTasks);
 app.get("/api/getDoneTasks/:user_id", taskCtrl.getDoneTasks);
@@ -58,3 +62,9 @@ app.put("/api/updateTaskToInProgress/:task_id", taskCtrl.updateTaskInProgress);
 //project endpoints
 app.get("/api/getProjects/:user_id", projectCtrl.getAllProjects);
 app.post("/api/createProject", projectCtrl.createProject);
+
+//stats endpoints
+app.get("/api/countTodoTask/:project_id", statsCtrl.countToDoTask);
+app.get("/api/countInProgressTask/:project_id", statsCtrl.countInProgressTask);
+app.get("/api/countReviewTask/:project_id", statsCtrl.countReviewTask);
+app.get("/api/countDoneTask/:project_id", statsCtrl.countDoneTask);
