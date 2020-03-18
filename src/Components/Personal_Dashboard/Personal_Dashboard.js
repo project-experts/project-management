@@ -217,6 +217,21 @@ class Personal_Dashboard extends Component {
   };
 
   render() {
+    const { tasks, inProgress, review, done } = this.state; 
+    let [ searchBy, filTasks, filInProgress, filReview, filDone ] = [ this.props.searchInput ]
+    if (!searchBy){
+      filTasks = tasks; 
+      filInProgress = inProgress; 
+      filReview = review; 
+      filDone = done; 
+   } 
+   else {
+      filTasks = tasks.filter(v => v.task_name.includes(searchBy) || v.task_description.includes(searchBy))
+      filInProgress = inProgress.filter(v => v.task_name.includes(searchBy) || v.task_description.includes(searchBy))
+      filReview = review.filter(v => v.task_name.includes(searchBy) || v.task_description.includes(searchBy))
+      filDone = done.filter(v => v.task_name.includes(searchBy) || v.task_description.includes(searchBy))
+      }
+      
     return (
       <div className="personal_dashboard">
         <DragDropContext onDragEnd={this.onDragEnd}>
@@ -228,7 +243,7 @@ class Personal_Dashboard extends Component {
                   ref={provided.innerRef}
                   style={getListStyle(snapshot.isDraggingOver)}
                 >
-                  {this.state.tasks.map((task, index) => (
+                  {filTasks.map((task, index) => (
                     <Draggable
                       key={task.task_id}
                       draggableId={task.task_id.toString()}
@@ -265,7 +280,7 @@ class Personal_Dashboard extends Component {
                   ref={provided.innerRef}
                   style={getListStyle(snapshot.isDraggingOver)}
                 >
-                  {this.state.inProgress.map((task, index) => (
+                  {filInProgress.map((task, index) => (
                     <Draggable
                       key={task.task_id}
                       draggableId={task.task_id.toString()}
@@ -302,7 +317,7 @@ class Personal_Dashboard extends Component {
                   ref={provided.innerRef}
                   style={getListStyle(snapshot.isDraggingOver)}
                 >
-                  {this.state.review.map((task, index) => (
+                  {filReview.map((task, index) => (
                     <Draggable
                       key={task.task_id}
                       draggableId={task.task_id.toString()}
@@ -333,7 +348,7 @@ class Personal_Dashboard extends Component {
           </div>
           <div>
             <div>Done</div>
-            {this.state.done.map(task => (
+            {filDone.map(task => (
               <div className="doneList" key={task.task_id}>
                 <div>{task.task_name}</div>
                 <div>{task.task_description}</div>
@@ -351,7 +366,8 @@ class Personal_Dashboard extends Component {
 function mapStateToProps(state) {
   return {
     toggleSideBar: state.sidebarReducer.toggleSideBar,
-    user: state.userReducer.user
+    user: state.userReducer.user,
+    searchInput: state.searchReducer.searchInput
   };
 }
 export default connect(mapStateToProps, { sidebarToggle })(Personal_Dashboard);

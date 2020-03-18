@@ -27,11 +27,17 @@ export class Project_List extends Component {
       }
       render() {
          const { projects } = this.state;
-         console.log(this.state.projects) 
+         let filteredProjects; 
+         if (this.props.searchInput){
+            filteredProjects = projects.filter(p => p.project_name.includes(this.props.searchInput) || p.project_description.includes(this.props.searchInput))
+         }
+         else {
+            filteredProjects = projects; 
+         }
          return (
                   <div className={this.props.toggleSideBar ? 'projects' : 'projects open'}>
                      <div className='idea'><FaPlus onClick={() => this.props.history.push(`/newProject/${this.props.user.user_id}`)} size={80} style={{margin: 'auto', color: 'green'}}></FaPlus></div>
-                        {projects.map(idea => 
+                        {filteredProjects.map(idea => 
                            <div className='idea' onClick={() => this.props.history.push(`/single/${idea.project_id}`)} >
                               <div key={idea.project_id}> Project: {idea.project_name} </div>
                               <div > {idea.project_description} </div>
@@ -48,7 +54,8 @@ export class Project_List extends Component {
 function mapStateToProps(state) {
    return {
       user: state.userReducer.user,
-      toggleSideBar: state.sidebarReducer.toggleSideBar
+      toggleSideBar: state.sidebarReducer.toggleSideBar,
+      searchInput: state.searchReducer.searchInput
    }
 }
 
