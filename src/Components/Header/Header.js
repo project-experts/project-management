@@ -5,6 +5,7 @@ import { withRouter } from "react-router-dom";
 import { loginClicked } from "../../redux/reducers/loginReducer";
 import { registerClicked } from "../../redux/reducers/registerReducer";
 import { sidebarToggle } from "../../redux/reducers/sidebarReducer";
+import { filterState } from '../../redux/reducers/searchReducer'
 import { IoMdLogIn } from "react-icons/io";
 import { FiUserCheck } from "react-icons/fi";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -18,6 +19,8 @@ class Header extends Component {
 
     this.state = {};
   }
+
+  handleSearch = v => this.props.filterState(v)
 
   render() {
     console.log(this.props);
@@ -42,6 +45,7 @@ class Header extends Component {
                 id="first_name"
                 type="text"
                 class="validate"
+                onChange={e=>this.handleSearch(e.target.value)}
               />
             </div>
             <StyledNav>
@@ -86,6 +90,7 @@ class Header extends Component {
                 id="first_name"
                 type="text"
                 class="validate"
+                onChange={e=>this.handleSearch(e.target.value)}
               />
             </div>
             <StyledNav>
@@ -123,7 +128,8 @@ export default connect(mapStateToProps, {
   loginClicked,
   registerClicked,
   sidebarToggle,
-  userLoggedIn
+  userLoggedIn,
+  filterState
 })(withRouter(Header));
 
 const StyledNav = styled.nav`
