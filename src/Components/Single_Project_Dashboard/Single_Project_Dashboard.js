@@ -189,7 +189,7 @@ export class Single_Project extends Component {
                            <div>{task.status}</div>
                            <div> 
                               <button onClick={() => this.pushToProgress(task.task_id)} >Did not pass</button> 
-                              <button onClick={() => this.pushToCompleted(task.task_id)} >Did not pass</button> 
+                              <button onClick={() => this.pushToCompleted(task.task_id)} >Passed</button> 
                            </div>
                         </div>
                      ))}
