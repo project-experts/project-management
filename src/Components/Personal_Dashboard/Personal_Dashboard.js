@@ -249,6 +249,28 @@ class Personal_Dashboard extends Component {
       );
     }
 
+    // const getPriorityStyle = () => {
+    //   let classes = [];
+    //   if (task.priority === "high") {
+    //     classes.push("priority_high");
+    //   } else if (task.priority === "medium") {
+    //     classes.push("priority_medium");
+    //   } else if (task.priority === "low") {
+    //     classes.push("priority_low");
+    //   }
+    //   return <div className={classes.join(" ")}></div>;
+    // };
+
+    const getPriorityColor = priority => {
+      if (priority === "high") {
+        return "priority_high";
+      } else if (priority === "medium") {
+        return "priority_medium";
+      } else {
+        return "priority_low";
+      }
+    };
+
     return (
       <div className="personal_dashboard">
         <DragDropContext onDragEnd={this.onDragEnd}>
@@ -280,7 +302,7 @@ class Personal_Dashboard extends Component {
                           <div className="description">
                             {task.task_description}
                           </div>
-                          <div className="priority">
+                          <div className={getPriorityColor(task.priority)}>
                             Priority: {task.priority}
                           </div>
                           <div className="deadline">
@@ -323,7 +345,7 @@ class Personal_Dashboard extends Component {
                           <div className="description">
                             {task.task_description}
                           </div>
-                          <div className="priority">
+                          <div className={getPriorityColor(task.priority)}>
                             Priority: {task.priority}
                           </div>
                           <div className="deadline">
@@ -366,7 +388,7 @@ class Personal_Dashboard extends Component {
                           <div className="description">
                             {task.task_description}
                           </div>
-                          <div className="priority">
+                          <div className={getPriorityColor(task.priority)}>
                             Priority: {task.priority}
                           </div>
                           <div className="deadline">
@@ -387,7 +409,9 @@ class Personal_Dashboard extends Component {
               <div className="doneList" key={task.task_id}>
                 <div>{task.task_name}</div>
                 <div>{task.task_description}</div>
-                <div>Priority: {task.priority}</div>
+                <div className={getPriorityColor(task.priority)}>
+                  Priority: {task.priority}
+                </div>
                 <div>Deadline:{task.deadline.slice(0, 10)}</div>
               </div>
             ))}

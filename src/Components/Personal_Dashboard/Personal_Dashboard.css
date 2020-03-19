@@ -25,6 +25,18 @@
   /* font-weight: bold; */
 }
 
+.priority_high {
+  color: red;
+}
+
+.priority_medium {
+  color: yellow;
+}
+
+.priority_low {
+  color: yellowgreen;
+}
+
 /* 
 .open {
   width: 100%;
