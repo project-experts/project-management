@@ -45,7 +45,7 @@ const {
 app.get('/sign-s3', (req, res) => {
 
   aws.config = {
-    region: 'us-west-1',
+    region: 'us-east-1',
     accessKeyId: AWS_ACCESS_KEY_ID,
     secretAccessKey: AWS_SECRET_ACCESS_KEY
   }
