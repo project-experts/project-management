@@ -16,6 +16,15 @@
   padding: 16px;
 }
 
+.dashboardTitle {
+  padding: 20px;
+  font-size: large;
+  font-weight: bold;
+}
+.title {
+  /* font-weight: bold; */
+}
+
 /* 
 .open {
   width: 100%;
