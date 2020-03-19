@@ -17,6 +17,6 @@ export default(
       <Route path='/projects' component={Project_List} />
       <Route path='/single/:project_id' component={Single_Project} />
       <Route path='/newProject/:user_id' component={NewProjectForm} />
-      <Route path='/singleProjectStats' component={Single_Project_Stats}/>
+      <Route path='/singleProjectStats/:project_id' component={Single_Project_Stats}/>
    </Switch>
 )

@@ -11,7 +11,8 @@ export class Project_List extends Component {
          super(props); 
 
          this.state = {
-            projects: []
+            projects: [],
+            project_id: 0
          }
    }
       componentDidMount(){

@@ -105,6 +105,7 @@ export class Single_Project extends Component {
    .then(res => this.getAllTasks())
    .catch(err => console.log(err))
   }
+   
   
  
    render() {
@@ -148,10 +149,12 @@ export class Single_Project extends Component {
             <div></div>
             </Modal>
             <div className='task_filler'>
+               <div onClick={() => this.props.history.push(`/SingleProjectStats/${this.props.match.params.project_id}`)}>button</div>
                <div className='task_container'>
                   <div className='tasks'>
                   <div id='task_name'>To Do</div>
                   <div> <IoMdAdd onClick={() => this.openModal()} size={50} className='plus-sign'></IoMdAdd></div>
+                     <div className='task_holder'>
                      {todos.length>0 && todos.map(task => (
                         <div className='task' key={task.task_id} >
                            <div>{task.task_name}</div>
@@ -161,6 +164,7 @@ export class Single_Project extends Component {
                            <div>{task.status}</div>
                         </div>
                      ))}
+                     </div>
                   </div>
                   <div className='tasks'>
                      <div id='task_name'>In Progress</div>
