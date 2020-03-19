@@ -101,7 +101,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   margin: `0 0 ${grid}px 0`,
 
   // change background colour if dragging
-  background: isDragging ? "lightgreen" : "grey",
+  background: isDragging ? "lightgreen" : "lightgrey",
 
   // styles we need to apply on draggables
   ...draggableStyle
@@ -217,18 +217,50 @@ class Personal_Dashboard extends Component {
   };
 
   render() {
+    const { tasks, inProgress, review, done } = this.state;
+    let [searchBy, filTasks, filInProgress, filReview, filDone] = [
+      this.props.searchInput
+    ];
+    if (!searchBy) {
+      filTasks = tasks;
+      filInProgress = inProgress;
+      filReview = review;
+      filDone = done;
+    } else {
+      filTasks = tasks.filter(
+        v =>
+          v.task_name.includes(searchBy) ||
+          v.task_description.includes(searchBy)
+      );
+      filInProgress = inProgress.filter(
+        v =>
+          v.task_name.includes(searchBy) ||
+          v.task_description.includes(searchBy)
+      );
+      filReview = review.filter(
+        v =>
+          v.task_name.includes(searchBy) ||
+          v.task_description.includes(searchBy)
+      );
+      filDone = done.filter(
+        v =>
+          v.task_name.includes(searchBy) ||
+          v.task_description.includes(searchBy)
+      );
+    }
+
     return (
       <div className="personal_dashboard">
         <DragDropContext onDragEnd={this.onDragEnd}>
           <div>
-            <div>To Do</div>
+            <div className="dashboardTitle">To Do</div>
             <Droppable droppableId="droppable">
               {(provided, snapshot) => (
                 <div
                   ref={provided.innerRef}
                   style={getListStyle(snapshot.isDraggingOver)}
                 >
-                  {this.state.tasks.map((task, index) => (
+                  {filTasks.map((task, index) => (
                     <Draggable
                       key={task.task_id}
                       draggableId={task.task_id.toString()}
@@ -244,10 +276,16 @@ class Personal_Dashboard extends Component {
                             provided.draggableProps.style
                           )}
                         >
-                          <div>{task.task_name}</div>
-                          <div>{task.task_description}</div>
-                          <div>Priority: {task.priority}</div>
-                          <div>Deadline: {task.deadline.slice(0, 10)}</div>
+                          <div className="title">{task.task_name}</div>
+                          <div className="description">
+                            {task.task_description}
+                          </div>
+                          <div className="priority">
+                            Priority: {task.priority}
+                          </div>
+                          <div className="deadline">
+                            Deadline: {task.deadline.slice(0, 10)}
+                          </div>
                         </div>
                       )}
                     </Draggable>
@@ -258,14 +296,14 @@ class Personal_Dashboard extends Component {
             </Droppable>
           </div>
           <div>
-            <div>In Progress</div>
+            <div className="dashboardTitle">In Progress</div>
             <Droppable droppableId="droppable2">
               {(provided, snapshot) => (
                 <div
                   ref={provided.innerRef}
                   style={getListStyle(snapshot.isDraggingOver)}
                 >
-                  {this.state.inProgress.map((task, index) => (
+                  {filInProgress.map((task, index) => (
                     <Draggable
                       key={task.task_id}
                       draggableId={task.task_id.toString()}
@@ -281,10 +319,16 @@ class Personal_Dashboard extends Component {
                             provided.draggableProps.style
                           )}
                         >
-                          <div>{task.task_name}</div>
-                          <div>{task.task_description}</div>
-                          <div>Priority: {task.priority}</div>
-                          <div>Deadline: {task.deadline.slice(0, 10)}</div>
+                          <div className="title">{task.task_name}</div>
+                          <div className="description">
+                            {task.task_description}
+                          </div>
+                          <div className="priority">
+                            Priority: {task.priority}
+                          </div>
+                          <div className="deadline">
+                            Deadline: {task.deadline.slice(0, 10)}
+                          </div>
                         </div>
                       )}
                     </Draggable>
@@ -295,14 +339,14 @@ class Personal_Dashboard extends Component {
             </Droppable>
           </div>
           <div>
-            <div>In Review</div>
+            <div className="dashboardTitle">In Review</div>
             <Droppable droppableId="droppable3">
               {(provided, snapshot) => (
                 <div
                   ref={provided.innerRef}
                   style={getListStyle(snapshot.isDraggingOver)}
                 >
-                  {this.state.review.map((task, index) => (
+                  {filReview.map((task, index) => (
                     <Draggable
                       key={task.task_id}
                       draggableId={task.task_id.toString()}
@@ -318,10 +362,16 @@ class Personal_Dashboard extends Component {
                             provided.draggableProps.style
                           )}
                         >
-                          <div>{task.task_name}</div>
-                          <div>{task.task_description}</div>
-                          <div>Priority: {task.priority}</div>
-                          <div>Deadline: {task.deadline.slice(0, 10)}</div>
+                          <div className="title">{task.task_name}</div>
+                          <div className="description">
+                            {task.task_description}
+                          </div>
+                          <div className="priority">
+                            Priority: {task.priority}
+                          </div>
+                          <div className="deadline">
+                            Deadline: {task.deadline.slice(0, 10)}
+                          </div>
                         </div>
                       )}
                     </Draggable>
@@ -332,8 +382,8 @@ class Personal_Dashboard extends Component {
             </Droppable>
           </div>
           <div>
-            <div>Done</div>
-            {this.state.done.map(task => (
+            <div className="dashboardTitle">Done</div>
+            {filDone.map(task => (
               <div className="doneList" key={task.task_id}>
                 <div>{task.task_name}</div>
                 <div>{task.task_description}</div>
@@ -351,7 +401,8 @@ class Personal_Dashboard extends Component {
 function mapStateToProps(state) {
   return {
     toggleSideBar: state.sidebarReducer.toggleSideBar,
-    user: state.userReducer.user
+    user: state.userReducer.user,
+    searchInput: state.searchReducer.searchInput
   };
 }
 export default connect(mapStateToProps, { sidebarToggle })(Personal_Dashboard);

@@ -109,12 +109,12 @@ export class Single_Project extends Component {
   
  
    render() {
+      
       const { name, task_description, teammates, startDate, isModalOpen, priority } = this.state;
-      const todos = teammates.filter(t => t.status === 'to do'); 
-      const inprogress = teammates.filter(t => t.status === 'in progress'); 
-      const review = teammates.filter(t => t.status === 'review'); 
-      const completed = teammates.filter(t => t.status === 'done'); 
-      console.log(this.props)
+      const todos = teammates.filter(t => t.status === 'to do' && (t.task_name.includes(this.props.searchInput) || t.task_description.includes(this.props.searchInput))); 
+      const inprogress = teammates.filter(t => t.status === 'in progress' && (t.task_name.includes(this.props.searchInput) || t.task_description.includes(this.props.searchInput))); 
+      const review = teammates.filter(t => t.status === 'review' && (t.task_name.includes(this.props.searchInput) || t.task_description.includes(this.props.searchInput))); 
+      const completed = teammates.filter(t => t.status === 'done' && (t.task_name.includes(this.props.searchInput) || t.task_description.includes(this.props.searchInput))); 
 
       return (
          <div className={this.props.toggleSideBar ? 'personal_dashboard' : 'personal_dashboard open'}>
@@ -209,14 +209,15 @@ export class Single_Project extends Component {
                </div>
             </div>
           </div>
-    );
+     )
   }
 }
 
 function mapStateToProps(state) {
   return {
     toggleSideBar: state.sidebarReducer.toggleSideBar,
-    userReducer: state.userReducer.user
+    userReducer: state.userReducer.user,
+    searchInput: state.searchReducer.searchInput
   };
 }
 export default connect(mapStateToProps, { sidebarToggle })(Single_Project);
