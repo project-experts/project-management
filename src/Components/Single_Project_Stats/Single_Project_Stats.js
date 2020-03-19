@@ -3,6 +3,7 @@ import {Bar} from 'react-chartjs-2'
 import { sidebarToggle } from '../../redux/reducers/sidebarReducer'
 import {connect} from 'react-redux'
 import './Single_Project_Stats.css'
+import axios from 'axios'
 
 
 class Single_Project_Stats extends Component{
@@ -14,7 +15,7 @@ class Single_Project_Stats extends Component{
                 labels:['to do', 'in progress', 'in review', 'complete'],
                 datasets:[{
                     label: 'Completion Rate',
-                    data:[ 11, 3, 6, 10, 15],
+                    data:[],
                     backgroundColor: [
                     'rgba(100, 0, 0, 0.4)',
                     'rgba(100, 100, 0, 0.5)',
@@ -26,7 +27,50 @@ class Single_Project_Stats extends Component{
             }
         }
     }
+    componentDidMount(){
+        console.log(this.props.match.params.project_id)
+        axios.get(`/api/countTodoTask/${this.props.match.params.project_id}`).then(res => {
+            console.log(res.data[0].count)
+            let chartData = {...this.state.chartData}
+            console.log(chartData)
+            chartData.datasets[0].data.push(+res.data[0].count)
+            this.setState({
+                chartData: chartData
+            })
+            axios.get(`/api/countInProgressTask/${this.props.match.params.project_id}`).then(res => {
+                console.log(res.data)
+                let chartData = {...this.state.chartData}
+                console.log(chartData)
+                chartData.datasets[0].data.push(+res.data[0].count)
+                this.setState({
+                    chartData: chartData
+                })
+                axios.get(`/api/countReviewTask/${this.props.match.params.project_id}`).then(res => {
+                    console.log(res.data)
+                    let chartData = {...this.state.chartData}
+                    console.log(chartData)
+                    chartData.datasets[0].data.push(+res.data[0].count)
+                    this.setState({
+                        chartData: chartData
+                    })
+                    axios.get(`/api/countDoneTask/${this.props.match.params.project_id}`).then(res => {
+                        console.log(res.data)
+                        let chartData = {...this.state.chartData}
+                        console.log(chartData)
+                        chartData.datasets[0].data.push(+res.data[0].count)
+                        this.setState({
+                            chartData: chartData
+                        })
+                     })
+                 })
+             })
+         })
+         
+       
+        // console.log("this is data", this.state.chartData.datasets[0].data)
+    }
     render(){
+        console.log(this.state)
         return(
             <div className={this.props.toggleSideBar ? 'Single_Project_Stats' : 'Single_Project_Stats open'}>
                <div className='chart_container'> 
@@ -35,7 +79,16 @@ class Single_Project_Stats extends Component{
                         data={this.state.chartData}
                         height={100}
                         width={100}
-                        options={{   
+                        options={{
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        max: 26,
+                                        min: 0,
+                                        stepSize: 2
+                                    }
+                                }]
+                            }
                         }}
                         />
                     </div>
@@ -46,7 +99,7 @@ class Single_Project_Stats extends Component{
                         data={this.state.chartData}
                         height={100}
                         width={100}
-                        options={{   
+                        options={{  
                         }}
                         />
                     </div>

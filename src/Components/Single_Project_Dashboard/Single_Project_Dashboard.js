@@ -105,6 +105,7 @@ export class Single_Project extends Component {
    .then(res => this.getAllTasks())
    .catch(err => console.log(err))
   }
+   
   
  
    render() {
@@ -113,6 +114,7 @@ export class Single_Project extends Component {
       const inprogress = teammates.filter(t => t.status === 'in progress'); 
       const review = teammates.filter(t => t.status === 'review'); 
       const completed = teammates.filter(t => t.status === 'done'); 
+      console.log(this.props)
 
       return (
          <div className={this.props.toggleSideBar ? 'personal_dashboard' : 'personal_dashboard open'}>
@@ -147,6 +149,7 @@ export class Single_Project extends Component {
             <div></div>
             </Modal>
             <div className='task_filler'>
+               <div onClick={() => this.props.history.push(`/SingleProjectStats/${this.props.match.params.project_id}`)}>button</div>
                <div className='task_container'>
                   <div className='tasks'>
                   <div id='task_name'>To Do</div>

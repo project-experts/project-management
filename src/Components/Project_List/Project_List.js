@@ -11,7 +11,8 @@ export class Project_List extends Component {
          super(props); 
 
          this.state = {
-            projects: []
+            projects: [],
+            project_id: 0
          }
    }
       componentDidMount(){
@@ -27,7 +28,7 @@ export class Project_List extends Component {
       }
       render() {
          const { projects } = this.state;
-         console.log(this.state.projects) 
+         console.log(this.state) 
          return (
                   <div className={this.props.toggleSideBar ? 'projects' : 'projects open'}>
                      <div className='idea'><FaPlus onClick={() => this.props.history.push(`/newProject/${this.props.user.user_id}`)} size={80} style={{margin: 'auto', color: 'green'}}></FaPlus></div>
