@@ -109,7 +109,7 @@ export class Single_Project extends Component {
   
  
    render() {
-      
+      console.log(this.state.teammates)
       const { name, task_description, teammates, startDate, isModalOpen, priority } = this.state;
       const todos = teammates.filter(t => t.status === 'to do' && (t.task_name.includes(this.props.searchInput) || t.task_description.includes(this.props.searchInput))); 
       const inprogress = teammates.filter(t => t.status === 'in progress' && (t.task_name.includes(this.props.searchInput) || t.task_description.includes(this.props.searchInput))); 
@@ -141,10 +141,8 @@ export class Single_Project extends Component {
                   ))}
                </select>
             </label>
-            <div style={{display: 'flex'}} >
                <button className='btn' onClick={this.closeModal} >Cancel</button>
                <button className='btn' onClick={this.submitTask} >Submit</button>
-            </div>
             <div></div>
             <div></div>
             </Modal>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { sidebarToggle } from '../../redux/reducers/sidebarReducer'
-import {userLoggedIn} from '../../redux/reducers/userReducer'
+import {userLoggedIn, userLoggedOut} from '../../redux/reducers/userReducer'
 import { connect } from 'react-redux'
 import './Sidebar.css'
 import { AiOutlineLogout } from 'react-icons/ai'
@@ -52,13 +52,12 @@ handleLogout = () => {
    this.closeModal(); 
    axios.post('/api/logout').then(res => {
       this.props.sidebarToggle(!this.props.toggleSideBar)
+      this.props.userLoggedOut()
       this.props.history.push('/')
    })
 }
     render() {
        const { isModelOpen } = this.state
-       console.log(this.state)
-       console.log(this.props)
       return (
             <div className={this.props.toggleSideBar ? 'show_side_bar' : 'hide_side_bar'}>
             <Modal
@@ -90,4 +89,4 @@ function mapStateToProps(state) {
       user: state.userReducer.user
    }
 }
-export default withRouter(connect(mapStateToProps, {sidebarToggle, userLoggedIn})(Sidebar));
+export default withRouter(connect(mapStateToProps, { sidebarToggle, userLoggedIn, userLoggedOut })(Sidebar));
