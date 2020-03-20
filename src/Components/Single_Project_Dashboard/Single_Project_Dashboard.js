@@ -144,10 +144,8 @@ export class Single_Project extends Component {
                   ))}
                </select>
             </label>
-            <div style={{display: 'flex'}} >
                <button className='btn' onClick={this.closeModal} >Cancel</button>
                <button className='btn' onClick={this.submitTask} >Submit</button>
-            </div>
             <div></div>
             <div></div>
             </Modal>
@@ -197,7 +195,7 @@ export class Single_Project extends Component {
                            <div>{task.status}</div>
                            <div> 
                               <button onClick={() => this.pushToProgress(task.task_id)} >Did not pass</button> 
-                              <button onClick={() => this.pushToCompleted(task.task_id)} >Did not pass</button> 
+                              <button onClick={() => this.pushToCompleted(task.task_id)} >Passed</button> 
                            </div>
                         </div>
                      ))}

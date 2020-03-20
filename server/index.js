@@ -45,7 +45,7 @@ const {
 app.get('/sign-s3', (req, res) => {
 
   aws.config = {
-    region: 'us-west-1',
+    region: 'us-east-1',
     accessKeyId: AWS_ACCESS_KEY_ID,
     secretAccessKey: AWS_SECRET_ACCESS_KEY
   }
@@ -90,10 +90,7 @@ app.get("/api/getAllTeammates/:project_id", taskCtrl.getAllTeammates);
 
 //personal Dashboard - get all tasks
 app.get("/api/getToDoTasks/:user_id", taskCtrl.getToDoTasks);
-app.get(
-  "/api/getALlTasksSingleProject/:project_id",
-  taskCtrl.getAllTasksSingleProject
-);
+app.get("/api/getALlTasksSingleProject/:project_id", taskCtrl.getAllTasksSingleProject);
 app.get("/api/getInProgressTasks/:user_id", taskCtrl.getInProgressTasks);
 app.get("/api/getReviewTasks/:user_id", taskCtrl.getReviewTasks);
 app.get("/api/getDoneTasks/:user_id", taskCtrl.getDoneTasks);
