@@ -173,8 +173,10 @@ export class Single_Project extends Component {
                      </div>
                   </div>
                   <div className='tasks'>
-                     <div id='task_name'>In Progress</div>
-                     {inprogress.length>0 && inprogress.map(task => (
+                  <div id='task_name'>To Do</div>
+                  <div> <IoMdAdd onClick={() => this.openModal()} size={50} className='plus-sign'></IoMdAdd></div>
+                     <div className='task_holder'>
+                     {todos.length>0 && todos.map(task => (
                         <div className='task' key={task.task_id} >
                            <div>{task.task_name}</div>
                            <div>{task.task_description}</div>
@@ -183,26 +185,13 @@ export class Single_Project extends Component {
                            <div>{task.status}</div>
                         </div>
                      ))}
-                  </div> 
-                  <div className='tasks'>
-                     <div id='task_name'>In Review</div>
-                     {review.length>0 && review.map(task => (
-                        <div className='task' key={task.task_id} >
-                           <div>{task.task_name}</div>
-                           <div>{task.task_description}</div>
-                           <div>{task.deadline.slice(0, 10)}</div>
-                           <div>{task.priority}</div>
-                           <div>{task.status}</div>
-                           <div> 
-                              <button onClick={() => this.pushToProgress(task.task_id)} >Did not pass</button> 
-                              <button onClick={() => this.pushToCompleted(task.task_id)} >Passed</button> 
-                           </div>
-                        </div>
-                     ))}
+                     </div>
                   </div>
                   <div className='tasks'>
-                     <div id='task_name'>Complete</div>
-                     {completed.length>0 && completed.map(task => (
+                  <div id='task_name'>To Do</div>
+                  <div> <IoMdAdd onClick={() => this.openModal()} size={50} className='plus-sign'></IoMdAdd></div>
+                     <div className='task_holder'>
+                     {todos.length>0 && todos.map(task => (
                         <div className='task' key={task.task_id} >
                            <div>{task.task_name}</div>
                            <div>{task.task_description}</div>
@@ -211,6 +200,22 @@ export class Single_Project extends Component {
                            <div>{task.status}</div>
                         </div>
                      ))}
+                     </div>
+                  </div>
+                  <div className='tasks'>
+                  <div id='task_name'>To Do</div>
+                  <div> <IoMdAdd onClick={() => this.openModal()} size={50} className='plus-sign'></IoMdAdd></div>
+                     <div className='task_holder'>
+                     {todos.length>0 && todos.map(task => (
+                        <div className='task' key={task.task_id} >
+                           <div>{task.task_name}</div>
+                           <div>{task.task_description}</div>
+                           <div>{task.deadline.slice(0, 10)}</div>
+                           <div>{task.priority}</div>
+                           <div>{task.status}</div>
+                        </div>
+                     ))}
+                     </div>
                   </div>
                </div>
             </div>

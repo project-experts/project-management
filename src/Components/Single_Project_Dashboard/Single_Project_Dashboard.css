@@ -59,6 +59,7 @@
    justify-content: flex-start;
    flex-wrap: wrap;
    margin-left: 50px; 
+   text-align: left;
 }
 .task_container{
    height: 675px;
