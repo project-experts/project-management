@@ -18,9 +18,17 @@ module.exports = {
   getAllProjects: (req, res) => {
     const db = req.app.get("db");
     const { user_id } = req.params;
-    console.log("Getting project by id :", user_id);
     db.projects
       .get_allProjects_singleUser(user_id)
-      .then(data => res.status(200).send(data));
+      .then(async data => {
+         let projects = data; 
+         let projecttIds =  data.map(v => v.project_id)
+         for (let i=0; i<projecttIds.length; i++){
+            projects[i].teammates = await db.projects.get_teammates_eachProject(i);
+            console.log('this is teammates: ', )
+         }
+         res.status(200).send(projects)
+         // console.log(projects)
+      });
   }
 };
