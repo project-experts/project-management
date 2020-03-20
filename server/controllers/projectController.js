@@ -22,13 +22,10 @@ module.exports = {
       .get_allProjects_singleUser(user_id)
       .then(async data => {
          let projects = data; 
-         let projecttIds =  data.map(v => v.project_id)
-         for (let i=0; i<projecttIds.length; i++){
-            projects[i].teammates = await db.projects.get_teammates_eachProject(i);
-            console.log('this is teammates: ', )
+         for (let i=0; i<projects.length; i++){
+            projects[i].teammates = await db.projects.get_teammates_eachProject(projects[i].project_id);
          }
          res.status(200).send(projects)
-         // console.log(projects)
       });
   }
 };
