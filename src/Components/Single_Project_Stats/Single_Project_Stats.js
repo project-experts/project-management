@@ -4,7 +4,8 @@ import { sidebarToggle } from '../../redux/reducers/sidebarReducer'
 import {connect} from 'react-redux'
 import './Single_Project_Stats.css'
 import axios from 'axios'
-
+import Chart from '../Charts/SingleProjectChart'
+ 
 
 class Single_Project_Stats extends Component{
     constructor(){
@@ -14,17 +15,17 @@ class Single_Project_Stats extends Component{
             chartData:{
                 labels:['to do', 'in progress', 'in review', 'complete'],
                 datasets:[{
-                    label: 'Completion Rate',
+                    label: 'Tasks',
                     data:[],
                     backgroundColor: [
-                    'rgba(100, 0, 0, 0.4)',
-                    'rgba(100, 100, 0, 0.5)',
-                    'rgba(233, 0, 0, 0.6)',
-                    'rgba(233, 0, 0, 0.7)',
+                    'rgb(153,227,225)',
+                    'rgb(168,134,255)',
+                    'rgb(255,229,128)',
+                    'rgb(255,138,99)',
                 ]
                  }
                 ]
-            }
+            },
         }
     }
     componentDidMount(){
@@ -75,35 +76,12 @@ class Single_Project_Stats extends Component{
             <div className={this.props.toggleSideBar ? 'Single_Project_Stats' : 'Single_Project_Stats open'}>
                <div className='chart_container'> 
                     <div className='chart_box'>
-                    <Bar
-                        data={this.state.chartData}
-                        height={100}
-                        width={100}
-                        options={{
-                            scales: {
-                                yAxes: [{
-                                    ticks: {
-                                        max: 26,
-                                        min: 0,
-                                        stepSize: 2
-                                    }
-                                }]
-                            }
-                        }}
-                        />
+                        {this.state.chartData.datasets[0].data.length > 3 && 
+                        <Chart chartData={this.state.chartData}/>
+                        }
                     </div>
                 </div>
-                <div className='chart_container'> 
-                    <div className='chart_box'>
-                    <Bar
-                        data={this.state.chartData}
-                        height={100}
-                        width={100}
-                        options={{  
-                        }}
-                        />
-                    </div>
-                </div>
+
             </div>
         )
     }

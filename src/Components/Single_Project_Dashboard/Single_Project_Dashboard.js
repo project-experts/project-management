@@ -6,6 +6,8 @@ import Modal from "react-modal";
 import { sidebarToggle } from "../../redux/reducers/sidebarReducer";
 import { IoMdAdd } from "react-icons/io";
 import axios from "axios";
+import {AiOutlineBarChart} from 'react-icons/ai'
+
 
 const todoStyle = {
   content: {
@@ -109,6 +111,7 @@ export class Single_Project extends Component {
   
  
    render() {
+      console.log(this.props)
       
       const { name, task_description, teammates, startDate, isModalOpen, priority } = this.state;
       const todos = teammates.filter(t => t.status === 'to do' && (t.task_name.includes(this.props.searchInput) || t.task_description.includes(this.props.searchInput))); 
@@ -149,7 +152,12 @@ export class Single_Project extends Component {
             <div></div>
             </Modal>
             <div className='task_filler'>
-               <div onClick={() => this.props.history.push(`/SingleProjectStats/${this.props.match.params.project_id}`)}>button</div>
+               <div className='project_info'>
+                  <div className='project_name'>Project Name 
+                  <AiOutlineBarChart className='chart_button'onClick={() => this.props.history.push(`/SingleProjectStats/${this.props.match.params.project_id}`)}/>
+                  </div>
+                   <div className='project_description'>typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>
+               </div>
                <div className='task_container'>
                   <div className='tasks'>
                   <div id='task_name'>To Do</div>
