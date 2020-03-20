@@ -13,10 +13,11 @@ export default(
    <Switch>
       <Route exact path='/' component={Landing} />
       <Route path='/dashboard' component={Personal_Dashboard} />
-      <Route path='/personal_state' component={Personal_Stats} />
+      <Route path='/personal_stats/:user_id' component={Personal_Stats} />
       <Route path='/projects' component={Project_List} />
       <Route path='/single/:project_id' component={Single_Project} />
       <Route path='/newProject/:user_id' component={NewProjectForm} />
       <Route path='/singleProjectStats/:project_id' component={Single_Project_Stats}/>
+       
    </Switch>
 )
