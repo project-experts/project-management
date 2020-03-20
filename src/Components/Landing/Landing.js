@@ -73,12 +73,30 @@ export class Landing extends Component {
       .catch(err => console.log(err));
   };
 
-  login = () => {
-    const { email, password } = this.state;
-    this.closeLoginModal();
-    console.log("Line 66 ", email, password);
-    axios
-      .post("/api/login", { email, password })
+// <<<<<<< John_branch
+//    login = () => {
+//       const { email, password } = this.state; 
+//       if (email.length<1 && password.length<1){
+//          window.alert('Please Enter valid email and password! ')
+//       }
+//       else if (email.length<1 && password.length>=1){
+//          window.alert('Please Enter valid email! ')
+//       }
+//       else if (email.length>=1 && password.length<1){
+//          window.alert('Please Enter valid password! ')
+//       }
+//       else {
+//          this.closeLoginModal(); 
+//       console.log('Line 66 ', email, password)
+//       axios.post('/api/login', { email, password })
+// =======
+//   login = () => {
+//     const { email, password } = this.state;
+//     this.closeLoginModal();
+//     console.log("Line 66 ", email, password);
+//     axios
+//       .post("/api/login", { email, password })
+// >>>>>>> master
       .then(res => {
         this.props.userLoggedIn(res.data);
         this.props.history.push("/dashboard");
@@ -101,12 +119,44 @@ export class Landing extends Component {
           "file-type": file.type
         }
       })
-      .then(response => {
-        const { signedRequest, url } = response.data;
-        this.setState({
-          profileImg: url
-        });
-        this.uploadFile(file, signedRequest, url);
+// <<<<<<< John_branch
+//       .catch(err => {
+//          window.alert('Email or password you entered is not correct! Please try again')
+//       }); 
+//       }
+      
+//    }
+
+
+//    //AWS S3 
+//    getSignedRequest = ([file]) => {
+//       this.setState({isUploading: true})
+  
+//      const fileName = `${file.name.replace(/\s/g, '-')}`
+
+//      axios.get(`/sign-s3?file-name=${fileName}&file-type=${file.type}`)
+
+  
+//      axios.get('/sign-s3', {
+//        params: {
+//          'file-name': fileName,
+//          'file-type': file.type
+//        }
+//      }).then( (response) => {
+//        const { signedRequest, url } = response.data 
+//        this.setState({
+//            profileImg: url
+//        })
+//        this.uploadFile(file, signedRequest, url)
+//      }).catch( err => {
+// =======
+//       .then(response => {
+//         const { signedRequest, url } = response.data;
+//         this.setState({
+//           profileImg: url
+//         });
+//         this.uploadFile(file, signedRequest, url);
+// >>>>>>> master
       })
       .catch(err => {});
   };
