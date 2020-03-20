@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { sidebarToggle } from "../../redux/reducers/sidebarReducer";
 import axios from "axios";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import deadline_logo from "./iconfinder_Clock_arrow_2202265.png";
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
@@ -68,15 +69,6 @@ const move = (
       });
     });
   };
-
-  // const updateTaskToDone = () => {
-  //   axios.put(`/api/updateTaskToDone/${removed.task_id}`).then(res => {
-  //     setState({
-  //       [sourceId]: sourceClone,
-  //       [destId]: destClone
-  //     });
-  //   });
-  // };
 
   if (droppableDestination.droppableId === "droppable2") {
     updateTaskInProgress();
@@ -249,18 +241,6 @@ class Personal_Dashboard extends Component {
       );
     }
 
-    // const getPriorityStyle = () => {
-    //   let classes = [];
-    //   if (task.priority === "high") {
-    //     classes.push("priority_high");
-    //   } else if (task.priority === "medium") {
-    //     classes.push("priority_medium");
-    //   } else if (task.priority === "low") {
-    //     classes.push("priority_low");
-    //   }
-    //   return <div className={classes.join(" ")}></div>;
-    // };
-
     const getPriorityColor = priority => {
       if (priority === "high") {
         return "priority_high";
@@ -298,15 +278,21 @@ class Personal_Dashboard extends Component {
                             provided.draggableProps.style
                           )}
                         >
-                          <div className="title">{task.task_name}</div>
+                          <div className="title">TITLE: {task.task_name}</div>
                           <div className="description">
-                            {task.task_description}
+                            DETAILS: {task.task_description}
                           </div>
                           <div className={getPriorityColor(task.priority)}>
-                            Priority: {task.priority}
+                            PRIORITY: {task.priority}
                           </div>
                           <div className="deadline">
-                            Deadline: {task.deadline.slice(0, 10)}
+                            <div className="deadline">
+                              DEADLINE: {task.deadline.slice(0, 10)}
+                              <img
+                                src={deadline_logo}
+                                className="deadlineLogo"
+                              ></img>
+                            </div>
                           </div>
                         </div>
                       )}
@@ -341,15 +327,21 @@ class Personal_Dashboard extends Component {
                             provided.draggableProps.style
                           )}
                         >
-                          <div className="title">{task.task_name}</div>
+                          <div className="title">TITLE: {task.task_name}</div>
                           <div className="description">
-                            {task.task_description}
+                            DETAILS: {task.task_description}
                           </div>
                           <div className={getPriorityColor(task.priority)}>
-                            Priority: {task.priority}
+                            PRIORITY: {task.priority}
                           </div>
                           <div className="deadline">
-                            Deadline: {task.deadline.slice(0, 10)}
+                            <div className="deadline">
+                              DEADLINE: {task.deadline.slice(0, 10)}
+                              <img
+                                src={deadline_logo}
+                                className="deadlineLogo"
+                              ></img>
+                            </div>
                           </div>
                         </div>
                       )}
@@ -384,15 +376,21 @@ class Personal_Dashboard extends Component {
                             provided.draggableProps.style
                           )}
                         >
-                          <div className="title">{task.task_name}</div>
+                          <div className="title">TITLE: {task.task_name}</div>
                           <div className="description">
-                            {task.task_description}
+                            DETAILS: {task.task_description}
                           </div>
                           <div className={getPriorityColor(task.priority)}>
-                            Priority: {task.priority}
+                            PRIORITY: {task.priority}
                           </div>
                           <div className="deadline">
-                            Deadline: {task.deadline.slice(0, 10)}
+                            <div className="deadline">
+                              DEADLINE: {task.deadline.slice(0, 10)}
+                              <img
+                                src={deadline_logo}
+                                className="deadlineLogo"
+                              ></img>
+                            </div>
                           </div>
                         </div>
                       )}
@@ -407,12 +405,19 @@ class Personal_Dashboard extends Component {
             <div className="dashboardTitle">Done</div>
             {filDone.map(task => (
               <div className="doneList" key={task.task_id}>
-                <div>{task.task_name}</div>
-                <div>{task.task_description}</div>
-                <div className={getPriorityColor(task.priority)}>
-                  Priority: {task.priority}
+                <div className="title">TITLE: {task.task_name}</div>
+                <div className="description">
+                  DETAILS: {task.task_description}
                 </div>
-                <div>Deadline:{task.deadline.slice(0, 10)}</div>
+                <div className={getPriorityColor(task.priority)}>
+                  PRIORITY: {task.priority}
+                </div>
+                <div className="deadline">
+                  <div className="deadline">
+                    DEADLINE: {task.deadline.slice(0, 10)}
+                    <img src={deadline_logo} className="deadlineLogo"></img>
+                  </div>
+                </div>
               </div>
             ))}
           </div>

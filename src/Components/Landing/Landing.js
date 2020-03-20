@@ -248,6 +248,16 @@ export class Landing extends Component {
             Register
           </button>
         </Modal>
+        <div>
+          <div className="ourMission">OUR MISSION</div>
+          <div className="statement">
+            Project Experts is the easy, free, flexible, and visual
+          </div>
+          <div className="statement">
+            way to manage your projects and organize anything!
+          </div>
+          <button className="moreDetails">more details</button>
+        </div>
       </div>
     );
   }
@@ -267,6 +277,6 @@ export default connect(mapStateToProps, {
 })(Landing);
 
 //Creating a workplace environment of transparency, ownership, and accountability, to make teamwork click.
+//Create transparency
 //Promote productivity
 //Improve relationships
-//Project Experts is the easy, free, flexible, and visual way to manage your projects and organize anything
