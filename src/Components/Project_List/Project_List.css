@@ -2,39 +2,102 @@
    height: auto;
    width: calc(100% - 200px);
    display: flex;
+   margin-top: 10px;
    flex-direction: row;
    justify-content: flex-start;
    align-items: flex-start;
    flex-wrap: wrap;
    overflow-y: scroll;
    transition: all .5s
-   /* margin-left: 40px; */
 }
 .open {
    width: 100%
 }
 .idea {
-   background-color: #929292;
    height: 300px;
    width: 300px;
    margin: 5px 15px;
-   border-radius: 10px;
+   padding: 10px;
+   background-color: #e6e6e6;
+   box-sizing: border-box;
+   border-radius: 3px;
    display: flex;
    flex-direction: column;
-   justify-content: space-evenly;
+   justify-content: space-between;
+   align-items: flex-start;
 }
 .idea:hover{
-   background-color: salmon;
    height: 300px;
    width: 300px;
    margin: 5px 15px;
-   border-radius: 10px;
+   border-radius: 3px;
    display: flex;
    flex-direction: column;
-   justify-content: space-evenly;
+   justify-content: space-between;
    opacity: 80%;
    cursor: pointer;
+   box-shadow: 0 0 5px 5px #888;
 }
- 
+
+.project-name{
+   width: 100%;
+   height: 30%;
+   min-height: 30%;
+   font-size: 25px;
+   font-weight: 700;
+   margin: 0 auto;
+   margin-left: 10px;
+   padding: 0 5px;
+   background-color:  #e6e6e6;
+   box-sizing: border-box;
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+}
+
+.lower-box{
+   height: 70%;
+   min-height: 70%;
+   background-color: white;
+   border-radius: 2px;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+}
+.description{
+   width: 90%;
+   height: 50%;
+   max-height: 50%;
+   padding: 16px 5px;
+   margin-left: 10px;
+   font-size: 20px;
+   box-sizing: border-box;
+   display: block;
+   text-align: left;
+   overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;  
+}
+
+.project-deadline{
+   width: 60%;
+   text-align: left;
+   font-size: 15px;
+   margin-top: 10px;
+   margin-left: 10px;
+   padding: 5px;
+   font-weight: 700;
+   background-color: #ff9900;
+   padding: 5px;
+   border-radius: 5px;
+}
+.members-line{
+   width: 90%;
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+}
+
 
 
