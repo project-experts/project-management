@@ -62,14 +62,28 @@ export class Landing extends Component {
 
    login = () => {
       const { email, password } = this.state; 
-      this.closeLoginModal(); 
+      if (email.length<1 && password.length<1){
+         window.alert('Please Enter valid email and password! ')
+      }
+      else if (email.length<1 && password.length>=1){
+         window.alert('Please Enter valid email! ')
+      }
+      else if (email.length>=1 && password.length<1){
+         window.alert('Please Enter valid password! ')
+      }
+      else {
+         this.closeLoginModal(); 
       console.log('Line 66 ', email, password)
       axios.post('/api/login', { email, password })
       .then(res => {
           this.props.userLoggedIn(res.data)
          this.props.history.push('/dashboard')
       })
-      .catch(err => console.log(err)); 
+      .catch(err => {
+         window.alert('Email or password you entered is not correct! Please try again')
+      }); 
+      }
+      
    }
 
 
