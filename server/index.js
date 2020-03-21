@@ -80,17 +80,14 @@ app.delete("/api/deleteTask/:user_id", taskCtrl.deleteTask);
 app.get("/api/getAllTeammates/:project_id", taskCtrl.getAllTeammates);
 
 //personal Dashboard - get all tasks
-<<<<<<< HEAD
 app.get(
   "/api/getALlTasksSingleProject/:project_id",
   taskCtrl.getAllTasksSingleProject
 );
 //get all tasks in 4 status based on current user
 app.get("/api/getToDoTasks/:user_id", taskCtrl.getToDoTasks);
-=======
 app.get("/api/getToDoTasks/:user_id", taskCtrl.getToDoTasks);
 app.get("/api/getALlTasksSingleProject/:project_id", taskCtrl.getAllTasksSingleProject);
->>>>>>> master
 app.get("/api/getInProgressTasks/:user_id", taskCtrl.getInProgressTasks);
 app.get("/api/getReviewTasks/:user_id", taskCtrl.getReviewTasks);
 app.get("/api/getDoneTasks/:user_id", taskCtrl.getDoneTasks);
