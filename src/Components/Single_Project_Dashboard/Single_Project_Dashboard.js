@@ -4,9 +4,11 @@ import { connect } from "react-redux";
 import DatePicker from "react-datepicker";
 import Modal from "react-modal";
 import { sidebarToggle } from "../../redux/reducers/sidebarReducer";
-import { IoMdAdd } from "react-icons/io";
+import { IoMdTime } from "react-icons/io";
+import { MdLowPriority } from "react-icons/md";
+import { AiOutlineBarChart } from 'react-icons/ai'
+import { TiMessage } from 'react-icons/ti'
 import axios from "axios";
-import {AiOutlineBarChart} from 'react-icons/ai'
 
 
 const todoStyle = {
@@ -52,7 +54,7 @@ export class Single_Project extends Component {
   }
   getAllTasks() {
     axios.get(`/api/getALlTasksSingleProject/${this.props.match.params.project_id}`)
-         .then(res => this.setState({teammates: res.data }))
+         .then(res => this.setState({alltasks: res.data }))
       }
   handleEvent = e => this.setState({ [e.target.name]: e.target.value });
   handleDate = selectedDate => this.setState({ startDate: selectedDate });
@@ -111,13 +113,12 @@ export class Single_Project extends Component {
   
  
    render() {
-      console.log(this.props)
-      
-      const { name, task_description, teammates, startDate, isModalOpen, priority } = this.state;
-      const todos = teammates.filter(t => t.status === 'to do' && (t.task_name.includes(this.props.searchInput) || t.task_description.includes(this.props.searchInput))); 
-      const inprogress = teammates.filter(t => t.status === 'in progress' && (t.task_name.includes(this.props.searchInput) || t.task_description.includes(this.props.searchInput))); 
-      const review = teammates.filter(t => t.status === 'review' && (t.task_name.includes(this.props.searchInput) || t.task_description.includes(this.props.searchInput))); 
-      const completed = teammates.filter(t => t.status === 'done' && (t.task_name.includes(this.props.searchInput) || t.task_description.includes(this.props.searchInput))); 
+      console.log(this.state.teammates)
+      const { name, task_description, alltasks, teammates, startDate, isModalOpen, priority } = this.state;
+      const todos = alltasks.filter(t => t.status === 'to do' && (t.task_name.includes(this.props.searchInput) || t.task_description.includes(this.props.searchInput))); 
+      const inprogress = alltasks.filter(t => t.status === 'in progress' && (t.task_name.includes(this.props.searchInput) || t.task_description.includes(this.props.searchInput))); 
+      const review = alltasks.filter(t => t.status === 'review' && (t.task_name.includes(this.props.searchInput) || t.task_description.includes(this.props.searchInput))); 
+      const completed = alltasks.filter(t => t.status === 'done' && (t.task_name.includes(this.props.searchInput) || t.task_description.includes(this.props.searchInput))); 
 
       return (
          <div className={this.props.toggleSideBar ? 'personal_dashboard' : 'personal_dashboard open'}>
@@ -131,9 +132,9 @@ export class Single_Project extends Component {
             <label>Priority: 
                <select value={priority} onChange={this.handlePriority} >
                   <option value=''>Select Priority </option>
-                  <option value='High'>High</option>
-                  <option value='Medium'>Medium</option>
-                  <option value='Low'>Low</option>
+                  <option value='high'>High</option>
+                  <option value='medium'>Medium</option>
+                  <option value='low'>Low</option>
                </select>
             </label>
             <p>Deadline: <DatePicker selected={startDate} onChange={this.handleDate}/></p>
@@ -150,72 +151,134 @@ export class Single_Project extends Component {
             <div></div>
             </Modal>
             <div className='task_filler'>
-               <div className='project_info'>
-                  <div className='project_name'>Project Name 
-                  <AiOutlineBarChart className='chart_button'onClick={() => this.props.history.push(`/SingleProjectStats/${this.props.match.params.project_id}`)}/>
+            <div className='upper-container-1' >
+                  <div className='project_info'>
+                     <div className='project_name'>Project Name 
+                     <AiOutlineBarChart className='chart_button' onClick={() => this.props.history.push(`/SingleProjectStats/${this.props.match.params.project_id}`)}/>
+                     </div>
+                     <div className='project_description'>typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>
                   </div>
-                   <div className='project_description'>typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>
+                  <div className='single-project-teams-1' > {teammates.length>0 && teammates.map(mate => 
+                        <div className='single-mate-1' key={mate.id}>
+                           <img src={mate.profile_image} width='40' style={{height: '40px', borderRadius: '50%', padding: '0', margin: 'auto'}} />
+                           <TiMessage size={100} style={{cursor: 'pointer'}} ></TiMessage>
+                           <h4 style={{margin: 0}} > {mate.first_name} {mate.last_name.slice(0, 1)} </h4>
+                        </div>)} 
+                  </div>
                </div>
                <div className='task_container'>
                   <div className='tasks'>
-                  <div id='task_name'>To Do</div>
-                  <div> <IoMdAdd onClick={() => this.openModal()} size={50} className='plus-sign'></IoMdAdd></div>
+                  <div id='task_status1'>To Do</div>
                      <div className='task_holder'>
+                     <div className='task' onClick={() => this.openModal()} style={{display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '80px'}} > +</div>
                      {todos.length>0 && todos.map(task => (
                         <div className='task' key={task.task_id} >
-                           <div>{task.task_name}</div>
-                           <div>{task.task_description}</div>
-                           <div>{task.deadline.slice(0, 10)}</div>
-                           <div>{task.priority}</div>
-                           <div>{task.status}</div>
+                           <div className='task-name1' >{task.task_name}</div>
+                           <div className='task-lower-box' >
+                              <div className='task-description1' >{task.task_description}</div>
+                              <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around', width: '100%'}}>
+                                 <div style={{minWidth: '60%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start'}} >
+                                    <div className='task-deadline-2' >
+                                       <IoMdTime size={20} ></IoMdTime> 
+                                       <div className='task-deadline1'> {task.deadline.slice(0, 10)}</div> 
+                                    </div>
+                                    <div className='task-deadline-2' >
+                                       <MdLowPriority size={20} ></MdLowPriority>
+                                       <div className={task.priority==='high' ? 'high1' : (task.priority === 'medium' ? 'medium1' : 'low1') } >{task.priority}</div>
+                                    </div>
+                                 </div>
+                                 <img src={task.profile_image} width='40' style={{height: '40px', borderRadius: '50%', padding: '0', margin: 'auto'}} />
+                                 <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-around', alignItems: 'flex-end'}} >
+                                    <button className='task-btn1' >Edit</button>
+                                    <button className='task-btn1' >Delete</button>
+                                 </div>
+                              </div>
+                           </div>
                         </div>
                      ))}
                      </div>
                   </div>
                   <div className='tasks'>
-                  <div id='task_name'>To Do</div>
-                  <div> <IoMdAdd onClick={() => this.openModal()} size={50} className='plus-sign'></IoMdAdd></div>
+                     <div id='task_status1'>In Progress</div>
                      <div className='task_holder'>
-                     {todos.length>0 && todos.map(task => (
+                     {inprogress.length>0 && inprogress.map(task => (
                         <div className='task' key={task.task_id} >
-                           <div>{task.task_name}</div>
-                           <div>{task.task_description}</div>
-                           <div>{task.deadline.slice(0, 10)}</div>
-                           <div>{task.priority}</div>
-                           <div>{task.status}</div>
+                           <div className='task-name1' >{task.task_name}</div>
+                           <div className='task-lower-box' >
+                              <div className='task-description1' >{task.task_description}</div>
+                              <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around', width: '100%'}}>
+                                 <div style={{minWidth: '60%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start'}} >
+                                    <div className='task-deadline-2' >
+                                       <IoMdTime size={20} ></IoMdTime> 
+                                       <div className='task-deadline1'> {task.deadline.slice(0, 10)}</div> 
+                                    </div>
+                                    <div className='task-deadline-2' >
+                                       <MdLowPriority size={20} ></MdLowPriority>
+                                       <div className={task.priority==='high' ? 'high1' : (task.priority === 'medium' ? 'medium1' : 'low1') } >{task.priority}</div>
+                                    </div>
+                                 </div>
+                                 <img src={task.profile_image} width='40' style={{height: '40px', borderRadius: '50%', padding: '0', margin: 'auto'}} />
+                              </div>
+                           </div>
+                        </div>
+                     ))}
+                     </div>
+                  </div> 
+                  <div className='tasks'>
+                     <div id='task_status1'>In Review</div>
+                     <div className='task_holder'>
+                     {review.length>0 && review.map(task => (
+                        <div className='task' key={task.task_id} >
+                           <div className='task-name1' >{task.task_name}</div>
+                           <div className='task-lower-box' >
+                              <div className='task-description1' >{task.task_description}</div>
+                              <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around', width: '100%'}}>
+                                 <div style={{minWidth: '60%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start'}} >
+                                    <div className='task-deadline-2' >
+                                       <IoMdTime size={20} ></IoMdTime> 
+                                       <div className='task-deadline1'> {task.deadline.slice(0, 10)}</div> 
+                                    </div>
+                                    <div className='task-deadline-2' >
+                                       <MdLowPriority size={20} ></MdLowPriority>
+                                       <div className={task.priority==='high' ? 'high1' : (task.priority === 'medium' ? 'medium1' : 'low1') } >{task.priority}</div>
+                                    </div>
+                                 </div>
+                                 <img src={task.profile_image} width='40' style={{height: '40px', borderRadius: '50%', padding: '0', margin: 'auto'}} />
+                                 <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-around', alignItems: 'flex-end'}} >
+                                    <button className='task-btn1' onClick={() => this.pushToProgress(task.task_id)} >Fail</button> 
+                                    <button className='task-btn1' onClick={() => this.pushToCompleted(task.task_id)} >Pass</button> 
+                                 </div>
+                              </div>
+                           </div>
                         </div>
                      ))}
                      </div>
                   </div>
                   <div className='tasks'>
-                  <div id='task_name'>To Do</div>
-                  <div> <IoMdAdd onClick={() => this.openModal()} size={50} className='plus-sign'></IoMdAdd></div>
+                     <div id='task_status1'>Complete</div>
                      <div className='task_holder'>
-                     {todos.length>0 && todos.map(task => (
+                     {completed.length>0 && completed.map(task => (
                         <div className='task' key={task.task_id} >
-                           <div>{task.task_name}</div>
-                           <div>{task.task_description}</div>
-                           <div>{task.deadline.slice(0, 10)}</div>
-                           <div>{task.priority}</div>
-                           <div>{task.status}</div>
+                           <div className='task-name1' >{task.task_name}</div>
+                           <div className='task-lower-box' >
+                              <div className='task-description1' >{task.task_description}</div>
+                              <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around', width: '100%'}}>
+                                 <div style={{minWidth: '60%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start'}} >
+                                    <div className='task-deadline-2' >
+                                       <IoMdTime size={20} ></IoMdTime> 
+                                       <div className='task-deadline1'> {task.deadline.slice(0, 10)}</div> 
+                                    </div>
+                                    <div className='task-deadline-2' >
+                                       <MdLowPriority size={20} ></MdLowPriority>
+                                       <div className={task.priority==='high' ? 'high1' : (task.priority === 'medium' ? 'medium1' : 'low1') } >{task.priority}</div>
+                                    </div>
+                                 </div>
+                                 <img src={task.profile_image} width='40' style={{height: '40px', borderRadius: '50%', padding: '0', margin: 'auto'}} />
+                              </div>
+                           </div>
                         </div>
                      ))}
-                     </div>
-                  </div>
-                  <div className='tasks'>
-                  <div id='task_name'>To Do</div>
-                  <div> <IoMdAdd onClick={() => this.openModal()} size={50} className='plus-sign'></IoMdAdd></div>
-                     <div className='task_holder'>
-                     {todos.length>0 && todos.map(task => (
-                        <div className='task' key={task.task_id} >
-                           <div>{task.task_name}</div>
-                           <div>{task.task_description}</div>
-                           <div>{task.deadline.slice(0, 10)}</div>
-                           <div>{task.priority}</div>
-                           <div>{task.status}</div>
-                        </div>
-                     ))}
-                     </div>
+                   </div>
                   </div>
                </div>
             </div>

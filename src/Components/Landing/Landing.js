@@ -15,7 +15,7 @@ import network from "./iconfinder_network.png";
 const loginStyle = {
   content: {
     width: "250px",
-    height: "250px",
+    height: "350px",
     margin: "auto",
     display: "flex",
     flexDirection: "column",
@@ -55,6 +55,10 @@ export class Landing extends Component {
 
   closeLoginModal = () => this.props.loginClicked(false);
   closeRegisterModal = () => this.props.registerClicked(false);
+  goToRegister = () => {
+     this.props.loginClicked(false)
+     this.props.registerClicked(true)
+  }
 
   handleClick = e =>
     this.setState({ isMissionRender: !this.state.isMissionRender });
@@ -222,6 +226,7 @@ export class Landing extends Component {
           <button className="btn" onClick={this.login}>
             Sign in
           </button>
+          <button onClick={this.goToRegister} >Don't have account ? Register</button>
         </Modal>
 
         <Modal
@@ -279,6 +284,7 @@ export class Landing extends Component {
           <button className="btn" onClick={this.register}>
             Register
           </button>
+          <button className="btn" onClick={this.closeRegisterModal} >Cancel</button>
         </Modal>
         <div>
           <div className="ourMission">OUR MISSION</div>
