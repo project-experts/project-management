@@ -80,69 +80,82 @@ export class Landing extends Component {
       .catch(err => console.log(err));
   };
 
-  login = () => {
-    const { email, password } = this.state;
-    this.closeLoginModal();
-    console.log("Line 66 ", email, password);
-    axios
-      .post("/api/login", { email, password })
-      .then(res => {
-        this.props.userLoggedIn(res.data);
-        this.props.history.push("/dashboard");
-      })
-      .catch(err => console.log(err));
-  };
-
-  //AWS S3
-  getSignedRequest = ([file]) => {
-    this.setState({ isUploading: true });
-
-    const fileName = `${file.name.replace(/\s/g, "-")}`;
-
-    axios.get(`/sign-s3?file-name=${fileName}&file-type=${file.type}`);
-
-    axios
-      .get("/sign-s3", {
-        params: {
-          "file-name": fileName,
-          "file-type": file.type
-        }
-      })
-      .then(response => {
-        const { signedRequest, url } = response.data;
-        this.setState({
-          profileImg: url
-        });
-        this.uploadFile(file, signedRequest, url);
-      })
-      .catch(err => {});
-  };
-  uploadFile = (file, signedRequest, url) => {
-    const options = {
-      headers: {
-        "Content-Type": file.type
+   login = () => {
+      const { email, password } = this.state; 
+      if (email.length<1 && password.length<1){
+         window.alert('Please Enter valid email and password! ')
       }
-    };
-
-    axios
-      .put(signedRequest, file, options)
-      .then(response => {
-        this.setState({ isUploading: false, url });
-        // THEN DO SOMETHING WITH THE URL. SEND TO DB USING POST REQUEST OR SOMETHING
+      else if (email.length<1 && password.length>=1){
+         window.alert('Please Enter valid email!')
+      }
+      else if (email.length>=1 && password.length<1){
+         window.alert('Please Enter valid password! ')
+      }
+      else {
+      this.closeLoginModal(); 
+      axios.post('/api/login', { email, password })
+      .then(res => {
+         this.props.userLoggedIn(res.data);
+         this.props.history.push("/dashboard");
       })
-      .catch(err => {
-        this.setState({
-          isUploading: false
-        });
-        if (err.response.status === 403) {
-          alert(
-            `Your request for a signed URL failed with a status 403. Double check the CORS configuration and bucket policy in the README. You also will want to double check your AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in your .env and ensure that they are the same as the ones that you created in the IAM dashboard. You may need to generate new keys\n${err.stack}`
-          );
-        } else {
-          alert(`ERROR: ${err.status}\n ${err.stack}`);
+      .catch(err =>{
+         window.alert('Email or password you entered is not correct! Please try again')
+         console.log(err)
+      }) 
+  }
+}
+
+
+   //AWS S3 
+   getSignedRequest = ([file]) => {
+      this.setState({ isUploading: true });
+  
+      const fileName = `${file.name.replace(/\s/g, "-")}`;
+  
+      axios.get(`/sign-s3?file-name=${fileName}&file-type=${file.type}`);
+  
+      axios
+        .get("/sign-s3", {
+          params: {
+            "file-name": fileName,
+            "file-type": file.type
+          }
+        })
+        .then(response => {
+          const { signedRequest, url } = response.data;
+          this.setState({
+            profileImg: url
+          });
+          this.uploadFile(file, signedRequest, url);
+        })
+        .catch(err => {});
+    };
+    uploadFile = (file, signedRequest, url) => {
+      const options = {
+        headers: {
+          "Content-Type": file.type
         }
-      });
-  };
+      };
+  
+      axios
+        .put(signedRequest, file, options)
+        .then(response => {
+          this.setState({ isUploading: false, url });
+          // THEN DO SOMETHING WITH THE URL. SEND TO DB USING POST REQUEST OR SOMETHING
+        })
+        .catch(err => {
+          this.setState({
+            isUploading: false
+          });
+          if (err.response.status === 403) {
+            alert(
+              `Your request for a signed URL failed with a status 403. Double check the CORS configuration and bucket policy in the README. You also will want to double check your AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in your .env and ensure that they are the same as the ones that you created in the IAM dashboard. You may need to generate new keys\n${err.stack}`
+            );
+          } else {
+            alert(`ERROR: ${err.status}\n ${err.stack}`);
+          }
+        });
+    };
 
   render() {
     const {
