@@ -8,6 +8,9 @@ import axios from "axios";
 import "./Landing.css";
 import { FaEye } from "react-icons/fa";
 import { TweenMax, Power3 } from "gsap";
+import growth from "./iconfinder_growth.png";
+import megaphone from "./iconfinder_megaphone.png";
+import network from "./iconfinder_network.png";
 
 const loginStyle = {
   content: {
@@ -43,7 +46,8 @@ export class Landing extends Component {
       email: "",
       password: "",
       profile_image: "",
-      isPassword: true
+      isPassword: true,
+      isMissionRender: false
     };
   }
 
@@ -51,6 +55,9 @@ export class Landing extends Component {
 
   closeLoginModal = () => this.props.loginClicked(false);
   closeRegisterModal = () => this.props.registerClicked(false);
+
+  handleClick = e =>
+    this.setState({ isMissionRender: !this.state.isMissionRender });
 
   register = () => {
     this.closeRegisterModal();
@@ -157,8 +164,20 @@ export class Landing extends Component {
       email,
       password,
       profile_image,
-      isPassword
+      isPassword,
+      isMissionRender
     } = this.state;
+
+    console.log("isMissionRender :", isMissionRender);
+
+    const missionStatements = () => {
+      if (isMissionRender === true) {
+        return "renderTrue";
+      } else {
+        return "renderFalse";
+      }
+    };
+
     return (
       <div className="landing">
         <Modal
@@ -269,7 +288,27 @@ export class Landing extends Component {
           <div className="statement">
             way to manage your projects and organize anything!
           </div>
-          <button className="moreDetails">more details</button>
+          <button
+            data-testid="button"
+            className="moreDetails"
+            onClick={e => this.handleClick(e)}
+          >
+            more details
+          </button>
+        </div>
+        <div className={missionStatements()}>
+          <div className="popDetail">
+            <img src={megaphone} className="icon"></img>
+            <div className="details">Create transparency</div>
+          </div>
+          <div className="popDetail">
+            <img src={growth} className="icon"></img>
+            <div className="details">Promote productivity</div>
+          </div>
+          <div className="popDetail">
+            <img src={network} className="icon"></img>
+            <div className="details">Improve relationships</div>
+          </div>
         </div>
       </div>
     );
