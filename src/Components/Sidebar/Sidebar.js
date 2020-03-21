@@ -74,7 +74,7 @@ handleLogout = () => {
                </div>
 
                <div onClick={() => this.props.history.push('/dashboard')}className='sidebar_links'>Personal Dashboard</div>
-               <div onClick={() => this.props.history.push('/charts')}className='sidebar_links'>Personal Stats Chart</div>
+               <div onClick={() => this.props.history.push(`/personal_stats/${this.props.user.user_id}`)}className='sidebar_links'>Personal Stats Chart</div>
                <div onClick={() => this.props.history.push('/projects')}className='sidebar_links'>Projects List</div>
                <div id='logout_container'> <AiOutlineLogout id='logout'onClick={this.openModel}> </AiOutlineLogout></div>
             </div>

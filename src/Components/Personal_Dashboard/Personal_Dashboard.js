@@ -279,7 +279,7 @@ class Personal_Dashboard extends Component {
                           )}
                         >
                           <div className="title">TITLE: {task.task_name}</div>
-                          <div className="description">
+                          <div className="descriptionA">
                             DETAILS: {task.task_description}
                           </div>
                           <div className={getPriorityColor(task.priority)}>
@@ -328,7 +328,7 @@ class Personal_Dashboard extends Component {
                           )}
                         >
                           <div className="title">TITLE: {task.task_name}</div>
-                          <div className="description">
+                          <div className="descriptionA">
                             DETAILS: {task.task_description}
                           </div>
                           <div className={getPriorityColor(task.priority)}>
@@ -377,7 +377,7 @@ class Personal_Dashboard extends Component {
                           )}
                         >
                           <div className="title">TITLE: {task.task_name}</div>
-                          <div className="description">
+                          <div className="descriptionA">
                             DETAILS: {task.task_description}
                           </div>
                           <div className={getPriorityColor(task.priority)}>
@@ -406,7 +406,7 @@ class Personal_Dashboard extends Component {
             {filDone.map(task => (
               <div className="doneList" key={task.task_id}>
                 <div className="title">TITLE: {task.task_name}</div>
-                <div className="description">
+                <div className="descriptionA">
                   DETAILS: {task.task_description}
                 </div>
                 <div className={getPriorityColor(task.priority)}>
