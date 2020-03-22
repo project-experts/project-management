@@ -59,6 +59,11 @@ export class Landing extends Component {
      this.props.loginClicked(false)
      this.props.registerClicked(true)
   }
+  goToLogin = () => {
+     this.props.registerClicked(false)
+     this.props.loginClicked(true)
+  }
+  
 
   handleClick = e =>
     this.setState({ isMissionRender: !this.state.isMissionRender });
@@ -78,9 +83,13 @@ export class Landing extends Component {
         last_name,
         email,
         password,
-        profile_image
+        profile_image: this.state.profileImg
       })
-      .then(res => this.props.userLoggedIn(res.data))
+      .then(res => {
+         this.props.userLoggedIn(res.data)
+         this.props.history.push("/dashboard");
+      })
+      
       .catch(err => console.log(err));
   };
 
@@ -116,7 +125,8 @@ export class Landing extends Component {
   
       const fileName = `${file.name.replace(/\s/g, "-")}`;
   
-      axios.get(`/sign-s3?file-name=${fileName}&file-type=${file.type}`);
+      axios.get(`/sign-s3?file-name=${fileName}&file-type=${file.type}`)
+      .then(console.log('axios fired line 120'))
   
       axios
         .get("/sign-s3", {
@@ -132,7 +142,7 @@ export class Landing extends Component {
           });
           this.uploadFile(file, signedRequest, url);
         })
-        .catch(err => {});
+        .catch(err => console.log('error line 138', err));
     };
     uploadFile = (file, signedRequest, url) => {
       const options = {
@@ -145,6 +155,7 @@ export class Landing extends Component {
         .put(signedRequest, file, options)
         .then(response => {
           this.setState({ isUploading: false, url });
+         //  this.setState({profile_image: url})
           // THEN DO SOMETHING WITH THE URL. SEND TO DB USING POST REQUEST OR SOMETHING
         })
         .catch(err => {
@@ -284,6 +295,7 @@ export class Landing extends Component {
           <button className="btn" onClick={this.register}>
             Register
           </button>
+          <button className="btn" onClick={this.goToLogin} >Already registered? login</button>
           <button className="btn" onClick={this.closeRegisterModal} >Cancel</button>
         </Modal>
         <div>
