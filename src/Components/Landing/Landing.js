@@ -59,6 +59,10 @@ export class Landing extends Component {
     this.props.loginClicked(false);
     this.props.registerClicked(true);
   };
+  goToLogin = () => {
+    this.props.registerClicked(false);
+    this.props.loginClicked(true);
+  };
 
   handleClick = e =>
     this.setState({ isMissionRender: !this.state.isMissionRender });
@@ -78,9 +82,13 @@ export class Landing extends Component {
         last_name,
         email,
         password,
-        profile_image
+        profile_image: this.state.profileImg
       })
-      .then(res => this.props.userLoggedIn(res.data))
+      .then(res => {
+        this.props.userLoggedIn(res.data);
+        this.props.history.push("/dashboard");
+      })
+
       .catch(err => console.log(err));
   };
 
@@ -107,6 +115,54 @@ export class Landing extends Component {
           console.log(err);
         });
     }
+  };
+
+  //AWS S3
+  getSignedRequest = ([file]) => {
+    this.setState({ isUploading: true });
+
+    const fileName = `${file.name.replace(/\s/g, "-")}`;
+
+    axios
+      .get(`/sign-s3?file-name=${fileName}&file-type=${file.type}`)
+      .then(console.log("axios fired line 120"));
+
+    axios
+      .get("/sign-s3", {
+        params: {
+          "file-name": fileName,
+          "file-type": file.type
+        }
+      })
+      .then(response => {
+        const { signedRequest, url } = response.data;
+        this.setState({
+          profileImg: url
+        });
+        this.uploadFile(file, signedRequest, url);
+      })
+      .catch(err => console.log("error line 138", err));
+  };
+  uploadFile = (file, signedRequest, url) => {
+    const options = {
+      headers: {
+        "Content-Type": file.type
+      }
+    };
+
+    axios
+      .put(signedRequest, file, options)
+      .then(response => {
+        this.setState({ isUploading: false, url });
+        //  this.setState({profile_image: url})
+        // THEN DO SOMETHING WITH THE URL. SEND TO DB USING POST REQUEST OR SOMETHING
+      })
+      .catch(err => {
+        window.alert(
+          "Email or password you entered is not correct! Please try again"
+        );
+        console.log(err);
+      });
   };
 
   //AWS S3
@@ -170,9 +226,7 @@ export class Landing extends Component {
       isPassword,
       isMissionRender
     } = this.state;
-
-    console.log("isMissionRender :", isMissionRender);
-
+    // console.log("isMissionRender :", isMissionRender);
     const missionStatements = () => {
       if (isMissionRender === true) {
         return "renderTrue";
@@ -180,7 +234,6 @@ export class Landing extends Component {
         return "renderFalse";
       }
     };
-
     return (
       <div className="landing">
         <Modal
@@ -229,7 +282,6 @@ export class Landing extends Component {
             Don't have account ? Register
           </button>
         </Modal>
-
         <Modal
           isOpen={this.props.isRegClicked}
           style={regStyle}
@@ -284,6 +336,9 @@ export class Landing extends Component {
           />
           <button className="btn" onClick={this.register}>
             Register
+          </button>
+          <button className="btn" onClick={this.goToLogin}>
+            Already registered? login
           </button>
           <button className="btn" onClick={this.closeRegisterModal}>
             Cancel
