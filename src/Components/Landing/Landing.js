@@ -1,4 +1,4 @@
-import React, { Component, useRef, useEffect } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { userLoggedIn } from "../../redux/reducers/userReducer";
 import { loginClicked } from "../../redux/reducers/loginReducer";
