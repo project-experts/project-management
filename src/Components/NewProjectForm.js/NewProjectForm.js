@@ -84,7 +84,7 @@ export class NewProjectForm extends Component {
       }
       axios.post('/api/createProject', body)
       .then(res => {
-         this.props.history.push('/projects')
+         this.props.history.push(`/projects/${this.props.user.user_id}`)
       })
       .catch(err => console.log(err))
    }
@@ -148,6 +148,7 @@ export class NewProjectForm extends Component {
 function mapStateToProps(state) {
    return {
       toggleSideBar: state.sidebarReducer.toggleSideBar,
+      user: state.userReducer.user,
    }
 }
 export default connect(mapStateToProps, { sidebarToggle })(NewProjectForm);
