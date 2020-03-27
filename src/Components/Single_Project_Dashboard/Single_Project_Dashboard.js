@@ -6,10 +6,9 @@ import Modal from "react-modal";
 import { sidebarToggle } from "../../redux/reducers/sidebarReducer";
 import { IoMdTime } from "react-icons/io";
 import { MdLowPriority } from "react-icons/md";
-import { AiOutlineBarChart } from 'react-icons/ai'
-import { TiMessage } from 'react-icons/ti'
+import { AiOutlineBarChart } from "react-icons/ai";
+import { TiMessage } from "react-icons/ti";
 import axios from "axios";
-
 
 const todoStyle = {
   content: {
@@ -61,9 +60,13 @@ export class Single_Project extends Component {
          .catch(err => console.log(err));
   }
   getAllTasks() {
-    axios.get(`/api/getALlTasksSingleProject/${this.props.match.params.project_id}`)
-         .then(res => this.setState({alltasks: res.data }))
-      }
+    axios
+      .get(
+        `/api/getALlTasksSingleProject/${this.props.match.params.project_id}`
+      )
+      .then(res => this.setState({ alltasks: res.data }));
+  }
+
   handleEvent = e => this.setState({ [e.target.name]: e.target.value });
   handleDate = selectedDate => this.setState({ startDate: selectedDate });
   handlePriority = e => this.setState({ priority: e.target.value });
@@ -76,8 +79,9 @@ export class Single_Project extends Component {
       firstName: firstName,
       lastName: lastName
     });
-  closeModal = () => this.setState({ isModalOpen: false, name: "", task_description: "" });
- 
+  closeModal = () =>
+    this.setState({ isModalOpen: false, name: "", task_description: "" });
+
   submitTask = () => {
     this.closeModal();
     const { name, task_description, startDate, owner, priority } = this.state;
@@ -108,10 +112,11 @@ export class Single_Project extends Component {
   };
 
   pushToProgress = task_id => {
-   axios.put(`/api/updateTaskToInProgress/${task_id}`)
-   .then(res => this.getAllTasks())
-   .catch(err => console.log(err))
-  }
+    axios
+      .put(`/api/updateTaskToInProgress/${task_id}`)
+      .then(res => this.getAllTasks())
+      .catch(err => console.log(err));
+  };
   pushToCompleted = task_id => {
    axios.put(`/api/updateTaskToDone/${task_id}`)
    .then(res => this.getAllTasks())
@@ -174,125 +179,319 @@ export class Single_Project extends Component {
                            <h4 style={{margin: 0}} > {mate.first_name} {mate.last_name.slice(0, 1)} </h4>
                         </div>)} 
                   </div>
-               </div>
-               <div className='task_container'>
-                  <div className='tasks'>
-                  <div id='task_status1'>To Do</div>
-                     <div className='task_holder'>
-                     <div className='task' onClick={() => this.openModal()} style={{display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '80px'}} > +</div>
-                     {todos.length>0 && todos.map(task => (
-                        <div className='task' key={task.task_id} >
-                           <div className='task-name1' >{task.task_name}</div>
-                           <div className='task-lower-box' >
-                              <div className='task-description1' >{task.task_description}</div>
-                              <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around', width: '100%'}}>
-                                 <div style={{minWidth: '60%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start'}} >
-                                    <div className='task-deadline-2' >
-                                       <IoMdTime size={20} ></IoMdTime> 
-                                       <div className='task-deadline1'> {task.deadline.slice(0, 10)}</div> 
-                                    </div>
-                                    <div className='task-deadline-2' >
-                                       <MdLowPriority size={20} ></MdLowPriority>
-                                       <div className={task.priority==='high' ? 'high1' : (task.priority === 'medium' ? 'medium1' : 'low1') } >{task.priority}</div>
-                                    </div>
-                                 </div>
-                                 <img src={task.profile_image} width='40' style={{height: '40px', borderRadius: '50%', padding: '0', margin: 'auto'}} />
-                                 <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-around', alignItems: 'flex-end'}} >
-                                    <button className='task-btn1' >Edit</button>
-                                    <button className='task-btn1' >Delete</button>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     ))}
-                     </div>
-                  </div>
-                  <div className='tasks'>
-                     <div id='task_status1'>In Progress</div>
-                     <div className='task_holder'>
-                     {inprogress.length>0 && inprogress.map(task => (
-                        <div className='task' key={task.task_id} >
-                           <div className='task-name1' >{task.task_name}</div>
-                           <div className='task-lower-box' >
-                              <div className='task-description1' >{task.task_description}</div>
-                              <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around', width: '100%'}}>
-                                 <div style={{minWidth: '60%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start'}} >
-                                    <div className='task-deadline-2' >
-                                       <IoMdTime size={20} ></IoMdTime> 
-                                       <div className='task-deadline1'> {task.deadline.slice(0, 10)}</div> 
-                                    </div>
-                                    <div className='task-deadline-2' >
-                                       <MdLowPriority size={20} ></MdLowPriority>
-                                       <div className={task.priority==='high' ? 'high1' : (task.priority === 'medium' ? 'medium1' : 'low1') } >{task.priority}</div>
-                                    </div>
-                                 </div>
-                                 <img src={task.profile_image} width='40' style={{height: '40px', borderRadius: '50%', padding: '0', margin: 'auto'}} />
-                              </div>
-                           </div>
-                        </div>
-                     ))}
-                     </div>
-                  </div> 
-                  <div className='tasks'>
-                     <div id='task_status1'>In Review</div>
-                     <div className='task_holder'>
-                     {review.length>0 && review.map(task => (
-                        <div className='task' key={task.task_id} >
-                           <div className='task-name1' >{task.task_name}</div>
-                           <div className='task-lower-box' >
-                              <div className='task-description1' >{task.task_description}</div>
-                              <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around', width: '100%'}}>
-                                 <div style={{minWidth: '60%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start'}} >
-                                    <div className='task-deadline-2' >
-                                       <IoMdTime size={20} ></IoMdTime> 
-                                       <div className='task-deadline1'> {task.deadline.slice(0, 10)}</div> 
-                                    </div>
-                                    <div className='task-deadline-2' >
-                                       <MdLowPriority size={20} ></MdLowPriority>
-                                       <div className={task.priority==='high' ? 'high1' : (task.priority === 'medium' ? 'medium1' : 'low1') } >{task.priority}</div>
-                                    </div>
-                                 </div>
-                                 <img src={task.profile_image} width='40' style={{height: '40px', borderRadius: '50%', padding: '0', margin: 'auto'}} />
-                                 <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-around', alignItems: 'flex-end'}} >
-                                    <button className='task-btn1' onClick={() => this.pushToProgress(task.task_id)} >Fail</button> 
-                                    <button className='task-btn1' onClick={() => this.pushToCompleted(task.task_id)} >Pass</button> 
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     ))}
-                     </div>
-                  </div>
-                  <div className='tasks'>
-                     <div id='task_status1'>Complete</div>
-                     <div className='task_holder'>
-                     {completed.length>0 && completed.map(task => (
-                        <div className='task' key={task.task_id} >
-                           <div className='task-name1' >{task.task_name}</div>
-                           <div className='task-lower-box' >
-                              <div className='task-description1' >{task.task_description}</div>
-                              <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around', width: '100%'}}>
-                                 <div style={{minWidth: '60%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start'}} >
-                                    <div className='task-deadline-2' >
-                                       <IoMdTime size={20} ></IoMdTime> 
-                                       <div className='task-deadline1'> {task.deadline.slice(0, 10)}</div> 
-                                    </div>
-                                    <div className='task-deadline-2' >
-                                       <MdLowPriority size={20} ></MdLowPriority>
-                                       <div className={task.priority==='high' ? 'high1' : (task.priority === 'medium' ? 'medium1' : 'low1') } >{task.priority}</div>
-                                    </div>
-                                 </div>
-                                 <img src={task.profile_image} width='40' style={{height: '40px', borderRadius: '50%', padding: '0', margin: 'auto'}} />
-                              </div>
-                           </div>
-                        </div>
-                     ))}
-                   </div>
-                  </div>
-               </div>
+                ))}
             </div>
           </div>
-     )
+          <div className="task_container">
+            <div className="tasks">
+              <div id="task_status1">To Do</div>
+              <div className="task_holder">
+                <div
+                  className="task"
+                  onClick={() => this.openModal()}
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    fontSize: "80px"
+                  }}
+                >
+                  {" "}
+                  +
+                </div>
+                {todos.length > 0 &&
+                  todos.map(task => (
+                    <div className="task" key={task.task_id}>
+                      <div className="task-name1">{task.task_name}</div>
+                      <div className="task-lower-box">
+                        <div className="task-description1">
+                          {task.task_description}
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "space-around",
+                            width: "100%"
+                          }}
+                        >
+                          <div
+                            style={{
+                              minWidth: "60%",
+                              display: "flex",
+                              flexDirection: "column",
+                              justifyContent: "flex-start"
+                            }}
+                          >
+                            <div className="task-deadline-2">
+                              <IoMdTime size={20}></IoMdTime>
+                              <div className="task-deadline1">
+                                {" "}
+                                {task.deadline.slice(0, 10)}
+                              </div>
+                            </div>
+                            <div className="task-deadline-2">
+                              <MdLowPriority size={20}></MdLowPriority>
+                              <div
+                                className={
+                                  task.priority === "high"
+                                    ? "high1"
+                                    : task.priority === "medium"
+                                    ? "medium1"
+                                    : "low1"
+                                }
+                              >
+                                {task.priority}
+                              </div>
+                            </div>
+                          </div>
+                          <img
+                            src={task.profile_image}
+                            width="40"
+                            style={{
+                              height: "40px",
+                              borderRadius: "50%",
+                              padding: "0",
+                              margin: "auto"
+                            }}
+                          />
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              justifyContent: "space-around",
+                              alignItems: "flex-end"
+                            }}
+                          >
+                            <button className="task-btn1">Edit</button>
+                            <button className="task-btn1">Delete</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </div>
+            <div className="tasks">
+              <div id="task_status1">In Progress</div>
+              <div className="task_holder">
+                {inprogress.length > 0 &&
+                  inprogress.map(task => (
+                    <div className="task" key={task.task_id}>
+                      <div className="task-name1">{task.task_name}</div>
+                      <div className="task-lower-box">
+                        <div className="task-description1">
+                          {task.task_description}
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "space-around",
+                            width: "100%"
+                          }}
+                        >
+                          <div
+                            style={{
+                              minWidth: "60%",
+                              display: "flex",
+                              flexDirection: "column",
+                              justifyContent: "flex-start"
+                            }}
+                          >
+                            <div className="task-deadline-2">
+                              <IoMdTime size={20}></IoMdTime>
+                              <div className="task-deadline1">
+                                {" "}
+                                {task.deadline.slice(0, 10)}
+                              </div>
+                            </div>
+                            <div className="task-deadline-2">
+                              <MdLowPriority size={20}></MdLowPriority>
+                              <div
+                                className={
+                                  task.priority === "high"
+                                    ? "high1"
+                                    : task.priority === "medium"
+                                    ? "medium1"
+                                    : "low1"
+                                }
+                              >
+                                {task.priority}
+                              </div>
+                            </div>
+                          </div>
+                          <img
+                            src={task.profile_image}
+                            width="40"
+                            style={{
+                              height: "40px",
+                              borderRadius: "50%",
+                              padding: "0",
+                              margin: "auto"
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </div>
+            <div className="tasks">
+              <div id="task_status1">In Review</div>
+              <div className="task_holder">
+                {review.length > 0 &&
+                  review.map(task => (
+                    <div className="task" key={task.task_id}>
+                      <div className="task-name1">{task.task_name}</div>
+                      <div className="task-lower-box">
+                        <div className="task-description1">
+                          {task.task_description}
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "space-around",
+                            width: "100%"
+                          }}
+                        >
+                          <div
+                            style={{
+                              minWidth: "60%",
+                              display: "flex",
+                              flexDirection: "column",
+                              justifyContent: "flex-start"
+                            }}
+                          >
+                            <div className="task-deadline-2">
+                              <IoMdTime size={20}></IoMdTime>
+                              <div className="task-deadline1">
+                                {" "}
+                                {task.deadline.slice(0, 10)}
+                              </div>
+                            </div>
+                            <div className="task-deadline-2">
+                              <MdLowPriority size={20}></MdLowPriority>
+                              <div
+                                className={
+                                  task.priority === "high"
+                                    ? "high1"
+                                    : task.priority === "medium"
+                                    ? "medium1"
+                                    : "low1"
+                                }
+                              >
+                                {task.priority}
+                              </div>
+                            </div>
+                          </div>
+                          <img
+                            src={task.profile_image}
+                            width="40"
+                            style={{
+                              height: "40px",
+                              borderRadius: "50%",
+                              padding: "0",
+                              margin: "auto"
+                            }}
+                          />
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              justifyContent: "space-around",
+                              alignItems: "flex-end"
+                            }}
+                          >
+                            <button
+                              className="task-btn1"
+                              onClick={() => this.pushToProgress(task.task_id)}
+                            >
+                              Fail
+                            </button>
+                            <button
+                              className="task-btn1"
+                              onClick={() => this.pushToCompleted(task.task_id)}
+                            >
+                              Pass
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </div>
+            <div className="tasks">
+              <div id="task_status1">Done</div>
+              <div className="task_holder">
+                {completed.length > 0 &&
+                  completed.map(task => (
+                    <div className="task" key={task.task_id}>
+                      <div className="task-name1">{task.task_name}</div>
+                      <div className="task-lower-box">
+                        <div className="task-description1">
+                          {task.task_description}
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "space-around",
+                            width: "100%"
+                          }}
+                        >
+                          <div
+                            style={{
+                              minWidth: "60%",
+                              display: "flex",
+                              flexDirection: "column",
+                              justifyContent: "flex-start"
+                            }}
+                          >
+                            <div className="task-deadline-2">
+                              <IoMdTime size={20}></IoMdTime>
+                              <div className="task-deadline1">
+                                {" "}
+                                {task.deadline.slice(0, 10)}
+                              </div>
+                            </div>
+                            <div className="task-deadline-2">
+                              <MdLowPriority size={20}></MdLowPriority>
+                              <div
+                                className={
+                                  task.priority === "high"
+                                    ? "high1"
+                                    : task.priority === "medium"
+                                    ? "medium1"
+                                    : "low1"
+                                }
+                              >
+                                {task.priority}
+                              </div>
+                            </div>
+                          </div>
+                          <img
+                            src={task.profile_image}
+                            width="40"
+                            style={{
+                              height: "40px",
+                              borderRadius: "50%",
+                              padding: "0",
+                              margin: "auto"
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          </div>
+        </div>
+    
+    );
   }
 }
 

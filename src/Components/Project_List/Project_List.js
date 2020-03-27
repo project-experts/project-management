@@ -1,12 +1,11 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import axios from 'axios'
-import './Project_List.css'
-import { FaPlus } from 'react-icons/fa'
-import { FiMoreHorizontal } from 'react-icons/fi'
-import { sidebarToggle } from '../../redux/reducers/sidebarReducer'
-import { IoIosPeople } from 'react-icons/io'
-
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import axios from "axios";
+import "./Project_List.css";
+import { FaPlus } from "react-icons/fa";
+import { FiMoreHorizontal } from "react-icons/fi";
+import { sidebarToggle } from "../../redux/reducers/sidebarReducer";
+import { IoIosPeople } from "react-icons/io";
 
 export class Project_List extends Component {
       constructor(props){
@@ -67,12 +66,11 @@ export class Project_List extends Component {
 
 
 function mapStateToProps(state) {
-   return {
-      user: state.userReducer.user,
-      toggleSideBar: state.sidebarReducer.toggleSideBar,
-      searchInput: state.searchReducer.searchInput
-   }
+  return {
+    user: state.userReducer.user,
+    toggleSideBar: state.sidebarReducer.toggleSideBar,
+    searchInput: state.searchReducer.searchInput
+  };
 }
 
-export default connect(mapStateToProps, {sidebarToggle})(Project_List);
-
+export default connect(mapStateToProps, { sidebarToggle })(Project_List);
