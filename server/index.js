@@ -106,6 +106,7 @@ app.put("/api/updateTaskToInProgress/:task_id", taskCtrl.updateTaskInProgress);
 //project endpoints
 app.get("/api/getProjects/:user_id", projectCtrl.getAllProjects);
 app.post("/api/createProject", projectCtrl.createProject);
+app.get('/api/getSingleProject/:project_id', projectCtrl.getSingleProject); 
 
 //stats endpoints
 app.get("/api/countTodoTask/:project_id", statsCtrl.countToDoTask);

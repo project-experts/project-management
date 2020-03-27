@@ -30,7 +30,6 @@ export class Project_List extends Component {
       }
       render() {
          const { projects } = this.state;
-         console.log('Projects list: ', projects)
          let filteredProjects; 
          if (this.props.searchInput){
             filteredProjects = projects.filter(p => p.project_name.includes(this.props.searchInput) || p.project_description.includes(this.props.searchInput))

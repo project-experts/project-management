@@ -37,6 +37,7 @@ export class Single_Project extends Component {
       startDate: new Date(),
       alltasks: [],  
       teammates: [],
+      currentProject: [],
     };
   }
 
@@ -44,12 +45,19 @@ export class Single_Project extends Component {
     if (this.props.match.params.project_id) {
       this.getTeamMates();
       this.getAllTasks();
+      this.getCurrentProject()
     }
+  }
+
+  getCurrentProject(){
+     axios.get(`/api/getSingleProject/${this.props.match.params.project_id}`)
+         .then(res => this.setState({currentProject: res.data}))
+         .catch(err => console.log(err))
   }
 
   getTeamMates() {
     axios.get(`/api/getAllTeammates/${this.props.match.params.project_id}`)
-         .then(res => this.setState({ teammates: res.data }))
+         .then(res => this.setState({ teammates: [{user_id: 'jdf30u0r33j03ur3fj', first_name: 'Select', last_name: 'team'}, ...res.data]}))
          .catch(err => console.log(err));
   }
   getAllTasks() {
@@ -113,12 +121,13 @@ export class Single_Project extends Component {
   
  
    render() {
-      console.log(this.state.teammates)
-      const { name, task_description, alltasks, teammates, startDate, isModalOpen, priority } = this.state;
+      const { name, task_description, alltasks, teammates, startDate, isModalOpen, priority, currentProject } = this.state;
       const todos = alltasks.filter(t => t.status === 'to do' && (t.task_name.includes(this.props.searchInput) || t.task_description.includes(this.props.searchInput))); 
       const inprogress = alltasks.filter(t => t.status === 'in progress' && (t.task_name.includes(this.props.searchInput) || t.task_description.includes(this.props.searchInput))); 
       const review = alltasks.filter(t => t.status === 'review' && (t.task_name.includes(this.props.searchInput) || t.task_description.includes(this.props.searchInput))); 
       const completed = alltasks.filter(t => t.status === 'done' && (t.task_name.includes(this.props.searchInput) || t.task_description.includes(this.props.searchInput))); 
+
+      console.log('teammates', teammates)
 
       return (
          <div className={this.props.toggleSideBar ? 'personal_dashboard' : 'personal_dashboard open'}>
@@ -140,7 +149,7 @@ export class Single_Project extends Component {
             <p>Deadline: <DatePicker selected={startDate} onChange={this.handleDate}/></p>
             <label>Assign: 
                <select  onChange={e => this.selectUserId(e.target.value)}  >
-                  {teammates.map(teammate => (
+                  {teammates.length>0 && teammates.map(teammate => (
                      <option value={teammate.user_id} key={teammate.user_id}> {teammate.first_name} {teammate.last_name} </option>
                   ))}
                </select>
@@ -153,10 +162,10 @@ export class Single_Project extends Component {
             <div className='task_filler'>
             <div className='upper-container-1' >
                   <div className='project_info'>
-                     <div className='project_name'>Project Name 
+                     <div className='project_name'> {currentProject.length>0 && currentProject[0].project_name}
                      <AiOutlineBarChart className='chart_button' onClick={() => this.props.history.push(`/SingleProjectStats/${this.props.match.params.project_id}`)}/>
                      </div>
-                     <div className='project_description'>typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>
+                     <div className='project_description'> {currentProject.length>0 && currentProject[0].project_description} </div>
                   </div>
                   <div className='single-project-teams-1' > {teammates.length>0 && teammates.map(mate => 
                         <div className='single-mate-1' key={mate.id}>
