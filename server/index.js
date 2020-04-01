@@ -61,7 +61,6 @@ app.get("/sign-s3", (req, res) => {
       signedRequest: data,
       url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
     };
-
     return res.send(returnData);
   });
 });
@@ -80,6 +79,12 @@ app.delete("/api/deleteTask/:user_id", taskCtrl.deleteTask);
 app.get("/api/getAllTeammates/:project_id", taskCtrl.getAllTeammates);
 
 //personal Dashboard - get all tasks
+app.get(
+  "/api/getALlTasksSingleProject/:project_id",
+  taskCtrl.getAllTasksSingleProject
+);
+//get all tasks in 4 status based on current user
+app.get("/api/getToDoTasks/:user_id", taskCtrl.getToDoTasks);
 app.get("/api/getToDoTasks/:user_id", taskCtrl.getToDoTasks);
 app.get("/api/getALlTasksSingleProject/:project_id", taskCtrl.getAllTasksSingleProject);
 app.get("/api/getInProgressTasks/:user_id", taskCtrl.getInProgressTasks);
@@ -101,6 +106,7 @@ app.put("/api/updateTaskToInProgress/:task_id", taskCtrl.updateTaskInProgress);
 //project endpoints
 app.get("/api/getProjects/:user_id", projectCtrl.getAllProjects);
 app.post("/api/createProject", projectCtrl.createProject);
+app.get('/api/getSingleProject/:project_id', projectCtrl.getSingleProject); 
 
 //stats endpoints
 app.get("/api/countTodoTask/:project_id", statsCtrl.countToDoTask);

@@ -49,18 +49,20 @@ class Header extends Component {
               />
             </div>
             <StyledNav>
-              <span>CONTACT US</span>
-              <span>MEET WITH THE TEAM</span>
+              <span style={{cursor: 'pointer'}} >CONTACT US</span>
+              <span style={{cursor: 'pointer'}} >MEET WITH THE TEAM</span>
               <div>
                 <IoMdLogIn
                   size={25}
                   onClick={() => this.props.loginClicked(true)}
+                  style={{cursor: 'pointer'}}
                 ></IoMdLogIn>
               </div>
               <div>
                 <FiUserCheck
                   size={25}
                   onClick={() => this.props.registerClicked(true)}
+                  style={{cursor: 'pointer'}}
                 ></FiUserCheck>
               </div>
             </StyledNav>
@@ -94,20 +96,10 @@ class Header extends Component {
               />
             </div>
             <StyledNav>
-              <span>CONTACT US</span>
-              <span>MEET WITH THE TEAM</span>
-              <div>
-                <IoMdLogIn
-                  size={25}
-                  onClick={() => this.props.loginClicked(true)}
-                ></IoMdLogIn>
-              </div>
-              <div>
-                <FiUserCheck
-                  size={25}
-                  onClick={() => this.props.registerClicked(true)}
-                ></FiUserCheck>
-              </div>
+              <span style={{cursor: 'pointer'}} >CONTACT US</span>
+              <span style={{cursor: 'pointer'}} >MEET WITH THE TEAM</span>
+              <div>Welcome, {' '} {this.props.user.first_name} {' '} {this.props.user.last_name.slice(0, 1).toUpperCase()} </div>
+              <div></div>
             </StyledNav>
           </div>
         )}

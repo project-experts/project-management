@@ -1,4 +1,4 @@
-import React, { Component, useRef, useEffect } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { userLoggedIn } from "../../redux/reducers/userReducer";
 import { loginClicked } from "../../redux/reducers/loginReducer";
@@ -8,11 +8,14 @@ import axios from "axios";
 import "./Landing.css";
 import { FaEye } from "react-icons/fa";
 import { TweenMax, Power3 } from "gsap";
+import growth from "./iconfinder_growth.png";
+import megaphone from "./iconfinder_megaphone.png";
+import network from "./iconfinder_network.png";
 
 const loginStyle = {
   content: {
     width: "250px",
-    height: "250px",
+    height: "350px",
     margin: "auto",
     display: "flex",
     flexDirection: "column",
@@ -43,7 +46,8 @@ export class Landing extends Component {
       email: "",
       password: "",
       profile_image: "",
-      isPassword: true
+      isPassword: true,
+      isMissionRender: false
     };
   }
 
@@ -51,6 +55,17 @@ export class Landing extends Component {
 
   closeLoginModal = () => this.props.loginClicked(false);
   closeRegisterModal = () => this.props.registerClicked(false);
+  goToRegister = () => {
+    this.props.loginClicked(false);
+    this.props.registerClicked(true);
+  };
+  goToLogin = () => {
+    this.props.registerClicked(false);
+    this.props.loginClicked(true);
+  };
+
+  handleClick = e =>
+    this.setState({ isMissionRender: !this.state.isMissionRender });
 
   register = () => {
     this.closeRegisterModal();
@@ -67,88 +82,139 @@ export class Landing extends Component {
         last_name,
         email,
         password,
-        profile_image
+        profile_image: this.state.profileImg
       })
-      .then(res => this.props.userLoggedIn(res.data))
+      .then(res => {
+        this.props.userLoggedIn(res.data);
+        this.props.history.push("/dashboard");
+      })
+
       .catch(err => console.log(err));
   };
 
-   login = () => {
-      const { email, password } = this.state; 
-      if (email.length<1 && password.length<1){
-         window.alert('Please Enter valid email and password! ')
-      }
-      else if (email.length<1 && password.length>=1){
-         window.alert('Please Enter valid email!')
-      }
-      else if (email.length>=1 && password.length<1){
-         window.alert('Please Enter valid password! ')
-      }
-      else {
-      this.closeLoginModal(); 
-      axios.post('/api/login', { email, password })
-      .then(res => {
-         this.props.userLoggedIn(res.data);
-         this.props.history.push("/dashboard");
-      })
-      .catch(err =>{
-         window.alert('Email or password you entered is not correct! Please try again')
-         console.log(err)
-      }) 
-  }
-}
-
-
-   //AWS S3 
-   getSignedRequest = ([file]) => {
-      this.setState({ isUploading: true });
-  
-      const fileName = `${file.name.replace(/\s/g, "-")}`;
-  
-      axios.get(`/sign-s3?file-name=${fileName}&file-type=${file.type}`);
-  
+  login = () => {
+    const { email, password } = this.state;
+    if (email.length < 1 && password.length < 1) {
+      window.alert("Please Enter valid email and password! ");
+    } else if (email.length < 1 && password.length >= 1) {
+      window.alert("Please Enter valid email!");
+    } else if (email.length >= 1 && password.length < 1) {
+      window.alert("Please Enter valid password! ");
+    } else {
+      this.closeLoginModal();
       axios
-        .get("/sign-s3", {
-          params: {
-            "file-name": fileName,
-            "file-type": file.type
-          }
-        })
-        .then(response => {
-          const { signedRequest, url } = response.data;
-          this.setState({
-            profileImg: url
-          });
-          this.uploadFile(file, signedRequest, url);
-        })
-        .catch(err => {});
-    };
-    uploadFile = (file, signedRequest, url) => {
-      const options = {
-        headers: {
-          "Content-Type": file.type
-        }
-      };
-  
-      axios
-        .put(signedRequest, file, options)
-        .then(response => {
-          this.setState({ isUploading: false, url });
-          // THEN DO SOMETHING WITH THE URL. SEND TO DB USING POST REQUEST OR SOMETHING
+        .post("/api/login", { email, password })
+        .then(res => {
+          this.props.userLoggedIn(res.data);
+          this.props.history.push("/dashboard");
         })
         .catch(err => {
-          this.setState({
-            isUploading: false
-          });
-          if (err.response.status === 403) {
-            alert(
-              `Your request for a signed URL failed with a status 403. Double check the CORS configuration and bucket policy in the README. You also will want to double check your AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in your .env and ensure that they are the same as the ones that you created in the IAM dashboard. You may need to generate new keys\n${err.stack}`
-            );
-          } else {
-            alert(`ERROR: ${err.status}\n ${err.stack}`);
-          }
+          window.alert(
+            "Email or password you entered is not correct! Please try again"
+          );
+          console.log(err);
         });
+    }
+  };
+
+  //AWS S3
+  getSignedRequest = ([file]) => {
+    this.setState({ isUploading: true });
+
+    const fileName = `${file.name.replace(/\s/g, "-")}`;
+
+    axios
+      .get(`/sign-s3?file-name=${fileName}&file-type=${file.type}`)
+      .then(console.log("axios fired line 120"));
+
+    axios
+      .get("/sign-s3", {
+        params: {
+          "file-name": fileName,
+          "file-type": file.type
+        }
+      })
+      .then(response => {
+        const { signedRequest, url } = response.data;
+        this.setState({
+          profileImg: url
+        });
+        this.uploadFile(file, signedRequest, url);
+      })
+      .catch(err => console.log("error line 138", err));
+  };
+  uploadFile = (file, signedRequest, url) => {
+    const options = {
+      headers: {
+        "Content-Type": file.type
+      }
     };
+
+    axios
+      .put(signedRequest, file, options)
+      .then(response => {
+        this.setState({ isUploading: false, url });
+        //  this.setState({profile_image: url})
+        // THEN DO SOMETHING WITH THE URL. SEND TO DB USING POST REQUEST OR SOMETHING
+      })
+      .catch(err => {
+        window.alert(
+          "Email or password you entered is not correct! Please try again"
+        );
+        console.log(err);
+      });
+  };
+
+  //AWS S3
+  getSignedRequest = ([file]) => {
+    this.setState({ isUploading: true });
+
+    const fileName = `${file.name.replace(/\s/g, "-")}`;
+
+    axios.get(`/sign-s3?file-name=${fileName}&file-type=${file.type}`);
+
+    axios
+      .get("/sign-s3", {
+        params: {
+          "file-name": fileName,
+          "file-type": file.type
+        }
+      })
+      .then(response => {
+        const { signedRequest, url } = response.data;
+        this.setState({
+          profileImg: url
+        });
+        this.uploadFile(file, signedRequest, url);
+      })
+      .catch(err => {});
+  };
+  uploadFile = (file, signedRequest, url) => {
+    const options = {
+      headers: {
+        "Content-Type": file.type
+      }
+    };
+
+    axios
+      .put(signedRequest, file, options)
+      .then(response => {
+        this.setState({ isUploading: false, url });
+        // THEN DO SOMETHING WITH THE URL. SEND TO DB USING POST REQUEST OR SOMETHING
+      })
+      .catch(err => {
+        this.setState({
+          isUploading: false
+        });
+        if (err.response.status === 403) {
+          alert(
+            `Your request for a signed URL failed with a status 403. Double check the CORS configuration and bucket policy in the README. You also will want to double check your AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in your .env and ensure that they are the same as the ones that you created in the IAM dashboard. You may need to generate new keys\n${err.stack}`
+          );
+        } else {
+          alert(`ERROR: ${err.status}\n ${err.stack}`);
+        }
+      });
+  };
 
   render() {
     const {
@@ -157,8 +223,17 @@ export class Landing extends Component {
       email,
       password,
       profile_image,
-      isPassword
+      isPassword,
+      isMissionRender
     } = this.state;
+    // console.log("isMissionRender :", isMissionRender);
+    const missionStatements = () => {
+      if (isMissionRender === true) {
+        return "renderTrue";
+      } else {
+        return "renderFalse";
+      }
+    };
     return (
       <div className="landing">
         <Modal
@@ -203,8 +278,10 @@ export class Landing extends Component {
           <button className="btn" onClick={this.login}>
             Sign in
           </button>
+          <button onClick={this.goToRegister}>
+            Don't have account ? Register
+          </button>
         </Modal>
-
         <Modal
           isOpen={this.props.isRegClicked}
           style={regStyle}
@@ -260,6 +337,12 @@ export class Landing extends Component {
           <button className="btn" onClick={this.register}>
             Register
           </button>
+          <button className="btn" onClick={this.goToLogin}>
+            Already registered? login
+          </button>
+          <button className="btn" onClick={this.closeRegisterModal}>
+            Cancel
+          </button>
         </Modal>
         <div>
           <div className="ourMission">OUR MISSION</div>
@@ -269,7 +352,27 @@ export class Landing extends Component {
           <div className="statement">
             way to manage your projects and organize anything!
           </div>
-          <button className="moreDetails">more details</button>
+          <button
+            data-testid="button"
+            className="moreDetails"
+            onClick={e => this.handleClick(e)}
+          >
+            more details
+          </button>
+        </div>
+        <div className={missionStatements()}>
+          <div className="popDetail">
+            <img src={megaphone} className="icon"></img>
+            <div className="details">Create transparency</div>
+          </div>
+          <div className="popDetail">
+            <img src={growth} className="icon"></img>
+            <div className="details">Promote productivity</div>
+          </div>
+          <div className="popDetail">
+            <img src={network} className="icon"></img>
+            <div className="details">Improve relationships</div>
+          </div>
         </div>
       </div>
     );

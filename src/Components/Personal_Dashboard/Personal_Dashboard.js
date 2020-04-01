@@ -91,6 +91,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   userSelect: "none",
   padding: grid * 2,
   margin: `0 0 ${grid}px 0`,
+  borderRadius: "8px",
 
   // change background colour if dragging
   background: isDragging ? "lightgreen" : "lightgrey",
@@ -278,16 +279,16 @@ class Personal_Dashboard extends Component {
                             provided.draggableProps.style
                           )}
                         >
-                          <div className="title">TITLE: {task.task_name}</div>
-                          <div className="description">
-                            DETAILS: {task.task_description}
+                          <div className="title">{task.task_name}</div>
+                          <div className="descriptionA">
+                            Task description: {task.task_description}
                           </div>
                           <div className={getPriorityColor(task.priority)}>
-                            PRIORITY: {task.priority}
+                            Priority: {task.priority}
                           </div>
                           <div className="deadline">
                             <div className="deadline">
-                              DEADLINE: {task.deadline.slice(0, 10)}
+                              Deadline: {task.deadline.slice(0, 10)}
                               <img
                                 src={deadline_logo}
                                 className="deadlineLogo"
@@ -327,16 +328,16 @@ class Personal_Dashboard extends Component {
                             provided.draggableProps.style
                           )}
                         >
-                          <div className="title">TITLE: {task.task_name}</div>
-                          <div className="description">
-                            DETAILS: {task.task_description}
+                          <div className="title">{task.task_name}</div>
+                          <div className="descriptionA">
+                            Task description: {task.task_description}
                           </div>
                           <div className={getPriorityColor(task.priority)}>
-                            PRIORITY: {task.priority}
+                            Priority: {task.priority}
                           </div>
                           <div className="deadline">
                             <div className="deadline">
-                              DEADLINE: {task.deadline.slice(0, 10)}
+                              Deadline: {task.deadline.slice(0, 10)}
                               <img
                                 src={deadline_logo}
                                 className="deadlineLogo"
@@ -376,16 +377,16 @@ class Personal_Dashboard extends Component {
                             provided.draggableProps.style
                           )}
                         >
-                          <div className="title">TITLE: {task.task_name}</div>
-                          <div className="description">
-                            DETAILS: {task.task_description}
+                          <div className="title">{task.task_name}</div>
+                          <div className="descriptionA">
+                            Task description: {task.task_description}
                           </div>
                           <div className={getPriorityColor(task.priority)}>
-                            PRIORITY: {task.priority}
+                            Priority: {task.priority}
                           </div>
                           <div className="deadline">
                             <div className="deadline">
-                              DEADLINE: {task.deadline.slice(0, 10)}
+                              Deadline: {task.deadline.slice(0, 10)}
                               <img
                                 src={deadline_logo}
                                 className="deadlineLogo"
@@ -405,16 +406,16 @@ class Personal_Dashboard extends Component {
             <div className="dashboardTitle">Done</div>
             {filDone.map(task => (
               <div className="doneList" key={task.task_id}>
-                <div className="title">TITLE: {task.task_name}</div>
-                <div className="description">
-                  DETAILS: {task.task_description}
+                <div className="title">{task.task_name}</div>
+                <div className="descriptionA">
+                  Task description: {task.task_description}
                 </div>
                 <div className={getPriorityColor(task.priority)}>
-                  PRIORITY: {task.priority}
+                  Priority: {task.priority}
                 </div>
                 <div className="deadline">
                   <div className="deadline">
-                    DEADLINE: {task.deadline.slice(0, 10)}
+                    Deadline: {task.deadline.slice(0, 10)}
                     <img src={deadline_logo} className="deadlineLogo"></img>
                   </div>
                 </div>
