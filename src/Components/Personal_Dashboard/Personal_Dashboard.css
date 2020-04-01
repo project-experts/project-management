@@ -14,6 +14,7 @@
   width: 218px;
   margin: 8px;
   padding: 16px;
+  border-radius: 8px;
 }
 
 .dashboardTitle {
@@ -24,6 +25,7 @@
 .title {
   padding: 4px;
   font-size: 13px;
+  font-weight: bold;
 }
 .descriptionA {
   padding: 4px;
