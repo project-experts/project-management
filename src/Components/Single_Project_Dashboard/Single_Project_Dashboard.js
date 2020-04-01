@@ -34,9 +34,9 @@ export class Single_Project extends Component {
       owner: 0,
       isModalOpen: false,
       startDate: new Date(),
-      alltasks: [],  
+      alltasks: [],
       teammates: [],
-      currentProject: [],
+      currentProject: []
     };
   }
 
@@ -44,20 +44,33 @@ export class Single_Project extends Component {
     if (this.props.match.params.project_id) {
       this.getTeamMates();
       this.getAllTasks();
-      this.getCurrentProject()
+      this.getCurrentProject();
     }
   }
 
-  getCurrentProject(){
-     axios.get(`/api/getSingleProject/${this.props.match.params.project_id}`)
-         .then(res => this.setState({currentProject: res.data}))
-         .catch(err => console.log(err))
+  getCurrentProject() {
+    axios
+      .get(`/api/getSingleProject/${this.props.match.params.project_id}`)
+      .then(res => this.setState({ currentProject: res.data }))
+      .catch(err => console.log(err));
   }
 
   getTeamMates() {
-    axios.get(`/api/getAllTeammates/${this.props.match.params.project_id}`)
-         .then(res => this.setState({ teammates: [{user_id: 'jdf30u0r33j03ur3fj', first_name: 'Select', last_name: 'team'}, ...res.data]}))
-         .catch(err => console.log(err));
+    axios
+      .get(`/api/getAllTeammates/${this.props.match.params.project_id}`)
+      .then(res =>
+        this.setState({
+          teammates: [
+            {
+              user_id: "jdf30u0r33j03ur3fj",
+              first_name: "Select",
+              last_name: "team"
+            },
+            ...res.data
+          ]
+        })
+      )
+      .catch(err => console.log(err));
   }
   getAllTasks() {
     axios
@@ -118,68 +131,171 @@ export class Single_Project extends Component {
       .catch(err => console.log(err));
   };
   pushToCompleted = task_id => {
-   axios.put(`/api/updateTaskToDone/${task_id}`)
-   .then(res => this.getAllTasks())
-   .catch(err => console.log(err))
-  }
-   
-  
- 
-   render() {
-      const { name, task_description, alltasks, teammates, startDate, isModalOpen, priority, currentProject } = this.state;
-      const todos = alltasks.filter(t => t.status === 'to do' && (t.task_name.includes(this.props.searchInput) || t.task_description.includes(this.props.searchInput))); 
-      const inprogress = alltasks.filter(t => t.status === 'in progress' && (t.task_name.includes(this.props.searchInput) || t.task_description.includes(this.props.searchInput))); 
-      const review = alltasks.filter(t => t.status === 'review' && (t.task_name.includes(this.props.searchInput) || t.task_description.includes(this.props.searchInput))); 
-      const completed = alltasks.filter(t => t.status === 'done' && (t.task_name.includes(this.props.searchInput) || t.task_description.includes(this.props.searchInput))); 
+    axios
+      .put(`/api/updateTaskToDone/${task_id}`)
+      .then(res => this.getAllTasks())
+      .catch(err => console.log(err));
+  };
 
-      console.log('teammates', teammates)
+  render() {
+    const {
+      name,
+      task_description,
+      alltasks,
+      teammates,
+      startDate,
+      isModalOpen,
+      priority,
+      currentProject
+    } = this.state;
+    const todos = alltasks.filter(
+      t =>
+        t.status === "to do" &&
+        (t.task_name.includes(this.props.searchInput) ||
+          t.task_description.includes(this.props.searchInput))
+    );
+    const inprogress = alltasks.filter(
+      t =>
+        t.status === "in progress" &&
+        (t.task_name.includes(this.props.searchInput) ||
+          t.task_description.includes(this.props.searchInput))
+    );
+    const review = alltasks.filter(
+      t =>
+        t.status === "review" &&
+        (t.task_name.includes(this.props.searchInput) ||
+          t.task_description.includes(this.props.searchInput))
+    );
+    const completed = alltasks.filter(
+      t =>
+        t.status === "done" &&
+        (t.task_name.includes(this.props.searchInput) ||
+          t.task_description.includes(this.props.searchInput))
+    );
 
-      return (
-         <div className={this.props.toggleSideBar ? 'personal_dashboard' : 'personal_dashboard open'}>
-            <Modal
-            isOpen={isModalOpen}
-            style={todoStyle}
-            contentLabel="Example Modal">
-            <p style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '80%'}} > Create new task </p>
-            <input className='input' placeholder='Task name' name='name' value={name} onChange={e => this.handleEvent(e)} />
-            <textarea className='input' placeholder='Task description' name='task_description' value={task_description} onChange={e => this.handleEvent(e)} style={{height: '10vh'}} />
-            <label>Priority: 
-               <select value={priority} onChange={this.handlePriority} >
-                  <option value=''>Select Priority </option>
-                  <option value='high'>High</option>
-                  <option value='medium'>Medium</option>
-                  <option value='low'>Low</option>
-               </select>
-            </label>
-            <p>Deadline: <DatePicker selected={startDate} onChange={this.handleDate}/></p>
-            <label>Assign: 
-               <select  onChange={e => this.selectUserId(e.target.value)}  >
-                  {teammates.length>0 && teammates.map(teammate => (
-                     <option value={teammate.user_id} key={teammate.user_id}> {teammate.first_name} {teammate.last_name} </option>
-                  ))}
-               </select>
-            </label>
-               <button className='btn' onClick={this.closeModal} >Cancel</button>
-               <button className='btn' onClick={this.submitTask} >Submit</button>
-            <div></div>
-            <div></div>
-            </Modal>
-            <div className='task_filler'>
-            <div className='upper-container-1' >
-                  <div className='project_info'>
-                     <div className='project_name'> {currentProject.length>0 && currentProject[0].project_name}
-                     <AiOutlineBarChart className='chart_button' onClick={() => this.props.history.push(`/SingleProjectStats/${this.props.match.params.project_id}`)}/>
-                     </div>
-                     <div className='project_description'> {currentProject.length>0 && currentProject[0].project_description} </div>
-                  </div>
-                  <div className='single-project-teams-1' > {teammates.length>0 && teammates.map(mate => 
-                        <div className='single-mate-1' key={mate.id}>
-                           <img src={mate.profile_image} width='40' style={{height: '40px', borderRadius: '50%', padding: '0', margin: 'auto'}} />
-                           <TiMessage size={100} style={{cursor: 'pointer'}} ></TiMessage>
-                           <h4 style={{margin: 0}} > {mate.first_name} {mate.last_name.slice(0, 1)} </h4>
-                        </div>)} 
+    console.log("teammates", teammates);
+
+    return (
+      <div
+        className={
+          this.props.toggleSideBar
+            ? "personal_dashboard"
+            : "personal_dashboard open"
+        }
+      >
+        <Modal
+          isOpen={isModalOpen}
+          style={todoStyle}
+          contentLabel="Example Modal"
+        >
+          <p
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "80%"
+            }}
+          >
+            {" "}
+            Create new task{" "}
+          </p>
+          <input
+            className="input"
+            placeholder="Task name"
+            name="name"
+            value={name}
+            onChange={e => this.handleEvent(e)}
+          />
+          <textarea
+            className="input"
+            placeholder="Task description"
+            name="task_description"
+            value={task_description}
+            onChange={e => this.handleEvent(e)}
+            style={{ height: "10vh" }}
+          />
+          <label>
+            Priority:
+            <select value={priority} onChange={this.handlePriority}>
+              <option value="">Select Priority </option>
+              <option value="high">High</option>
+              <option value="medium">Medium</option>
+              <option value="low">Low</option>
+            </select>
+          </label>
+          <p>
+            Deadline:{" "}
+            <DatePicker selected={startDate} onChange={this.handleDate} />
+          </p>
+          <label>
+            Assign:
+            <select onChange={e => this.selectUserId(e.target.value)}>
+              {teammates.length > 0 &&
+                teammates.map(teammate => (
+                  <option value={teammate.user_id} key={teammate.user_id}>
+                    {" "}
+                    {teammate.first_name} {teammate.last_name}{" "}
+                  </option>
+                ))}
+            </select>
+          </label>
+          <button className="btn" onClick={this.closeModal}>
+            Cancel
+          </button>
+          <button className="btn" onClick={this.submitTask}>
+            Submit
+          </button>
+          <div></div>
+          <div></div>
+        </Modal>
+        <div className="bigBox">
+          <div className="task_filler">
+            <div className="upper-container-1">
+              <div className="project_info">
+                <div className="project_name">
+                  {" "}
+                  {currentProject.length > 0 && currentProject[0].project_name}
+                  <AiOutlineBarChart
+                    className="chart_button"
+                    onClick={() =>
+                      this.props.history.push(
+                        `/SingleProjectStats/${this.props.match.params.project_id}`
+                      )
+                    }
+                  />
+                </div>
+                <div className="project_description">
+                  {" "}
+                  {currentProject.length > 0 &&
+                    currentProject[0].project_description}{" "}
+                </div>
+              </div>
+              {/* <div className="single-project-teams-1">
+              {" "}
+              {teammates.length > 0 &&
+                teammates.map(mate => (
+                  <div className="single-mate-1" key={mate.id}>
+                    <img
+                      src={mate.profile_image}
+                      width="40"
+                      style={{
+                        height: "40px",
+                        borderRadius: "50%",
+                        padding: "0",
+                        margin: "auto"
+                      }}
+                    />
+                    <TiMessage
+                      size={100}
+                      style={{ cursor: "pointer" }}
+                    ></TiMessage>
+                    <h4 style={{ margin: 0 }}>
+                      {" "}
+                      {mate.first_name} {mate.last_name.slice(0, 1)}{" "}
+                    </h4>
                   </div>
                 ))}
+            </div> */}
             </div>
           </div>
           <div className="task_container">
@@ -252,7 +368,9 @@ export class Single_Project extends Component {
                               height: "40px",
                               borderRadius: "50%",
                               padding: "0",
-                              margin: "auto"
+                              margin: "auto",
+                              marginLeft: "-1vw",
+                              marginRight: "0.5vw"
                             }}
                           />
                           <div
@@ -490,7 +608,7 @@ export class Single_Project extends Component {
             </div>
           </div>
         </div>
-    
+      </div>
     );
   }
 }

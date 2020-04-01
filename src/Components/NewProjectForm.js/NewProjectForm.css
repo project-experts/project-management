@@ -32,7 +32,7 @@
   position: sticky;
   top: 0px;
   padding-left: 15px;
-  font-size: 50px;
+  font-size: 20px;
   background: transparent;
   border: none;
   border-bottom: 1px solid #000000;
@@ -95,10 +95,11 @@
   flex-direction: row;
   align-items: center;
   margin-left: 10%;
+  font-size: 1.5vh;
 }
 .each-row:hover {
   border-radius: 10px;
-  background-color: green;
+  background-color: lightblue;
   cursor: pointer;
   margin: auto;
 }
