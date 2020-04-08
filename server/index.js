@@ -8,8 +8,13 @@ const authCtrl = require("./controllers/authController");
 const taskCtrl = require("./controllers/taskController");
 const projectCtrl = require("./controllers/projectController");
 const statsCtrl = require("./controllers/statsController");
+const path = require("path");
 
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "..", "build")));
+app.get("/", function (req, res) {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
 
 // server static files when hitting the server
 app.use(express.static("build"));
@@ -19,11 +24,11 @@ app.use(
     secret: SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie: { maxAge: 1000 * 60 * 60 }
+    cookie: { maxAge: 1000 * 60 * 60 },
   })
 );
 
-massive(CONNECTION_STRING).then(db => {
+massive(CONNECTION_STRING).then((db) => {
   app.set("db", db);
   app.listen(SERVER_PORT, () =>
     console.log(`Server is listening on port ${SERVER_PORT}`)
@@ -39,7 +44,7 @@ app.get("/sign-s3", (req, res) => {
   aws.config = {
     region: "us-east-1",
     accessKeyId: AWS_ACCESS_KEY_ID,
-    secretAccessKey: AWS_SECRET_ACCESS_KEY
+    secretAccessKey: AWS_SECRET_ACCESS_KEY,
   };
 
   const s3 = new aws.S3();
@@ -50,7 +55,7 @@ app.get("/sign-s3", (req, res) => {
     Key: fileName,
     Expires: 60,
     ContentType: fileType,
-    ACL: "public-read"
+    ACL: "public-read",
   };
 
   s3.getSignedUrl("putObject", s3Params, (err, data) => {
@@ -59,7 +64,7 @@ app.get("/sign-s3", (req, res) => {
     }
     const returnData = {
       signedRequest: data,
-      url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
+      url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`,
     };
     return res.send(returnData);
   });
@@ -86,7 +91,10 @@ app.get(
 //get all tasks in 4 status based on current user
 app.get("/api/getToDoTasks/:user_id", taskCtrl.getToDoTasks);
 app.get("/api/getToDoTasks/:user_id", taskCtrl.getToDoTasks);
-app.get("/api/getALlTasksSingleProject/:project_id", taskCtrl.getAllTasksSingleProject);
+app.get(
+  "/api/getALlTasksSingleProject/:project_id",
+  taskCtrl.getAllTasksSingleProject
+);
 app.get("/api/getInProgressTasks/:user_id", taskCtrl.getInProgressTasks);
 app.get("/api/getReviewTasks/:user_id", taskCtrl.getReviewTasks);
 app.get("/api/getDoneTasks/:user_id", taskCtrl.getDoneTasks);
@@ -106,7 +114,7 @@ app.put("/api/updateTaskToInProgress/:task_id", taskCtrl.updateTaskInProgress);
 //project endpoints
 app.get("/api/getProjects/:user_id", projectCtrl.getAllProjects);
 app.post("/api/createProject", projectCtrl.createProject);
-app.get('/api/getSingleProject/:project_id', projectCtrl.getSingleProject); 
+app.get("/api/getSingleProject/:project_id", projectCtrl.getSingleProject);
 
 //stats endpoints
 app.get("/api/countTodoTask/:project_id", statsCtrl.countToDoTask);
