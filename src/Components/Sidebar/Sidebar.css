@@ -63,7 +63,7 @@
   height: 50px;
   width: 200px;
   cursor: pointer;
-  opacity: 65%;
+  opacity: 0.65;
 }
 #profile_img {
   height: 125px;

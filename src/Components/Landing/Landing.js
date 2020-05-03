@@ -20,8 +20,8 @@ const loginStyle = {
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-around",
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 };
 
 const regStyle = {
@@ -32,8 +32,8 @@ const regStyle = {
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-around",
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 };
 
 export class Landing extends Component {
@@ -47,11 +47,11 @@ export class Landing extends Component {
       password: "",
       profile_image: "",
       isPassword: true,
-      isMissionRender: false
+      isMissionRender: false,
     };
   }
 
-  handleEvent = e => this.setState({ [e.target.name]: e.target.value });
+  handleEvent = (e) => this.setState({ [e.target.name]: e.target.value });
 
   closeLoginModal = () => this.props.loginClicked(false);
   closeRegisterModal = () => this.props.registerClicked(false);
@@ -64,7 +64,7 @@ export class Landing extends Component {
     this.props.loginClicked(true);
   };
 
-  handleClick = e =>
+  handleClick = (e) =>
     this.setState({ isMissionRender: !this.state.isMissionRender });
 
   register = () => {
@@ -74,7 +74,7 @@ export class Landing extends Component {
       last_name,
       email,
       password,
-      profile_image
+      profile_image,
     } = this.state;
     axios
       .post("/api/register", {
@@ -82,14 +82,14 @@ export class Landing extends Component {
         last_name,
         email,
         password,
-        profile_image: this.state.profileImg
+        profile_image: this.state.profileImg,
       })
-      .then(res => {
+      .then((res) => {
         this.props.userLoggedIn(res.data);
         this.props.history.push("/dashboard");
       })
 
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
   login = () => {
@@ -104,11 +104,11 @@ export class Landing extends Component {
       this.closeLoginModal();
       axios
         .post("/api/login", { email, password })
-        .then(res => {
+        .then((res) => {
           this.props.userLoggedIn(res.data);
           this.props.history.push("/dashboard");
         })
-        .catch(err => {
+        .catch((err) => {
           window.alert(
             "Email or password you entered is not correct! Please try again"
           );
@@ -131,33 +131,33 @@ export class Landing extends Component {
       .get("/sign-s3", {
         params: {
           "file-name": fileName,
-          "file-type": file.type
-        }
+          "file-type": file.type,
+        },
       })
-      .then(response => {
+      .then((response) => {
         const { signedRequest, url } = response.data;
         this.setState({
-          profileImg: url
+          profileImg: url,
         });
         this.uploadFile(file, signedRequest, url);
       })
-      .catch(err => console.log("error line 138", err));
+      .catch((err) => console.log("error line 138", err));
   };
   uploadFile = (file, signedRequest, url) => {
     const options = {
       headers: {
-        "Content-Type": file.type
-      }
+        "Content-Type": file.type,
+      },
     };
 
     axios
       .put(signedRequest, file, options)
-      .then(response => {
+      .then((response) => {
         this.setState({ isUploading: false, url });
         //  this.setState({profile_image: url})
         // THEN DO SOMETHING WITH THE URL. SEND TO DB USING POST REQUEST OR SOMETHING
       })
-      .catch(err => {
+      .catch((err) => {
         window.alert(
           "Email or password you entered is not correct! Please try again"
         );
@@ -177,34 +177,34 @@ export class Landing extends Component {
       .get("/sign-s3", {
         params: {
           "file-name": fileName,
-          "file-type": file.type
-        }
+          "file-type": file.type,
+        },
       })
-      .then(response => {
+      .then((response) => {
         const { signedRequest, url } = response.data;
         this.setState({
-          profileImg: url
+          profileImg: url,
         });
         this.uploadFile(file, signedRequest, url);
       })
-      .catch(err => {});
+      .catch((err) => {});
   };
   uploadFile = (file, signedRequest, url) => {
     const options = {
       headers: {
-        "Content-Type": file.type
-      }
+        "Content-Type": file.type,
+      },
     };
 
     axios
       .put(signedRequest, file, options)
-      .then(response => {
+      .then((response) => {
         this.setState({ isUploading: false, url });
         // THEN DO SOMETHING WITH THE URL. SEND TO DB USING POST REQUEST OR SOMETHING
       })
-      .catch(err => {
+      .catch((err) => {
         this.setState({
-          isUploading: false
+          isUploading: false,
         });
         if (err.response.status === 403) {
           alert(
@@ -224,9 +224,9 @@ export class Landing extends Component {
       password,
       profile_image,
       isPassword,
-      isMissionRender
+      isMissionRender,
     } = this.state;
-    // console.log("isMissionRender :", isMissionRender);
+    console.log("isMissionRender :", isMissionRender);
     const missionStatements = () => {
       if (isMissionRender === true) {
         return "renderTrue";
@@ -246,7 +246,7 @@ export class Landing extends Component {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              width: "80%"
+              width: "80%",
             }}
           >
             Please sign in{" "}
@@ -256,7 +256,7 @@ export class Landing extends Component {
             placeholder="Enter your email"
             name="email"
             value={email}
-            onChange={e => this.handleEvent(e)}
+            onChange={(e) => this.handleEvent(e)}
           />
           <div className="input-div">
             {" "}
@@ -266,7 +266,7 @@ export class Landing extends Component {
               placeholder="Enter your password"
               name="password"
               value={password}
-              onChange={e => this.handleEvent(e)}
+              onChange={(e) => this.handleEvent(e)}
             />
             <FaEye
               className="font"
@@ -292,7 +292,7 @@ export class Landing extends Component {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              width: "80%"
+              width: "80%",
             }}
           >
             Please register{" "}
@@ -302,21 +302,21 @@ export class Landing extends Component {
             placeholder="Enter your first name"
             name="first_name"
             value={first_name}
-            onChange={e => this.handleEvent(e)}
+            onChange={(e) => this.handleEvent(e)}
           />
           <input
             className="input"
             placeholder="Enter your last name"
             name="last_name"
             value={last_name}
-            onChange={e => this.handleEvent(e)}
+            onChange={(e) => this.handleEvent(e)}
           />
           <input
             className="input"
             placeholder="Enter your email"
             name="email"
             value={email}
-            onChange={e => this.handleEvent(e)}
+            onChange={(e) => this.handleEvent(e)}
           />
           <button className="btn">Validate your email </button>
           <input
@@ -324,7 +324,7 @@ export class Landing extends Component {
             placeholder="Choose your password"
             name="password"
             value={password}
-            onChange={e => this.handleEvent(e)}
+            onChange={(e) => this.handleEvent(e)}
           />
           <input
             className="input"
@@ -332,7 +332,7 @@ export class Landing extends Component {
             placeholder="Upload photo"
             name="profile_image"
             value={profile_image}
-            onChange={e => this.getSignedRequest(e.target.files)}
+            onChange={(e) => this.getSignedRequest(e.target.files)}
           />
           <button className="btn" onClick={this.register}>
             Register
@@ -355,7 +355,7 @@ export class Landing extends Component {
           <button
             data-testid="button"
             className="moreDetails"
-            onClick={e => this.handleClick(e)}
+            onClick={(e) => this.handleClick(e)}
           >
             more details
           </button>
@@ -382,14 +382,14 @@ export class Landing extends Component {
 function mapStateToProps(state) {
   return {
     isLoginClicked: state.loginReducer.isLoginClicked,
-    isRegClicked: state.registerReducer.isRegClicked
+    isRegClicked: state.registerReducer.isRegClicked,
   };
 }
 
 export default connect(mapStateToProps, {
   userLoggedIn,
   loginClicked,
-  registerClicked
+  registerClicked,
 })(Landing);
 
 //Creating a workplace environment of transparency, ownership, and accountability, to make teamwork click.
